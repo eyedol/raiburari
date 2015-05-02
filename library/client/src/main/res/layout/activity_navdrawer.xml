@@ -1,0 +1,36 @@
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:ignore="MissingPrefix">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false"
+        android:orientation="vertical">
+
+        <include layout="@layout/toolbar_actionbar" />
+
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <com.addhen.raiburari.client.ui.widget.ScrimInsetsFrameLayout
+        android:id="@+id/relativeDrawer"
+        android:layout_width="@dimen/navdrawer_width"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:insetForeground="#4000">
+
+        <include
+            layout="@layout/include_navdrawer"
+            android:fitsSystemWindows="true" />
+    </com.addhen.raiburari.client.ui.widget.ScrimInsetsFrameLayout>
+</android.support.v4.widget.DrawerLayout>

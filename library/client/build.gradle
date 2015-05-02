@@ -1,0 +1,87 @@
+/*
+ * Copyright (c) 2015. Henry Addo
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+apply plugin: 'com.android.library'
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
+    buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
+
+    defaultConfig {
+        minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
+        targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
+
+        //libraryId globalConfiguration.getAt("androidLibraryId")
+        versionCode globalConfiguration.getAt("androidVersionCode")
+        versionName globalConfiguration.getAt("androidVersionName")
+        testInstrumentationRunner globalConfiguration.getAt("testInstrumentationRunner")
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+    }
+
+    lintOptions {
+        abortOnError false;
+        disable 'InvalidPackage'            //Some libraries have issues with this.
+        disable 'OldTargetApi'
+        //Lint gives this warning but SDK 20 would be Android L Beta.
+        disable 'IconDensities'             //For testing purpose. This is safe to remove.
+        disable 'IconMissingDensityFolder'  //For testing purpose. This is safe to remove.
+    }
+}
+
+dependencies {
+    def clientDependencies = rootProject.ext.clientDependencies
+    def clientTestDependencies = rootProject.ext.clientTestDependencies
+
+    compile project(':library:domain')
+    compile project(':library:data')
+
+    apt clientDependencies.daggerCompiler
+    compile clientDependencies.dagger
+    compile clientDependencies.butterKnife
+    compile clientDependencies.support
+    compile clientDependencies.appCompat
+    compile clientDependencies.cardView
+    compile clientDependencies.recyclerView
+    compile clientDependencies.rxJava
+    compile clientDependencies.rxAndroid
+    compile clientDependencies.timber
+    compile clientDependencies.snackbar
+    compile clientDependencies.fab
+    compile clientDependencies.otto
+    provided clientDependencies.javaxAnnotation
+
+    androidTestCompile clientTestDependencies.mockito
+    androidTestCompile clientTestDependencies.dexmaker
+    androidTestCompile clientTestDependencies.dexmakerMockito
+    androidTestCompile clientTestDependencies.espresso
+    androidTestCompile clientTestDependencies.testingSupportLib
+}

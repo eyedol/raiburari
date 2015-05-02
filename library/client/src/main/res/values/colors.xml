@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2015. Henry Addo
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~
+  -->
+
+<resources>
+    <color name="color_primary">#212121</color>
+    <color name="color_primary_dark">#000000</color>
+    <color name="color_accent">#7caac2</color>
+    <color name="text_dark">#606060</color>
+    <color name="text_light">#787878</color>
+    <color name="text_error">#9b0114</color>
+    <color name="text_required">#d0021b</color>
+    <color name="list_view">#e7e7e7</color>
+    <color name="spinner">#dddddd</color>
+    <color name="background">#eeeeee</color>
+    <color name="image_button">#cccccc</color>
+    <color name="list_selected">#7caac2</color>
+    <color name="list_focused">#7caac2</color>
+    <color name="list_hovered">#aac8d8</color>
+    <color name="list_pressed">#659bb7</color>
+    <color name="swipe_first">#4995dd</color>
+    <color name="swipe_second">#74aee5</color>
+    <color name="swipe_third">#9fc7ed</color>
+    <color name="swipe_fourth">#cae0f5</color>
+    <color name="progress_done">#bbb</color>
+    <color name="progress_done_dark">#b3b3b3</color>
+    <color name="progress_secondary">#ccc</color>
+    <color name="progress_secondary_dark">#c4c4c4</color>
+    <color name="progress_background">#dddddd</color>
+    <color name="progress_background_dark">#d5d5d5</color>
+    <color name="button_primary">#888888</color>
+    <color name="button_primary_dark">#777777</color>
+    <color name="button_secondary">#787878</color>
+    <color name="button_secondary_dark">#606060</color>
+    <color name="button_disabled">#e7e7e7</color>
+    <color name="button_disabled_dark">#d6d6d6</color>
+    <color name="nav_drawer_separator_color">#606060</color>
+    <color name="body_text_1">#de000000</color>
+    <color name="body_text_1_inverse">#deffffff</color>
+    <color name="body_text_2_inverse">#8affffff</color>
+
+    <color name="user_profile_background_tint_color">#6000</color>
+    <color name="user_profile_default_background_color">@color/color_primary</color>
+
+    <!-- Navdrawer -->
+    <color name="navdrawer_background">#ffffffff</color>
+    <color name="navdrawer_text_color">@color/body_text_1</color>
+    <color name="navdrawer_text_color_selected">@color/color_primary</color>
+    <color name="navdrawer_icon_tint">#888</color>
+    <color name="navdrawer_icon_tint_selected">@color/color_primary</color>
+    <color name="navdrawer_item_pressed_state">#16000000</color>
+    <color name="navdrawer_item_unpressed_state">#00FFFFFF</color>
+    <color name="navdrawer_item_highlight">#0A000000</color>
+
+    <!-- Fab -->
+    <color name="fab_color_primary">#8fc266</color>
+    <color name="fab_color_pressed">#71a646</color>
+</resources>
