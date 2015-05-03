@@ -20,6 +20,39 @@ package com.addhen.android.raiburari.model;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class UserProfile {
+public class UserProfile extends Model {
 
+    private String mFullName;
+
+    private String mUsername;
+
+    private String mAvatar;
+
+    public UserProfile(String fullName, String username, String avatar) {
+        mFullName = fullName;
+        mUsername = username;
+        mAvatar = avatar;
+    }
+
+    public String getFullName() {
+        return mFullName;
+    }
+
+    public String getUsername() {
+        return mUsername;
+    }
+
+    public String getAvatar() {
+        return mAvatar;
+    }
+
+    @Override
+    public String toString() {
+        return "UserProfile{" +
+                "id='" + getId() + '\'' +
+                "mFullName='" + mFullName + '\'' +
+                ", mUsername='" + mUsername + '\'' +
+                ", mAvatar='" + mAvatar + '\'' +
+                '}';
+    }
 }

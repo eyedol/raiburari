@@ -96,7 +96,7 @@ dependencies {
 def siteUrl = 'https://bitbucket.org/eyedol/raiburari'      // Homepage URL of the library
 def gitUrl = 'https://eyedol@bitbucket.org/eyedol/raiburari.git'   // Git repository URL
 def issueUrl = 'https://bitbucket.org/eyedol/raiburari/issues'
-group = "com.addhen.raiburari"                      // Maven Group ID for the artifact
+group = "com.addhen.android"                      // Maven Group ID for the artifact
 
 install {
     repositories.mavenInstaller {

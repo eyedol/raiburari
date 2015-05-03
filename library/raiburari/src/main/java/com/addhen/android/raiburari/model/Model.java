@@ -22,4 +22,13 @@ package com.addhen.android.raiburari.model;
  */
 public abstract class Model {
 
+    private Long _id;
+
+    public Long getId() {
+        return _id;
+    }
+
+    public void setId(Long id) {
+        _id = id;
+    }
 }

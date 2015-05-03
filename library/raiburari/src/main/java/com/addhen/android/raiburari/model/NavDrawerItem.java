@@ -20,7 +20,7 @@ package com.addhen.android.raiburari.model;
 /**
  * @author Henry Addo
  */
-public class NavDrawerItem {
+public class NavDrawerItem extends Model {
 
     public String title;
 
