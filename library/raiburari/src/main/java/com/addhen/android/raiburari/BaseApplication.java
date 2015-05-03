@@ -24,6 +24,9 @@ import com.addhen.android.raiburari.di.module.ApplicationModule;
 import android.app.Application;
 
 /**
+ * Base {@link Application} class that must be subclassed by the inherited app to setup the App for
+ * Dagger Dependency Injections.
+ *
  * @author Henry Addo
  */
 public abstract class BaseApplication extends Application {
@@ -42,6 +45,11 @@ public abstract class BaseApplication extends Application {
                 .build();
     }
 
+    /**
+     * Get the {@link ApplicationComponent}
+     *
+     * @return The {@link ApplicationComponent}
+     */
     public ApplicationComponent getApplicationComponent() {
         return mApplicationComponent;
     }

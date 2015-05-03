@@ -18,16 +18,28 @@
 package com.addhen.android.raiburari.model;
 
 /**
+ * Base Model calls
+ *
  * @author Henry Addo
  */
 public abstract class Model {
 
     private Long _id;
 
+    /**
+     * Gets the model ID
+     *
+     * @return The model ID
+     */
     public Long getId() {
         return _id;
     }
 
+    /**
+     * Sets the model ID
+     *
+     * @param id The model ID to be set
+     */
     public void setId(Long id) {
         _id = id;
     }

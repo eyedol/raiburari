@@ -15,9 +15,11 @@
  *
  */
 
-package com.addhen.raiburari.client.presenter;
+package com.addhen.android.raiburari.presenter;
 
 /**
+ * Presenter interface that all App Presenters must implemented
+ *
  * @author Henry Addo
  */
 public interface Presenter {

@@ -139,6 +139,7 @@ task sourcesJar(type: Jar) {
     classifier = 'sources'
 }
 task javadoc(type: Javadoc) {
+    failOnError false // Don't fail on error
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 }
@@ -149,7 +150,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 }
 
 artifacts {
-    //archives javadocJar
+    archives javadocJar
     archives sourcesJar
 }
 
