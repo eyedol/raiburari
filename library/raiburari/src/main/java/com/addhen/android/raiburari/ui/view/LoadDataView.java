@@ -15,6 +15,25 @@
  *
  */
 
-include ':library:domain'
-include ':library:data'
-include ':library:raiburari'
+package com.addhen.android.raiburari.ui.view;
+
+/**
+ * @author Henry Addo
+ */
+public interface LoadDataView extends UiView {
+
+    /**
+     * Shows a view with a progress bar indicating a loading process.
+     */
+    void showLoading();
+
+    /**
+     * Hides a loading view.
+     */
+    void hideLoading();
+
+    /**
+     * Shows a retry view in case of an error when retrieving data.
+     */
+    void showRetry(String message);
+}

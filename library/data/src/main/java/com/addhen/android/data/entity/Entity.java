@@ -15,6 +15,22 @@
  *
  */
 
-include ':library:domain'
-include ':library:data'
-include ':library:raiburari'
+package com.addhen.android.data.entity;
+
+/**
+ * Base entity class that all entities must subclass
+ *
+ * @author Henry Addo
+ */
+public abstract class Entity {
+
+    private Long _id;
+
+    public Long getId() {
+        return _id;
+    }
+
+    public void setId(Long id) {
+        _id = id;
+    }
+}

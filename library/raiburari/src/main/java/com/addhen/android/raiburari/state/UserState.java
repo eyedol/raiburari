@@ -15,6 +15,18 @@
  *
  */
 
-include ':library:domain'
-include ':library:data'
-include ':library:raiburari'
+package com.addhen.android.raiburari.state;
+
+import com.addhen.android.raiburari.model.UserProfile;
+
+/**
+ * @author Henry Addo
+ */
+public interface UserState {
+
+    void setUserProfile(UserProfile userProfile);
+
+    class UserProfileChangedEvent {
+
+    }
+}

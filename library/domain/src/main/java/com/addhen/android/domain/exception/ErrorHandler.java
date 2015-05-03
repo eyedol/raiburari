@@ -15,6 +15,16 @@
  *
  */
 
-include ':library:domain'
-include ':library:data'
-include ':library:raiburari'
+package com.addhen.android.domain.exception;
+
+/**
+ * Interface to represent a wrapper around an {@link java.lang.Exception} to manage errors.
+ *
+ * @author Henry Addo
+ */
+public interface ErrorHandler {
+
+    Exception getException();
+
+    String getErrorMessage();
+}

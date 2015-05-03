@@ -15,6 +15,33 @@
  *
  */
 
-include ':library:domain'
-include ':library:data'
-include ':library:raiburari'
+package com.addhen.android.raiburari.di.module;
+
+import com.addhen.raiburari.client.di.qualifier.ForActivity;
+
+import android.app.Activity;
+
+import dagger.Module;
+import dagger.Provides;
+
+/**
+ * A module to wrap the Activity state and expose it to the graph.
+ */
+@Module
+public class ActivityModule {
+
+    private final Activity activity;
+
+    public ActivityModule(Activity activity) {
+        this.activity = activity;
+    }
+
+    /**
+     * Expose the activity to dependents in the graph.
+     */
+    @Provides
+    @ForActivity
+    Activity activity() {
+        return this.activity;
+    }
+}

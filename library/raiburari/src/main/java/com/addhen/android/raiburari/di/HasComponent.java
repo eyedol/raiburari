@@ -15,6 +15,15 @@
  *
  */
 
-include ':library:domain'
-include ':library:data'
-include ':library:raiburari'
+package com.addhen.android.raiburari.di;
+
+/**
+ * Interface representing a contract for clients that contains a component for dependency
+ * injection.
+ *
+ * @author Henry Addo
+ */
+public interface HasComponent<C> {
+
+    C getComponent();
+}

@@ -15,6 +15,11 @@
  *
  */
 
-include ':library:domain'
-include ':library:data'
-include ':library:raiburari'
+package com.addhen.android.raiburari.model;
+
+/**
+ * @author Henry Addo
+ */
+public abstract class Model {
+
+}

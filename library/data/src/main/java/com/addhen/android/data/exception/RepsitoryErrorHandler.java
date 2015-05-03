@@ -15,6 +15,30 @@
  *
  */
 
-include ':library:domain'
-include ':library:data'
-include ':library:raiburari'
+package com.addhen.android.data.exception;
+
+import com.addhen.android.domain.exception.ErrorHandler;
+
+/**
+ * Exception handler for Repository errors
+ *
+ * @author Henry Addo
+ */
+public class RepsitoryErrorHandler implements ErrorHandler {
+
+    private final Exception mException;
+
+    public RepsitoryErrorHandler(Exception exception) {
+        mException = exception;
+    }
+
+    @Override
+    public Exception getException() {
+        return mException;
+    }
+
+    @Override
+    public String getErrorMessage() {
+        return mException.getMessage();
+    }
+}

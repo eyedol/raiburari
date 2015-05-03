@@ -15,6 +15,15 @@
  *
  */
 
-include ':library:domain'
-include ':library:data'
-include ':library:raiburari'
+package com.addhen.android.raiburari.ui.listener;
+
+/**
+ * Define an observable scroll state
+ *
+ * @author Ushahidi Team <team@ushahidi.com>
+ */
+public enum ObservableScrollState {
+    STOP,
+    UP,
+    DOWN,
+}

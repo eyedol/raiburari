@@ -15,6 +15,33 @@
  *
  */
 
-include ':library:domain'
-include ':library:data'
-include ':library:raiburari'
+package com.addhen.android.data.pref;
+
+/**
+ * @author Henry Addo
+ */
+public interface AppPreference<T> {
+
+    /**
+     * Gets the value of the preference
+     */
+    T get();
+
+    /**
+     * Checks if the preference is set.
+     *
+     * @return The status of the preferences. Whether it has been set or not.
+     */
+    boolean isSet();
+
+    /**
+     * Set the value for the preference
+     */
+    void set(T value);
+
+    /**
+     * Deletes the set preference.
+     */
+    void delete();
+}
+
