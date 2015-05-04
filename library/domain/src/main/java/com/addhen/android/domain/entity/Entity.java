@@ -24,13 +24,5 @@ package com.addhen.android.domain.entity;
  */
 public abstract class Entity {
 
-    private Long _id;
-
-    public Long getId() {
-        return _id;
-    }
-
-    public void setId(Long id) {
-        _id = id;
-    }
+    public Long _id;
 }

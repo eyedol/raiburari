@@ -15,9 +15,7 @@
  *
  */
 
-apply plugin: 'com.android.library'
-
-apply from: '../../common/common-android-settings.gradle'
+apply plugin: 'java'
 
 configurations {
     provided

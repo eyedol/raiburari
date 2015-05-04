@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">My Application</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="exception_message_generic">There was a generic error</string>
+    <string name="exception_message_user_not_found">User not found</string>
+</resources>

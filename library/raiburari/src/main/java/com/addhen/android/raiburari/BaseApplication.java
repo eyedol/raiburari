@@ -29,7 +29,7 @@ import android.app.Application;
  *
  * @author Henry Addo
  */
-public abstract class BaseApplication extends Application {
+public class BaseApplication extends Application {
 
     private ApplicationComponent mApplicationComponent;
 

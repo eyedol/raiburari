@@ -22,20 +22,20 @@ import java.util.List;
 import rx.Observable;
 
 /**
- * Base Interface that represents Repository for fetching {@link com.addhen.raiburari.domain.entity.Entity}
- * related data. It provides a list and a singe item of {@link com.addhen.raiburari.domain.entity.Entity}
+ * Base Interface that represents Repository for fetching {@link com.addhen.android.domain.entity.Entity}
+ * related data. It provides a list and a singe item of {@link com.addhen.android.domain.entity.Entity}
  *
  * @author Henry Addo
  */
 public interface Repository<E> {
 
     /**
-     * Get an {@link rx.Observable} which will emit a List of {@link com.addhen.raiburari.domain.entity.Entity}.
+     * Get an {@link rx.Observable} which will emit a List of {@link com.addhen.android.domain.entity.Entity}.
      */
     Observable<List<E>> getEntities();
 
     /**
-     * Get an {@link rx.Observable} which will emit a {@link com.addhen.raiburari.domain.entity.Entity}.
+     * Get an {@link rx.Observable} which will emit a {@link com.addhen.android.domain.entity.Entity}.
      *
      * @param entityId The entity id used to retrieve the entity data.
      */

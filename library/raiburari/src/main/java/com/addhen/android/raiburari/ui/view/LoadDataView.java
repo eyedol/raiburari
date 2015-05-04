@@ -35,5 +35,10 @@ public interface LoadDataView extends UiView {
     /**
      * Shows a retry view in case of an error when retrieving data.
      */
-    void showRetry(String message);
+    void showRetry();
+
+    /**
+     * Hide a retry view shown if there was an error when retrieving data.
+     */
+    void hideRetry();
 }

@@ -17,7 +17,7 @@
 
 package com.addhen.android.raiburari.di.module;
 
-import com.addhen.raiburari.client.di.qualifier.ForActivity;
+import com.addhen.android.raiburari.di.qualifier.ForActivity;
 
 import android.app.Activity;
 

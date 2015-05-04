@@ -17,7 +17,10 @@
 
 package com.addhen.android.raiburari.ui.activity;
 
+import com.addhen.android.raiburari.BaseApplication;
 import com.addhen.android.raiburari.R;
+import com.addhen.android.raiburari.di.component.ApplicationComponent;
+import com.addhen.android.raiburari.di.module.ActivityModule;
 import com.addhen.android.raiburari.state.ApplicationState;
 
 import android.content.res.Configuration;
@@ -59,7 +62,7 @@ import static android.view.View.VISIBLE;
 /**
  * @author Henry Addo
  */
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * Layout resource id
@@ -162,6 +165,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getApplicationComponent().inject(this);
         injectViews();
         if (mLayout != 0) {
             setContentView(mLayout);
@@ -435,5 +439,23 @@ public class BaseActivity extends AppCompatActivity {
                 .beginTransaction();
         fragmentTransaction.add(containerViewId, fragment, tag);
         fragmentTransaction.commit();
+    }
+
+    /**
+     * Get the Main Application component for dependency injection.
+     *
+     * @return {@link com.addhen.android.raiburari.di.component.ApplicationComponent}
+     */
+    public ApplicationComponent getApplicationComponent() {
+        return ((BaseApplication) getApplication()).getApplicationComponent();
+    }
+
+    /**
+     * Get an Activity module for dependency injection.
+     *
+     * @return {@link com.addhen.android.raiburari.di.module.ActivityModule}
+     */
+    protected ActivityModule getActivityModule() {
+        return new ActivityModule(this);
     }
 }
