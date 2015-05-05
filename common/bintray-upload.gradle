@@ -20,7 +20,7 @@ def gitUrl = 'https://eyedol@bitbucket.org/eyedol/raiburari.git'   // Git reposi
 def issueUrl = 'https://bitbucket.org/eyedol/raiburari/issues'
 group = "com.addhen.android"                      // Maven Group ID for the artifact
 
-def libVersion = globalConfiguration.getAt("androidVersionName")
+def libVersion = rootProject.extensions.getByName("ext").getAt("androidVersionName")
 
 install {
     repositories.mavenInstaller {
