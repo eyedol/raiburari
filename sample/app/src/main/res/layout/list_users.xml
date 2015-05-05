@@ -22,7 +22,7 @@
                 android:layout_height="match_parent"
         >
 
-    <com.addhen.android.raiburari.ui.widget.BloatedRecyclerView
+    <com.addhen.android.raiburari.presentation.ui.widget.BloatedRecyclerView
             android:id="@id/android:list"
             app:recyclerviewClipToPadding="true"
             app:recyclerviewScrollbars="vertical"

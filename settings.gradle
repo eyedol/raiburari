@@ -14,10 +14,4 @@
  * limitations under the License.
  *
  */
-
-include ':library:domain', ':app', ':data', ':domain'
-include ':library:data'
-include ':library:raiburari'
-project(':app').projectDir = new File('sample/app')
-project(':data').projectDir = new File('sample/data')
-project(':domain').projectDir = new File('sample/domain')
+include ':library:raiburari', ':sample:app'

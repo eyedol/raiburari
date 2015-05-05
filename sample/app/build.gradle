@@ -38,8 +38,6 @@ android {
 
 dependencies {
     compile project(':library:raiburari')
-    compile project(':data')
-
-    apt clientDependencies.daggerCompiler
-    provided clientDependencies.javaxAnnotation
+    apt appDependencies.daggerCompiler
+    provided appDependencies.javaxAnnotation
 }

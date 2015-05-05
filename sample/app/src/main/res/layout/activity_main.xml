@@ -9,7 +9,7 @@
                 tools:context=".MainActivity">
 
     <fragment
-            android:name="com.addhen.android.raiburari.sample.app.ui.fragment.MainFragment"
+            android:name="com.addhen.android.raiburari.sample.app.presentation.ui.fragment.MainFragment"
             android:id="@+id/fragmentUserList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
