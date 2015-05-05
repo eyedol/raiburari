@@ -18,20 +18,30 @@
 package com.addhen.android.raiburari.sample.app.di.components;
 
 import com.addhen.android.raiburari.di.component.ActivityComponent;
+import com.addhen.android.raiburari.di.component.ApplicationComponent;
 import com.addhen.android.raiburari.di.module.ActivityModule;
-import com.addhen.android.raiburari.di.qualifier.ForActivity;
+import com.addhen.android.raiburari.di.qualifier.ActivityScope;
 import com.addhen.android.raiburari.sample.app.di.modules.UserModule;
+import com.addhen.android.raiburari.sample.app.presenter.UserListPresenter;
+import com.addhen.android.raiburari.sample.app.ui.activity.MainActivity;
 import com.addhen.android.raiburari.sample.app.ui.fragment.MainFragment;
+import com.addhen.raiburari.sample.domain.repository.UserRepository;
 
 import dagger.Component;
 
 /**
  * @author Henry Addo
  */
-@ForActivity
-@Component(dependencies = SampleApplicationComponent.class, modules = {ActivityModule.class,
+@ActivityScope
+@Component(dependencies = ApplicationComponent.class, modules = {ActivityModule.class,
         UserModule.class})
 public interface UserComponent extends ActivityComponent {
 
+    void inject(MainActivity mainActivity);
+
     void inject(MainFragment mainFragment);
+
+    UserListPresenter userListPresenter();
+
+    UserRepository userRepository();
 }

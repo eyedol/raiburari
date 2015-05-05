@@ -27,7 +27,6 @@ import com.addhen.raiburari.sample.domain.repository.UserRepository;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import rx.Observable;
 import rx.functions.Func1;
@@ -35,7 +34,6 @@ import rx.functions.Func1;
 /**
  * {@link UserRepository} for retrieving user data.
  */
-@Singleton
 public class UserDataRepository implements UserRepository {
 
     private final UserDataStoreFactory userDataStoreFactory;

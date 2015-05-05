@@ -19,13 +19,11 @@ package com.addhen.android.raiburari.sample.app.ui.activity;
 
 import com.addhen.android.raiburari.di.HasComponent;
 import com.addhen.android.raiburari.sample.app.R;
+import com.addhen.android.raiburari.sample.app.di.components.DaggerUserComponent;
 import com.addhen.android.raiburari.sample.app.di.components.UserComponent;
 import com.addhen.android.raiburari.ui.activity.BaseActivity;
 
 import android.os.Bundle;
-
-//import com.addhen.android.raiburari.sample.app.di.components.DaggerUserComponent;
-
 
 public class MainActivity extends BaseActivity implements HasComponent<UserComponent> {
 
@@ -43,7 +41,8 @@ public class MainActivity extends BaseActivity implements HasComponent<UserCompo
 
 
     private void initializeInjector() {
-        this.userComponent = UserComponent.builder()
+
+        this.userComponent = DaggerUserComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
                 .build();

@@ -17,11 +17,16 @@
 
 package com.addhen.raiburari.sample.data.repository.datasource;
 
+import javax.inject.Inject;
+
 /**
- * @author Ushahidi Team <team@ushahidi.com>
+ * Factory that creates different implementations of {@link UserDataSource}.
+ *
+ * @author Henry Addo
  */
 public class UserDataStoreFactory {
 
+    @Inject
     public UserDataStoreFactory() {
 
     }

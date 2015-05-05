@@ -18,11 +18,14 @@
 package com.addhen.android.raiburari.sample.app.di.modules;
 
 import com.addhen.android.domain.usecase.Usecase;
-import com.addhen.android.raiburari.di.qualifier.ForActivity;
+import com.addhen.android.raiburari.di.qualifier.ActivityScope;
+import com.addhen.raiburari.sample.data.repository.UserDataRepository;
+import com.addhen.raiburari.sample.domain.repository.UserRepository;
 import com.addhen.raiburari.sample.domain.usecase.GetUserListUsecase;
 
 import javax.inject.Named;
 
+import dagger.Module;
 import dagger.Provides;
 
 /**
@@ -30,16 +33,24 @@ import dagger.Provides;
  *
  * @author Henry Addo
  */
+@Module
 public class UserModule {
 
     public UserModule() {
     }
 
     @Provides
-    @ForActivity
+    @ActivityScope
     @Named("userList")
     Usecase provideGetUserListUseCase(
             GetUserListUsecase getUserListUseCase) {
         return getUserListUseCase;
+    }
+
+
+    @Provides
+    @ActivityScope
+    UserRepository provideUserRepository(UserDataRepository userDataRepository) {
+        return userDataRepository;
     }
 }

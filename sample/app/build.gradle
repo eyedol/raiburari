@@ -40,5 +40,6 @@ dependencies {
     compile project(':library:raiburari')
     compile project(':data')
 
-    //apt clientDependencies.daggerCompiler
+    apt clientDependencies.daggerCompiler
+    provided clientDependencies.javaxAnnotation
 }

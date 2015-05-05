@@ -22,7 +22,7 @@ package com.addhen.android.raiburari.di.component;
  */
 
 import com.addhen.android.raiburari.di.module.ActivityModule;
-import com.addhen.android.raiburari.di.qualifier.ForActivity;
+import com.addhen.android.raiburari.di.qualifier.ActivityScope;
 
 import android.app.Activity;
 
@@ -33,11 +33,11 @@ import dagger.Component;
  * Activity-level components should extend this component.
  * <p/>
  * Subtypes of ActivityComponent should be decorated with annotation:
- * {@link com.addhen.android.raiburari.di.qualifier.ForActivity}
+ * {@link ActivityScope}
  *
  * @author Henry Addo
  */
-@ForActivity
+@ActivityScope
 @Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
 public interface ActivityComponent {
 

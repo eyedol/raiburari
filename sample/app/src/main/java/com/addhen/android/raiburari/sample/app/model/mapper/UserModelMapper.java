@@ -17,6 +17,7 @@
 
 package com.addhen.android.raiburari.sample.app.model.mapper;
 
+import com.addhen.android.raiburari.di.qualifier.ActivityScope;
 import com.addhen.android.raiburari.sample.app.model.UserModel;
 import com.addhen.raiburari.sample.domain.entity.User;
 
@@ -29,6 +30,7 @@ import javax.inject.Inject;
 /**
  * @author Henry Addo
  */
+@ActivityScope
 public class UserModelMapper {
 
     @Inject

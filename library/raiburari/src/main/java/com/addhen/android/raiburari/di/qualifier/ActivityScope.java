@@ -15,24 +15,21 @@
  *
  */
 
-package com.addhen.android.raiburari.sample.app.di.components;
+package com.addhen.android.raiburari.di.qualifier;
 
-import com.addhen.android.raiburari.sample.app.di.modules.SampleApplicationModule;
-import com.addhen.android.raiburari.sample.app.ui.activity.MainActivity;
-import com.addhen.raiburari.sample.domain.repository.UserRepository;
+import java.lang.annotation.Retention;
 
-import javax.inject.Singleton;
+import javax.inject.Scope;
 
-import dagger.Component;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
+ * Activity linked dependencies scope. Used to provide dependencies linked to activities lifecycle.
+ *
  * @author Henry Addo
  */
-@Singleton // Constraints this component to one-per-application or unscoped bindings.
-@Component(modules = SampleApplicationModule.class)
-public interface SampleApplicationComponent {
+@Scope
+@Retention(RUNTIME)
+public @interface ActivityScope {
 
-    void inject(MainActivity mainActivity);
-
-    UserRepository userRepository();
 }

@@ -21,6 +21,7 @@ import com.addhen.android.domain.exception.DefaultErrorHandler;
 import com.addhen.android.domain.exception.ErrorHandler;
 import com.addhen.android.domain.usecase.DefaultSubscriber;
 import com.addhen.android.domain.usecase.Usecase;
+import com.addhen.android.raiburari.di.qualifier.ActivityScope;
 import com.addhen.android.raiburari.presenter.Presenter;
 import com.addhen.android.raiburari.sample.app.exception.ErrorMessageFactory;
 import com.addhen.android.raiburari.sample.app.model.UserModel;
@@ -40,7 +41,7 @@ import javax.inject.Named;
  * {@link Presenter} that controls communication between views and models of the presentation
  * layer.
  */
-@com.addhen.android.raiburari.di.qualifier.ForActivity
+@ActivityScope
 public class UserListPresenter extends DefaultSubscriber<List<User>> implements Presenter {
 
     private UserListView viewListView;

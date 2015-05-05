@@ -18,17 +18,95 @@
 package com.addhen.android.raiburari.sample.app.ui.fragment;
 
 import com.addhen.android.raiburari.sample.app.R;
+import com.addhen.android.raiburari.sample.app.di.components.UserComponent;
+import com.addhen.android.raiburari.sample.app.model.UserModel;
+import com.addhen.android.raiburari.sample.app.presenter.UserListPresenter;
+import com.addhen.android.raiburari.sample.app.ui.view.UserListView;
 import com.addhen.android.raiburari.ui.fragment.BaseFragment;
+
+import android.content.Context;
+import android.os.Bundle;
+
+import java.util.Collection;
+
+import javax.inject.Inject;
 
 /**
  * @author Henry Addo
  */
-public class MainFragment extends BaseFragment {
+public class MainFragment extends BaseFragment implements UserListView {
+
+    @Inject
+    UserListPresenter userListPresenter;
 
     /**
      * BaseFragment
      */
     public MainFragment() {
-        super(R.layout.activity_main, R.menu.menu_main);
+        super(R.layout.fragment_user_list, R.menu.menu_main);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        this.initialize();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.userListPresenter.resume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        this.userListPresenter.pause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.userListPresenter.destroy();
+    }
+
+    private void initialize() {
+        getComponent(UserComponent.class).inject(this);
+        userListPresenter.setView(this);
+    }
+
+    @Override
+    public void showUserList(Collection<UserModel> userModelCollection) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showRetry() {
+
+    }
+
+    @Override
+    public void hideRetry() {
+
+    }
+
+    @Override
+    public void showError(String message) {
+
+    }
+
+    @Override
+    public Context getAppContext() {
+        return getActivity().getApplicationContext();
     }
 }

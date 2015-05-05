@@ -17,7 +17,7 @@
 
 package com.addhen.android.raiburari.di.module;
 
-import com.addhen.android.raiburari.di.qualifier.ForActivity;
+import com.addhen.android.raiburari.di.qualifier.ActivityScope;
 
 import android.app.Activity;
 
@@ -25,7 +25,10 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * A module to wrap the Activity state and expose it to the graph.
+ * Dependency injection module used to provide activity scope context and satisfy activity/fragment
+ * dependency needs
+ *
+ * @author Henry Addo
  */
 @Module
 public class ActivityModule {
@@ -40,7 +43,7 @@ public class ActivityModule {
      * Expose the activity to dependents in the graph.
      */
     @Provides
-    @ForActivity
+    @ActivityScope
     Activity activity() {
         return this.activity;
     }

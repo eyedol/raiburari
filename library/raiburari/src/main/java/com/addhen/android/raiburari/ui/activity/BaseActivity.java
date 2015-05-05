@@ -204,7 +204,9 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected void setElevationToolBar(float elevation) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getActionBarToolbar().setElevation(elevation);
+            if (getActionBarToolbar() != null) {
+                getActionBarToolbar().setElevation(elevation);
+            }
         }
     }
 
