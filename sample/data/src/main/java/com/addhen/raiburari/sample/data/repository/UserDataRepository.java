@@ -69,7 +69,7 @@ public class UserDataRepository implements UserRepository {
             UserEntityDataMapper userEntityDataMapper) {
         this.userDataStoreFactory = dataStoreFactory;
         this.userEntityDataMapper = userEntityDataMapper;
-        userDataStore = this.userDataStoreFactory.createDummyDataSource();
+        userDataStore = userDataStoreFactory.createDummyDataSource();
     }
 
     @Override

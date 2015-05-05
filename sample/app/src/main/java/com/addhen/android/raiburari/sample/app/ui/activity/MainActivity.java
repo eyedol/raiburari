@@ -36,11 +36,11 @@ public class MainActivity extends BaseActivity implements HasComponent<UserCompo
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initializeInjector();
+        injector();
     }
 
 
-    private void initializeInjector() {
+    private void injector() {
 
         this.userComponent = DaggerUserComponent.builder()
                 .applicationComponent(getApplicationComponent())

@@ -63,6 +63,7 @@ public class UserListPresenter extends DefaultSubscriber<List<User>> implements 
 
     @Override
     public void resume() {
+        initialize();
     }
 
     @Override
@@ -112,7 +113,7 @@ public class UserListPresenter extends DefaultSubscriber<List<User>> implements 
         this.viewListView.showError(errorMessage);
     }
 
-    private void showUsersCollectionInView(Collection<User> usersCollection) {
+    private void showUsersCollectionInView(List<User> usersCollection) {
         final Collection<UserModel> userModelsCollection =
                 this.userModelDataMapper.map(usersCollection);
         this.viewListView.showUserList(userModelsCollection);

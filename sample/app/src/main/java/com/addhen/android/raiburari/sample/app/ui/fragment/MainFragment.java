@@ -21,20 +21,24 @@ import com.addhen.android.raiburari.sample.app.R;
 import com.addhen.android.raiburari.sample.app.di.components.UserComponent;
 import com.addhen.android.raiburari.sample.app.model.UserModel;
 import com.addhen.android.raiburari.sample.app.presenter.UserListPresenter;
+import com.addhen.android.raiburari.sample.app.ui.adapter.UserAdapter;
 import com.addhen.android.raiburari.sample.app.ui.view.UserListView;
-import com.addhen.android.raiburari.ui.fragment.BaseFragment;
+import com.addhen.android.raiburari.ui.fragment.BaseRecyclerViewFragment;
 
 import android.content.Context;
 import android.os.Bundle;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.inject.Inject;
 
 /**
  * @author Henry Addo
  */
-public class MainFragment extends BaseFragment implements UserListView {
+public class MainFragment extends BaseRecyclerViewFragment<UserModel, UserAdapter>
+        implements UserListView {
 
     @Inject
     UserListPresenter userListPresenter;
@@ -43,7 +47,7 @@ public class MainFragment extends BaseFragment implements UserListView {
      * BaseFragment
      */
     public MainFragment() {
-        super(R.layout.fragment_user_list, R.menu.menu_main);
+        super(UserAdapter.class, R.layout.list_users, R.menu.menu_main);
     }
 
     @Override
@@ -73,11 +77,15 @@ public class MainFragment extends BaseFragment implements UserListView {
     private void initialize() {
         getComponent(UserComponent.class).inject(this);
         userListPresenter.setView(this);
+        mBloatedRecyclerView.addItemDividerDecoration(getActivity());
     }
 
     @Override
     public void showUserList(Collection<UserModel> userModelCollection) {
-
+        if (userModelCollection != null) {
+            List userList = new ArrayList(userModelCollection);
+            mRecyclerViewAdapter.setItems(userList);
+        }
     }
 
     @Override

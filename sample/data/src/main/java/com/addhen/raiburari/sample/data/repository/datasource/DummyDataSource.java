@@ -19,9 +19,11 @@ package com.addhen.raiburari.sample.data.repository.datasource;
 
 import com.addhen.raiburari.sample.data.entity.UserEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
+import rx.Subscriber;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
@@ -30,7 +32,35 @@ public class DummyDataSource implements UserDataSource {
 
     @Override
     public Observable<List<UserEntity>> getUserEntityList() {
-        return null;
+        return Observable.create(new Observable.OnSubscribe<List<UserEntity>>() {
+            @Override
+            public void call(Subscriber<? super List<UserEntity>> subscriber) {
+                UserEntity userEntity = new UserEntity();
+                userEntity._id = 1l;
+                userEntity.description = "Hey there";
+                userEntity.fullName = "Henry Addo";
+                userEntity.email = "addhenemail";
+
+                UserEntity userEntity2 = new UserEntity();
+                userEntity2._id = 2l;
+                userEntity2.email = "emailaddress";
+                userEntity2.description = "Hey there";
+                userEntity2.fullName = "Ebony Mathis";
+
+                UserEntity userEntity3 = new UserEntity();
+                userEntity3._id = 3l;
+                userEntity3.email = "emailaddress";
+                userEntity3.description = "Hey there";
+                userEntity3.fullName = "FindReels";
+
+                List<UserEntity> listUser = new ArrayList<>();
+                listUser.add(userEntity);
+                listUser.add(userEntity2);
+                listUser.add(userEntity3);
+                subscriber.onNext(listUser);
+                subscriber.onCompleted();
+            }
+        });
     }
 
     @Override

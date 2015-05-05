@@ -30,7 +30,7 @@ import android.widget.TextView;
 /**
  * @author Henry Addo
  */
-public class UsersAdapter extends BaseRecyclerViewAdapter<UserModel> {
+public class UserAdapter extends BaseRecyclerViewAdapter<UserModel> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
@@ -40,7 +40,7 @@ public class UsersAdapter extends BaseRecyclerViewAdapter<UserModel> {
 
     @Override
     public int getAdapterItemCount() {
-        return getItemCount();
+        return getItems().size();
     }
 
     @Override
@@ -59,7 +59,6 @@ public class UsersAdapter extends BaseRecyclerViewAdapter<UserModel> {
             super(convertView);
             title = (TextView) convertView.findViewById(R.id.title);
             email = (TextView) convertView.findViewById(R.id.email);
-
         }
 
     }
