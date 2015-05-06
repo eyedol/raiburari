@@ -22,7 +22,7 @@ package com.addhen.android.raiburari.data.entity;
  *
  * @author Henry Addo
  */
-public abstract class Entity {
+public abstract class DataEntity {
 
     public Long _id;
 }

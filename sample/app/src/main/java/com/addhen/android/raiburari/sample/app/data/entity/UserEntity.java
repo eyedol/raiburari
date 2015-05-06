@@ -17,12 +17,12 @@
 
 package com.addhen.android.raiburari.sample.app.data.entity;
 
-import com.addhen.android.raiburari.data.entity.Entity;
+import com.addhen.android.raiburari.data.entity.DataEntity;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class UserEntity extends Entity {
+public class UserEntity extends DataEntity {
 
     public String fullName;
 
