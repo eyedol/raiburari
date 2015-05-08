@@ -17,13 +17,13 @@
 
 package com.addhen.android.raiburari.sample.app.presentation.ui.fragment;
 
+import com.addhen.android.raiburari.presentation.ui.fragment.BaseRecyclerViewFragment;
 import com.addhen.android.raiburari.sample.app.R;
 import com.addhen.android.raiburari.sample.app.presentation.di.components.UserComponent;
 import com.addhen.android.raiburari.sample.app.presentation.model.UserModel;
 import com.addhen.android.raiburari.sample.app.presentation.presenter.UserListPresenter;
 import com.addhen.android.raiburari.sample.app.presentation.ui.adapter.UserAdapter;
 import com.addhen.android.raiburari.sample.app.presentation.ui.view.UserListView;
-import com.addhen.android.raiburari.presentation.ui.fragment.BaseRecyclerViewFragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -42,6 +42,8 @@ public class MainFragment extends BaseRecyclerViewFragment<UserModel, UserAdapte
 
     @Inject
     UserListPresenter userListPresenter;
+
+    private static MainFragment mMainFragment;
 
     /**
      * BaseFragment
@@ -73,6 +75,14 @@ public class MainFragment extends BaseRecyclerViewFragment<UserModel, UserAdapte
         super.onDestroy();
         this.userListPresenter.destroy();
     }
+
+    public static MainFragment newInstance() {
+        if (mMainFragment == null) {
+            mMainFragment = new MainFragment();
+        }
+        return mMainFragment;
+    }
+
 
     private void initialize() {
         getComponent(UserComponent.class).inject(this);

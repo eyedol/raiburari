@@ -21,7 +21,6 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>
         <item name="android:background">@color/color_primary</item>
-        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="ViewPager">
@@ -646,4 +645,21 @@
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:paddingBottom">@dimen/content_padding</item>
     </style>
+    <style name="ListView.NavDrawer">
+
+    </style>
+
+    <!-- Toolbar ActionBar -->
+    <style name="ActionBarThemeOverlay">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="colorControlNormal">?actionBarIconColor</item>
+        <item name="colorControlHighlight">@color/color_accent</item>
+    </style>
+
+    <style name="TextAppearance.ActionBar.Title"
+           parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="ActionBarPopupThemeOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 </resources>

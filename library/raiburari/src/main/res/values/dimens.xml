@@ -32,4 +32,7 @@
     <dimen name="navdrawer_user_profile_image_size">40dp</dimen>
     <dimen name="navdrawer_user_account_height">180dp</dimen>
     <dimen name="navdrawer_width">260dp</dimen>
+
+    <!-- Toolbar elevation -->
+    <dimen name="headerbar_elevation">4dp</dimen>
 </resources>

@@ -75,6 +75,12 @@ public class Utility {
         return context.getPackageManager().hasSystemFeature("com.google.android.tv");
     }
 
+    public static boolean isLollipopOrHigher() {
+        // Hardcode lollipop version number because devices lower that lollipop don't have
+        // the lollipop's version number
+        return Build.VERSION.SDK_INT >= 21;
+    }
+
     /**
      * Checks if {@link Environment}.MEDIA_MOUNTED is returned by {@code getExternalStorageState()}
      * and therefore external storage is read- and writeable.

@@ -75,7 +75,6 @@
                     android:layout_marginStart="16dp"
                     android:layout_toEndOf="@+id/iconFooter"
                     android:layout_toRightOf="@+id/iconFooter"
-                    android:text="@string/clear"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_size_medium"/>
         </RelativeLayout>

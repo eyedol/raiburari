@@ -51,6 +51,7 @@
     <color name="body_text_1">#de000000</color>
     <color name="body_text_1_inverse">#deffffff</color>
     <color name="body_text_2_inverse">#8affffff</color>
+    <color name="color_control_highlight">#3fff</color>
 
     <color name="user_profile_background_tint_color">#6000</color>
     <color name="user_profile_default_background_color">@color/color_primary</color>

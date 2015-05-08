@@ -27,11 +27,13 @@ import com.addhen.android.raiburari.presentation.state.ApplicationState;
 import com.addhen.android.raiburari.presentation.ui.adapter.NavDrawerAdapter;
 import com.addhen.android.raiburari.presentation.ui.listener.NavDrawerListener;
 import com.addhen.android.raiburari.presentation.ui.widget.BezelImageView;
+import com.addhen.android.raiburari.presentation.util.Utility;
 import com.squareup.picasso.Picasso;
 
 import android.app.Activity;
 import android.content.res.Configuration;
-import android.os.Build;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -146,10 +148,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     // Show user profile
     protected View mUserProfileLayout;
 
-    // Hardcode lollipop version number because devices lower that lollipop don't have
-    // the lollipop's version number
-    private static final int LOLLIPOP = 21;
-
     /**
      * Initialize nav drawer menu items.
      */
@@ -208,6 +206,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 
             mRelativeDrawer = (FrameLayout) this.findViewById(R.id.relativeDrawer);
 
+            if (Utility.isLollipopOrHigher()) {
+                Resources.Theme theme = this.getTheme();
+                TypedArray typedArray = theme
+                        .obtainStyledAttributes(new int[]{android.R.attr.colorPrimary});
+                mDrawerLayout.setStatusBarBackground(typedArray.getResourceId(0, 0));
+                setElevationToolBar(15);
+            }
+
             if (mList != null) {
                 setupNavDrawer(savedInstanceState);
             }
@@ -222,7 +228,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * Sets the base elevation of this view, in pixels.
      */
     protected void setElevationToolBar(float elevation) {
-        if (Build.VERSION.SDK_INT >= LOLLIPOP) {
+        if (Utility.isLollipopOrHigher()) {
             if (getActionBarToolbar() != null) {
                 getActionBarToolbar().setElevation(elevation);
             }
@@ -393,6 +399,20 @@ public abstract class BaseActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = this.getSupportFragmentManager()
                 .beginTransaction();
         fragmentTransaction.add(containerViewId, fragment, tag);
+        fragmentTransaction.commit();
+    }
+
+    /**
+     * Adds a {@link Fragment} to this activity's layout.
+     *
+     * @param containerViewId The container view where to add the fragment.
+     * @param fragment        The fragment to be added.
+     * @param tag             The tag for the fragment
+     */
+    protected void replaceFragment(int containerViewId, Fragment fragment, String tag) {
+        FragmentTransaction fragmentTransaction = this.getSupportFragmentManager()
+                .beginTransaction();
+        fragmentTransaction.replace(containerViewId, fragment, tag);
         fragmentTransaction.commit();
     }
 

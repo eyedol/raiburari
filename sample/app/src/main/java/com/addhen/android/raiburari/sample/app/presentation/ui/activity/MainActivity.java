@@ -24,6 +24,7 @@ import com.addhen.android.raiburari.presentation.ui.listener.NavDrawerListener;
 import com.addhen.android.raiburari.sample.app.R;
 import com.addhen.android.raiburari.sample.app.presentation.di.components.DaggerUserComponent;
 import com.addhen.android.raiburari.sample.app.presentation.di.components.UserComponent;
+import com.addhen.android.raiburari.sample.app.presentation.ui.fragment.MainFragment;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -46,6 +47,7 @@ public class MainActivity extends BaseActivity implements HasComponent<UserCompo
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injector();
+        addFragment(R.id.container, MainFragment.newInstance(), "list");
     }
 
     @Override
