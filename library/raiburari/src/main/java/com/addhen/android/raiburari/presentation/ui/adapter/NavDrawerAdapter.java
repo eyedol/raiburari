@@ -31,6 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,16 +55,26 @@ public class NavDrawerAdapter extends BaseAdapter {
 
     private List<NavDrawerItem> mNavDrawerItems;
 
-    public NavDrawerAdapter(Context context, List<NavDrawerItem> navDrawerItems,
-            boolean removeAlpha, List<Integer> extra) {
+    public NavDrawerAdapter(Context context) {
         mcontext = context;
-        mNavDrawerItems = navDrawerItems;
+        mNavDrawerItems = new ArrayList<>();
+    }
+
+    public void setNavDrawerItems(List<NavDrawerItem> navDrawerItems,
+            boolean removeAlpha, List<Integer> extra) {
+        mNavDrawerItems.clear();
+        mNavDrawerItems.addAll(navDrawerItems);
         mRemoveAlpha = removeAlpha;
         mNewSelector = extra.get(0);
         mColorDefault = extra.get(1);
         mColorIcon = extra.get(2);
         mColorName = extra.get(3);
         mColorSeparator = extra.get(4);
+        notifyDataSetChanged();
+    }
+
+    public void setNavDrawerItems(List<NavDrawerItem> navDrawerItems, List<Integer> extra) {
+        setNavDrawerItems(navDrawerItems, false, extra);
     }
 
     @Override
@@ -119,6 +130,7 @@ public class NavDrawerAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(mcontext)
                     .inflate(R.layout.navdrawer_item_layout, parent, false);
             widget = new Widgets(convertView);
+            convertView.setTag(widget);
         } else {
             widget = (Widgets) convertView.getTag();
         }

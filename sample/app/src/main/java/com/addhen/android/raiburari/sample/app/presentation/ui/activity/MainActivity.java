@@ -18,20 +18,29 @@
 package com.addhen.android.raiburari.sample.app.presentation.ui.activity;
 
 import com.addhen.android.raiburari.presentation.di.HasComponent;
+import com.addhen.android.raiburari.presentation.model.NavDrawerItem;
+import com.addhen.android.raiburari.presentation.ui.activity.BaseActivity;
+import com.addhen.android.raiburari.presentation.ui.listener.NavDrawerListener;
 import com.addhen.android.raiburari.sample.app.R;
 import com.addhen.android.raiburari.sample.app.presentation.di.components.DaggerUserComponent;
 import com.addhen.android.raiburari.sample.app.presentation.di.components.UserComponent;
-import com.addhen.android.raiburari.presentation.ui.activity.BaseActivity;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.View;
 
-public class MainActivity extends BaseActivity implements HasComponent<UserComponent> {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends BaseActivity implements HasComponent<UserComponent>,
+        NavDrawerListener {
 
     private UserComponent userComponent;
 
     public MainActivity() {
-        super(R.layout.activity_main, R.menu.menu_main);
+        super(R.layout.activity_navdrawer, R.menu.menu_main, R.id.drawerLayout);
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,6 +48,18 @@ public class MainActivity extends BaseActivity implements HasComponent<UserCompo
         injector();
     }
 
+    @Override
+    protected void initNavDrawerItems(Bundle savedInstanceState) {
+        setNavDrawerListener(this);
+        NavDrawerItem navDrawerItem = new NavDrawerItem("About", R.drawable.ic_action_add, false,
+                0);
+        List<NavDrawerItem> itemList = new ArrayList<>();
+        itemList.add(navDrawerItem);
+        setNavDrawerAdapterItems(itemList);
+        if (savedInstanceState == null) {
+            setNavDrawerDefaultStartPosition(0);
+        }
+    }
 
     private void injector() {
 
@@ -51,5 +72,25 @@ public class MainActivity extends BaseActivity implements HasComponent<UserCompo
     @Override
     public UserComponent getComponent() {
         return userComponent;
+    }
+
+    @Override
+    public void onNavDrawerItemClick(int position, int layoutContainerId) {
+
+    }
+
+    @Override
+    public void onPrepareOptionsMenusNavDrawer(Menu menu, int position, boolean visible) {
+
+    }
+
+    @Override
+    public void onNavDrawerFooterClick(View v) {
+
+    }
+
+    @Override
+    public void onNavDrawerUserAvatarClick(View v) {
+
     }
 }
