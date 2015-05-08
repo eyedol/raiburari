@@ -49,7 +49,7 @@ public class UserProfile extends Model {
     @Override
     public String toString() {
         return "UserProfile{" +
-                "id='" + getId() + '\'' +
+                "id='" + _id + '\'' +
                 "mFullName='" + mFullName + '\'' +
                 ", mUsername='" + mUsername + '\'' +
                 ", mAvatar='" + mAvatar + '\'' +

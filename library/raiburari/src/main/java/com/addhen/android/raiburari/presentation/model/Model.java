@@ -24,23 +24,5 @@ package com.addhen.android.raiburari.presentation.model;
  */
 public abstract class Model {
 
-    private Long _id;
-
-    /**
-     * Gets the model ID
-     *
-     * @return The model ID
-     */
-    public Long getId() {
-        return _id;
-    }
-
-    /**
-     * Sets the model ID
-     *
-     * @param id The model ID to be set
-     */
-    public void setId(Long id) {
-        _id = id;
-    }
+    public Long _id;
 }
