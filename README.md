@@ -1,15 +1,16 @@
 Raiburari [ ![Download](https://api.bintray.com/packages/eyedol/maven/Raiburari/images/download.svg) ](https://bintray.com/eyedol/maven/Raiburari/_latestVersion)
 =========
 
-This is resuable library for quickly building Android apps. Heavily based on the Clean Architecture
+This is a resuable library for quickly building Android apps.
 
 Setup
 =====
+You can use [gradleplease](http://gradleplease.appspot.com/#raiburari) to find the latest.
 Gradle
 ------
 ```groovy
    dependencies {
-       compile 'com.addhen.android:raiburari:<latest_version>@aar'
+       compile 'com.addhen.android:raiburari:<latest_version>'
    }
 ```
 
@@ -20,7 +21,6 @@ Maven
   <groupId>com.addhen.android</groupId>
   <artifactId>raiburari</artifactId>
   <version>LATEST</version>
-  <type>aar</type>
 </dependency>
 ```
 
