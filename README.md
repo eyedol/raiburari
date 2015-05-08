@@ -6,6 +6,7 @@ This is a resuable library for quickly building Android apps.
 Setup
 =====
 You can use [gradleplease](http://gradleplease.appspot.com/#raiburari) to find the latest.
+
 Gradle
 ------
 ```groovy
