@@ -22,7 +22,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.2.2'
+        classpath 'com.android.tools.build:gradle:1.2.3'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
         classpath 'com.github.dcendents:android-maven-plugin:1.2'
         classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.1"
@@ -36,8 +36,8 @@ task wrapper(type: Wrapper) {
 
 allprojects {
     ext {
-        androidVersionCode = 080
-        androidVersionName = "0.8.0"
+        androidVersionCode = 071
+        androidVersionName = "0.7.1"
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
     }
 }
