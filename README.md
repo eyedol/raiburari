@@ -1,7 +1,7 @@
 Raiburari [ ![Download](https://api.bintray.com/packages/eyedol/maven/Raiburari/images/download.svg) ](https://bintray.com/eyedol/maven/Raiburari/_latestVersion)
 =========
 
-This is a resuable library for quickly building Android apps.
+This is a resuable library to make it easy to write Android apps.
 
 Setup
 =====
