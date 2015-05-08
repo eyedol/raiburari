@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/content_padding"
             android:paddingRight="@dimen/content_padding"
-            android:paddingTop="@dimen/content_padding">
+            android:paddingTop="@dimen/navdrawer_profile_pic_top_padding">
 
         <com.addhen.android.raiburari.presentation.ui.widget.BezelImageView
                 android:id="@+id/anonymous_user_image"

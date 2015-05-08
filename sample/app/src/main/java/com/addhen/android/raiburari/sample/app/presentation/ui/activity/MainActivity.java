@@ -39,7 +39,7 @@ public class MainActivity extends BaseActivity implements HasComponent<UserCompo
     private UserComponent userComponent;
 
     public MainActivity() {
-        super(R.layout.activity_navdrawer, R.menu.menu_main, R.id.drawerLayout);
+        super(R.layout.activity_navdrawer, 0, R.id.drawerLayout);
     }
 
 

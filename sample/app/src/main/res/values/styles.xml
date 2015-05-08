@@ -1,5 +1,14 @@
 <resources>
 
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorControlHighlight">?colorAccent</item>
+        <item name="colorAccent">@color/color_accent</item>
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <!-- Base application theme. -->
     <style name="AppTheme.ProgressBar">
         <item name="android:layout_width">wrap_content</item>
@@ -15,11 +24,5 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:layout_gravity">center</item>
-    </style>
-
-    <style name="Toolbar">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">?attr/actionBarSize</item>
-        <item name="android:background">@color/color_primary</item>
     </style>
 </resources>

@@ -206,6 +206,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
             mRelativeDrawer = (FrameLayout) this.findViewById(R.id.relativeDrawer);
 
+            if (mToolbar != null) {
+                setSupportActionBar(mToolbar);
+            }
+
             if (Utility.isLollipopOrHigher()) {
                 Resources.Theme theme = this.getTheme();
                 TypedArray typedArray = theme
@@ -269,11 +273,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onPause() {
         mApplicationState.unregisterEvent(this);
         super.onPause();
-    }
-
-    @Override
-    public void setContentView(int layoutResID) {
-        super.setContentView(layoutResID);
     }
 
     protected void setActionBarTitle(String title) {
