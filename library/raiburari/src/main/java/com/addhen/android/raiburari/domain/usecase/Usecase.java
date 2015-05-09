@@ -27,7 +27,7 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.Subscriptions;
 
 /**
- * Base class to be extended by all usecases
+ * Base class to be extended by all Usecases
  *
  * @author Henry Addo
  */
@@ -54,8 +54,7 @@ public abstract class Usecase {
     /**
      * Executes the current use case.
      *
-     * @param UseCaseSubscriber The guy who will be listen to the observable build with {@link
-     *                          #buildUseCaseObservable()}.
+     * @param UseCaseSubscriber Usecase observable {@link #buildUseCaseObservable()}.
      */
     @SuppressWarnings("unchecked")
     public void execute(Subscriber UseCaseSubscriber) {

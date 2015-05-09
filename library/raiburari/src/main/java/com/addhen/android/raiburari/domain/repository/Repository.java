@@ -42,4 +42,25 @@ public interface Repository<E> {
      * @param entityId The entity id used to retrieve the entity data.
      */
     Observable<E> getEntity(final int entityId);
+
+    /**
+     * Add an {@link Entity} to a storage.
+     *
+     * @param entity The entity to be added.
+     */
+    Observable<Long> addEntity(E entity);
+
+    /**
+     * Update an existing {@link Entity} in a storage.
+     *
+     * @param entity The entity to be updated.
+     */
+    Observable<Long> updateEntity(E entity);
+
+    /**
+     * Delete an existing {@link Entity} in a storage.
+     *
+     * @param id The entity's id to be deleted.
+     */
+    Observable<Long> deleteEntity(Long id);
 }
