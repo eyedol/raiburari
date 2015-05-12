@@ -64,7 +64,7 @@ public class DummyDataSource implements UserDataSource {
     }
 
     @Override
-    public Observable<UserEntity> getUserEntityDetails(int userId) {
+    public Observable<UserEntity> getUserEntityDetails(Long userId) {
         return null;
     }
 }

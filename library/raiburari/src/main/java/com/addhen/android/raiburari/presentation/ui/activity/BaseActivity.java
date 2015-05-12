@@ -644,8 +644,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    ;
-
     /**
      * Information footer list item
      *
@@ -687,8 +685,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             mIconFooter.setImageResource(icon);
         }
     }
-
-    ;
 
     /**
      * Information footer list item

@@ -41,7 +41,7 @@ public interface Repository<E> {
      *
      * @param entityId The entity id used to retrieve the entity data.
      */
-    Observable<E> getEntity(final int entityId);
+    Observable<E> getEntity(final Long entityId);
 
     /**
      * Add an {@link Entity} to a storage.

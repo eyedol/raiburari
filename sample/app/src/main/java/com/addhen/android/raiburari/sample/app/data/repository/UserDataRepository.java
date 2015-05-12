@@ -78,7 +78,22 @@ public class UserDataRepository implements UserRepository {
     }
 
     @Override
-    public Observable<User> getEntity(int userId) {
+    public Observable<Long> addEntity(User entity) {
+        return null;
+    }
+
+    @Override
+    public Observable<Long> updateEntity(User entity) {
+        return null;
+    }
+
+    @Override
+    public Observable<Long> deleteEntity(Long id) {
+        return null;
+    }
+
+    @Override
+    public Observable<User> getEntity(Long userId) {
         return userDataStore.getUserEntityDetails(userId).map(userDetailsEntityMapper);
     }
 

@@ -53,11 +53,16 @@ public class MainActivity extends BaseActivity implements HasComponent<UserCompo
     @Override
     protected void initNavDrawerItems(Bundle savedInstanceState) {
         setNavDrawerListener(this);
-        NavDrawerItem navDrawerItem = new NavDrawerItem("About", R.drawable.ic_action_add, false,
+        NavDrawerItem navDrawerItem2 = new NavDrawerItem("About", R.drawable.ic_action_add, false,
                 0);
         List<NavDrawerItem> itemList = new ArrayList<>();
-        itemList.add(navDrawerItem);
+        itemList.add(navDrawerItem2);
+        setColorDefaultItemNavigation(R.color.navdrawer_background);
+        setColorIconItemNavigation(R.color.navdrawer_icon_tint);
+        setColorSelectedItemNavigation(R.color.navdrawer_text_color);
         setNavDrawerAdapterItems(itemList);
+
+        setNavDrawerFooterItem("Settings", R.drawable.abc_btn_check_material);
         if (savedInstanceState == null) {
             setNavDrawerDefaultStartPosition(0);
         }

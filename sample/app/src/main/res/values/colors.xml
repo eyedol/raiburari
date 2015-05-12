@@ -8,4 +8,11 @@
     <color name="text_light">#727272</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
+
+    <!-- NavDrawer -->
+    <color name="navdrawer_background">#ffffffff</color>
+    <color name="navdrawer_text_color">@color/body_text_1</color>
+    <color name="navdrawer_text_color_selected">@color/color_primary</color>
+    <color name="navdrawer_icon_tint">#888</color>
+    <color name="navdrawer_icon_tint_selected">@color/color_primary</color>
 </resources>

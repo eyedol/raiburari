@@ -38,5 +38,5 @@ public interface UserDataSource {
      *
      * @param userId The id to retrieve user data.
      */
-    Observable<UserEntity> getUserEntityDetails(final int userId);
+    Observable<UserEntity> getUserEntityDetails(Long userId);
 }
