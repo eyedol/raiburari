@@ -25,8 +25,10 @@ import com.addhen.android.raiburari.sample.app.R;
 import com.addhen.android.raiburari.sample.app.presentation.di.components.DaggerUserComponent;
 import com.addhen.android.raiburari.sample.app.presentation.di.components.UserComponent;
 import com.addhen.android.raiburari.sample.app.presentation.ui.fragment.MainFragment;
+import com.addhen.android.raiburari.sample.app.presentation.ui.fragment.MapFragment;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.View;
 
@@ -38,6 +40,10 @@ public class MainActivity extends BaseActivity implements HasComponent<UserCompo
 
     private UserComponent userComponent;
 
+    private static int HOME_FRAGMENT_POSITION = 0;
+
+    private static int MAP_FRAGMENT_POSITION = 1;
+
     public MainActivity() {
         super(R.layout.activity_navdrawer, 0, R.id.drawerLayout);
     }
@@ -47,16 +53,20 @@ public class MainActivity extends BaseActivity implements HasComponent<UserCompo
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injector();
-        addFragment(R.id.container, MainFragment.newInstance(), "list");
+        //addFragment(R.id.container, MainFragment.newInstance());
     }
 
     @Override
     protected void initNavDrawerItems(Bundle savedInstanceState) {
         setNavDrawerListener(this);
-        NavDrawerItem navDrawerItem2 = new NavDrawerItem("About", R.drawable.ic_action_add, false,
-                0);
+        NavDrawerItem homeNavDrawerItem = new NavDrawerItem("Home", R.drawable.ic_action_add, false,
+                HOME_FRAGMENT_POSITION);
+        NavDrawerItem mapNavDrawerItem = new NavDrawerItem("Map", R.drawable.ic_action_add, false,
+                MAP_FRAGMENT_POSITION);
         List<NavDrawerItem> itemList = new ArrayList<>();
-        itemList.add(navDrawerItem2);
+        itemList.add(homeNavDrawerItem);
+        itemList.add(mapNavDrawerItem);
+
         setColorDefaultItemNavigation(R.color.navdrawer_background);
         setColorIconItemNavigation(R.color.navdrawer_icon_tint);
         setColorSelectedItemNavigation(R.color.navdrawer_text_color);
@@ -83,6 +93,14 @@ public class MainActivity extends BaseActivity implements HasComponent<UserCompo
 
     @Override
     public void onNavDrawerItemClick(int position, int layoutContainerId) {
+        Fragment fragment;
+        if (position == MAP_FRAGMENT_POSITION) {
+            fragment = MapFragment.newInstance();
+            replaceFragment(layoutContainerId, fragment, "map");
+        } else {
+            fragment = MainFragment.newInstance();
+            replaceFragment(layoutContainerId, fragment, "list");
+        }
 
     }
 

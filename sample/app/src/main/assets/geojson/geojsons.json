@@ -1,0 +1,68 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "GeometryCollection",
+        "geometries": [
+          {
+            "type": "Point",
+            "coordinates": [
+              140.876044,
+              38.321012
+            ]
+          }
+        ]
+      },
+      "properties": {
+        "title": "eyedol's Home",
+        "description": "Sendai, Japan",
+        "id": 41,
+        "url": "http://whereintheworldis-ushahidi-api.herokuapp.com/api/v2/posts/41"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "GeometryCollection",
+        "geometries": [
+          {
+            "type": "Point",
+            "coordinates": [
+              -77.036646,
+              38.894955
+            ]
+          }
+        ]
+      },
+      "properties": {
+        "title": "Snowing DC",
+        "description": "IFES training in cold DC",
+        "id": 131,
+        "url": "http://whereintheworldis-ushahidi-api.herokuapp.com/api/v2/posts/131"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "GeometryCollection",
+        "geometries": [
+          {
+            "type": "Point",
+            "coordinates": [
+              174.635882,
+              -36.872569
+            ]
+          }
+        ]
+      },
+      "properties": {
+        "title": "Robbie's Home",
+        "description": "Auckland, New Zealand",
+        "id": 1,
+        "url": "http://whereintheworldis-ushahidi-api.herokuapp.com/api/v2/posts/1"
+      }
+    }
+  ]
+}

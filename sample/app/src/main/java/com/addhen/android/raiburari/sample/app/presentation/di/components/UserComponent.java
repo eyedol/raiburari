@@ -23,9 +23,11 @@ import com.addhen.android.raiburari.presentation.di.module.ActivityModule;
 import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
 import com.addhen.android.raiburari.sample.app.domain.repository.UserRepository;
 import com.addhen.android.raiburari.sample.app.presentation.di.modules.UserModule;
+import com.addhen.android.raiburari.sample.app.presentation.presenter.MapPresenter;
 import com.addhen.android.raiburari.sample.app.presentation.presenter.UserListPresenter;
 import com.addhen.android.raiburari.sample.app.presentation.ui.activity.MainActivity;
 import com.addhen.android.raiburari.sample.app.presentation.ui.fragment.MainFragment;
+import com.addhen.android.raiburari.sample.app.presentation.ui.fragment.MapFragment;
 
 import dagger.Component;
 
@@ -41,7 +43,11 @@ public interface UserComponent extends ActivityComponent {
 
     void inject(MainFragment mainFragment);
 
+    void inject(MapFragment mapFragment);
+
     UserListPresenter userListPresenter();
 
     UserRepository userRepository();
+
+    MapPresenter mapPresenter();
 }

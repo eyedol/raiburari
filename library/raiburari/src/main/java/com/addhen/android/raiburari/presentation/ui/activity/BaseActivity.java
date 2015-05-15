@@ -406,12 +406,38 @@ public abstract class BaseActivity extends AppCompatActivity {
      *
      * @param containerViewId The container view where to add the fragment.
      * @param fragment        The fragment to be added.
+     */
+    protected void addFragment(int containerViewId, Fragment fragment) {
+        FragmentTransaction fragmentTransaction = this.getSupportFragmentManager()
+                .beginTransaction();
+        fragmentTransaction.add(containerViewId, fragment);
+        fragmentTransaction.commit();
+    }
+
+    /**
+     * Adds a {@link Fragment} to this activity's layout.
+     *
+     * @param containerViewId The container view where to add the fragment.
+     * @param fragment        The fragment to be added.
      * @param tag             The tag for the fragment
      */
     protected void replaceFragment(int containerViewId, Fragment fragment, String tag) {
         FragmentTransaction fragmentTransaction = this.getSupportFragmentManager()
                 .beginTransaction();
         fragmentTransaction.replace(containerViewId, fragment, tag);
+        fragmentTransaction.commit();
+    }
+
+    /**
+     * Adds a {@link Fragment} to this activity's layout.
+     *
+     * @param containerViewId The container view where to add the fragment.
+     * @param fragment        The fragment to be added.
+     */
+    protected void replaceFragment(int containerViewId, Fragment fragment) {
+        FragmentTransaction fragmentTransaction = this.getSupportFragmentManager()
+                .beginTransaction();
+        fragmentTransaction.replace(containerViewId, fragment);
         fragmentTransaction.commit();
     }
 

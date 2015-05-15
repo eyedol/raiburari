@@ -40,4 +40,9 @@ allprojects {
         androidVersionName = "1.0.0"
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    repositories {
+        jcenter()
+        maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
+    }
 }
