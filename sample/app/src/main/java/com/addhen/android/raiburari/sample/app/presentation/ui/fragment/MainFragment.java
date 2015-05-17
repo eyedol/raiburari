@@ -16,7 +16,10 @@
 
 package com.addhen.android.raiburari.sample.app.presentation.ui.fragment;
 
+import com.addhen.android.raiburari.presentation.ui.adapter.ContextMenuAdapter;
 import com.addhen.android.raiburari.presentation.ui.fragment.BaseRecyclerViewFragment;
+import com.addhen.android.raiburari.presentation.ui.listener.RecyclerViewItemTouchListenerAdapter;
+import com.addhen.android.raiburari.presentation.ui.widget.ContextMenu;
 import com.addhen.android.raiburari.sample.app.R;
 import com.addhen.android.raiburari.sample.app.presentation.di.components.UserComponent;
 import com.addhen.android.raiburari.sample.app.presentation.model.UserModel;
@@ -26,6 +29,9 @@ import com.addhen.android.raiburari.sample.app.presentation.ui.view.UserListView
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.AdapterView;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,10 +43,15 @@ import javax.inject.Inject;
  * @author Henry Addo
  */
 public class MainFragment extends BaseRecyclerViewFragment<UserModel, UserAdapter>
-        implements UserListView {
+        implements UserListView,
+        RecyclerViewItemTouchListenerAdapter.RecyclerViewOnItemClickListener {
 
     @Inject
     UserListPresenter userListPresenter;
+
+    ContextMenu mContextMenu;
+
+    UserAdapter mUserAdapter;
 
     private static MainFragment mMainFragment;
 
@@ -86,7 +97,23 @@ public class MainFragment extends BaseRecyclerViewFragment<UserModel, UserAdapte
     private void initialize() {
         getComponent(UserComponent.class).inject(this);
         userListPresenter.setView(this);
+        RecyclerViewItemTouchListenerAdapter itemTouchListenerAdapter
+                = new RecyclerViewItemTouchListenerAdapter(
+                mBloatedRecyclerView.recyclerView, this);
         mBloatedRecyclerView.addItemDividerDecoration(getActivity());
+        mBloatedRecyclerView.recyclerView.addOnItemTouchListener(itemTouchListenerAdapter);
+        mUserAdapter = mRecyclerViewAdapter;
+        mUserAdapter.setOnUserItemClickListener(new UserAdapter.OnUserItemClickListener() {
+            @Override
+            public void onMoreClick(View v, int position) {
+                if (mContextMenu == null) {
+                    manageContextMenu(v, position);
+                } else {
+                    mContextMenu.hideContextMenu();
+                    mContextMenu = null;
+                }
+            }
+        });
     }
 
     @Override
@@ -125,5 +152,39 @@ public class MainFragment extends BaseRecyclerViewFragment<UserModel, UserAdapte
     @Override
     public Context getAppContext() {
         return getActivity().getApplicationContext();
+    }
+
+    @Override
+    public void onItemClick(RecyclerView parent, View clickedView, int position) {
+
+    }
+
+    @Override
+    public void onItemLongClick(RecyclerView parent, View clickedView, int position) {
+        // DO nothing
+    }
+
+    public void manageContextMenu(View v, int position) {
+        // Set up context menu
+        ContextMenuAdapter.ContextMenuItem contextMenuItem = new ContextMenuAdapter.ContextMenuItem(
+                "Edit");
+        ContextMenuAdapter.ContextMenuItem deleteItem = new ContextMenuAdapter.ContextMenuItem(
+                R.drawable.ic_action_add, "Delete");
+        List<ContextMenuAdapter.ContextMenuItem> cm = new ArrayList<>();
+        cm.add(contextMenuItem);
+        cm.add(deleteItem);
+        cm.add(ContextMenuAdapter.ContextMenuItem.dividerMenuItem());
+        cm.add(new ContextMenuAdapter.ContextMenuItem("Cancel"));
+
+        mContextMenu = new ContextMenu(getAppContext());
+        mContextMenu.setContextMenuItems(cm);
+        mContextMenu.setOnContextMenuItemClickListener(
+                new ContextMenu.OnContextMenuItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        showToast("Item selected");
+                    }
+                });
+        mContextMenu.toggleContextMenuFromView(v, position);
     }
 }

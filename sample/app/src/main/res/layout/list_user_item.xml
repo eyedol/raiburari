@@ -44,5 +44,11 @@
             android:singleLine="true"
             android:ellipsize="end"
             />
-
+    <ImageButton
+            android:id="@+id/btn_more"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/ic_action_more"
+            android:src="@mipmap/ic_more_grey"
+            android:layout_gravity="right"/>
 </LinearLayout>

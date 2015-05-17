@@ -102,12 +102,13 @@ public class ContextMenu extends LinearLayout implements AdapterView.OnItemClick
         mListView.setDivider(getResources().getDrawable(android.R.color.transparent));
         mListView.setDividerHeight(0);
         mListView.setBackgroundColor(Color.WHITE);
-        setBackgroundResource(mBackgroundResId);
-        setOrientation(VERTICAL);
-        setLayoutParams(new LayoutParams(mWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
+        mListView.setOnItemClickListener(this);
         mContextMenuAdapter = new ContextMenuAdapter(context);
         mListView.setAdapter(mContextMenuAdapter);
-        addView(mListView);
+        setBackgroundResource(R.drawable.bg_container_shadow);
+        setOrientation(VERTICAL);
+        setLayoutParams(
+                new LayoutParams(DEFAULT_CONTEXT_MENU_WIDTH, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
     public void setContextMenuItems(List<ContextMenuAdapter.ContextMenuItem> contextMenuItems) {
@@ -134,7 +135,8 @@ public class ContextMenu extends LinearLayout implements AdapterView.OnItemClick
     private void showContextMenuFromView(final View openingView, int position) {
         if (!isContextMenuShowing) {
             isContextMenuShowing = true;
-
+            //((ViewGroup) openingView.getRootView().findViewById(android.R.id.content))
+            //      .removeAllViews();
             ((ViewGroup) openingView.getRootView().findViewById(android.R.id.content))
                     .addView(this);
 
@@ -207,6 +209,7 @@ public class ContextMenu extends LinearLayout implements AdapterView.OnItemClick
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        hideContextMenu();
         if (mOnContextMenuItemClickListener != null) {
             mOnContextMenuItemClickListener.onItemClick(adapterView, view, i, l);
         }

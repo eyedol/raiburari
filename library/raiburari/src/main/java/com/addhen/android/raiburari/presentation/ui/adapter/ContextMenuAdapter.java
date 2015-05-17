@@ -132,6 +132,10 @@ public class ContextMenuAdapter extends ArrayAdapter<ContextMenuAdapter.ContextM
 
         }
 
+        public ContextMenuItem(String label) {
+            this(0, label);
+        }
+
         public ContextMenuItem(int iconResId, String label) {
             this.iconResId = iconResId;
             this.label = label;
