@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Base RecyclerView Adapter class for all RecyclerView adapters for a specific Model class
+ * Base RecyclerView Adapter class for all RecyclerView adapters for a specific Type {@link Model}
  *
  * @param <M> Model class
  * @author Henry Addo

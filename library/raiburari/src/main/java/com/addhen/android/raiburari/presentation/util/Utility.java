@@ -19,6 +19,7 @@ package com.addhen.android.raiburari.presentation.util;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -185,4 +186,12 @@ public class Utility {
         }
     }
 
+    public static boolean isTablet(Resources res) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            return res.getConfiguration().smallestScreenWidthDp >= 600;
+        } else {
+            return (res.getDisplayMetrics().widthPixels / res.getDisplayMetrics().density) >= 600;
+
+        }
+    }
 }

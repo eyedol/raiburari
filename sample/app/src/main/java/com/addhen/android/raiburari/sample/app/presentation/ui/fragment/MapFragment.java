@@ -78,6 +78,9 @@ public class MapFragment extends BaseFragment implements MapsView {
         mMapView.setMaxZoomLevel(mMapView.getTileProvider().getMaximumZoomLevel());
         mMapView.setCenter(mMapView.getTileProvider().getCenterCoordinate());
         mMapView.setZoom(0);
+        mMapView.setScrollableAreaLimit(mMapView.getTileProvider().getBoundingBox());
+        mMapView.setZoom(mMapView.getTileProvider().getCenterZoom());
+        mMapView.zoomToBoundingBox(mMapView.getTileProvider().getBoundingBox());
     }
 
     @Override

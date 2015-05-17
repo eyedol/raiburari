@@ -17,14 +17,10 @@
 
 package com.addhen.android.raiburari.presentation.state;
 
-import com.addhen.android.raiburari.presentation.model.UserProfile;
-
 /**
  * @author Henry Addo
  */
 public interface State {
-
-    UserProfile getUserProfile();
 
     void registerEvent(Object receiver);
 

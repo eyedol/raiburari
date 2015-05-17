@@ -5,6 +5,8 @@
         <item name="android:layout_height">?attr/actionBarSize</item>
         <item name="android:background">@color/color_primary</item>
         <item name="android:theme">@style/ActionBarThemeOverlay</item>
+        <item name="android:elevation">4dp</item>
+        <item name="elevation">4dp</item>
     </style>
     <style name="ActionBarThemeOverlay" parent="@style/ThemeOverlay.AppCompat.Dark">
         <item name="popupTheme">@style/ActionBarPopupThemeOverlay</item>

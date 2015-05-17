@@ -29,7 +29,7 @@ ext {
 
     //Libraries
     daggerVersion = '2.0'
-    butterKnifeVersion = '6.0.0'
+    butterKnifeVersion = '6.1.0'
     support = '22.1.0'
     appCompat = '22.1.0'
     cardView = '22.1.0'
@@ -39,11 +39,11 @@ ext {
     javaxAnnotationVersion = '10.0-b28'
     gsonVersion = '2.3'
     okHttpVersion = '2.3.0'
-    timber = '2.5.1'
-    fab = '1.9.0'
-    snackbar = '2.10.6'
-    otto = '1.3.6'
-    picasso = '2.5.2';
+    timberVersion = '2.5.1'
+    fabVersion = '1.9.0'
+    snackbarVersion = '2.10.6'
+    ottoVersion = '1.3.6'
+    picassoVersion = '2.5.2'
 
     //Testing
     robolectricVersion = '2.4'
@@ -64,13 +64,13 @@ ext {
             rxJava         : "io.reactivex:rxjava:${rxJavaVersion}",
             rxAndroid      : "io.reactivex:rxandroid:${rxAndroidVersion}",
             javaxAnnotation: "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
-            timber         : "com.jakewharton.timber:timber:${timber}",
-            fab            : "com.getbase:floatingactionbutton:${fab}",
-            snackbar       : "com.nispok:snackbar:${snackbar}",
-            otto           : "com.squareup:otto:${otto}",
+            timber         : "com.jakewharton.timber:timber:${timberVersion}",
+            fab            : "com.getbase:floatingactionbutton:${fabVersion}",
+            snackbar       : "com.nispok:snackbar:${snackbarVersion}",
+            otto           : "com.squareup:otto:${ottoVersion}",
             okHttp         : "com.squareup.okhttp:okhttp:${okHttpVersion}",
             gson           : "com.google.code.gson:gson:${gsonVersion}",
-            picasso        : "com.squareup.picasso:picasso:${picasso}",
+            picasso        : "com.squareup.picasso:picasso:${picassoVersion}",
     ]
 
     appTestDependencies = [

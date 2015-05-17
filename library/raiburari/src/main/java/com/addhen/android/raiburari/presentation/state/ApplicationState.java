@@ -17,7 +17,6 @@
 
 package com.addhen.android.raiburari.presentation.state;
 
-import com.addhen.android.raiburari.presentation.model.UserProfile;
 import com.squareup.otto.Bus;
 
 import android.support.annotation.NonNull;
@@ -25,20 +24,14 @@ import android.support.annotation.NonNull;
 /**
  * @author Henry Addo
  */
-public class ApplicationState implements State, UserState {
+public class ApplicationState implements State {
 
     private final Bus mEventBus;
-
-    private UserProfile mUserProfile;
 
     public ApplicationState(@NonNull Bus eventBus) {
         mEventBus = eventBus;
     }
 
-    @Override
-    public UserProfile getUserProfile() {
-        return mUserProfile;
-    }
 
     @Override
     public void registerEvent(Object receiver) {
@@ -48,11 +41,5 @@ public class ApplicationState implements State, UserState {
     @Override
     public void unregisterEvent(Object receiver) {
         mEventBus.unregister(receiver);
-    }
-
-    @Override
-    public void setUserProfile(UserProfile userProfile) {
-        mUserProfile = userProfile;
-        mEventBus.post(new UserProfileChangedEvent());
     }
 }

@@ -1,5 +1,6 @@
 package com.addhen.android.raiburari.sample.app.presentation.util;
 
+import com.addhen.android.raiburari.sample.app.presentation.ui.widget.CustomMarker;
 import com.cocoahero.android.geojson.Feature;
 import com.cocoahero.android.geojson.FeatureCollection;
 import com.cocoahero.android.geojson.GeoJSON;
@@ -13,7 +14,6 @@ import com.cocoahero.android.geojson.Point;
 import com.cocoahero.android.geojson.Polygon;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.overlay.Icon;
-import com.mapbox.mapboxsdk.overlay.Marker;
 import com.mapbox.mapboxsdk.overlay.PathOverlay;
 import com.mapbox.mapboxsdk.util.NetworkUtils;
 import com.mapbox.mapboxsdk.util.constants.UtilConstants;
@@ -135,7 +135,8 @@ public class GeoJsonLoadUtils {
                 JSONArray coordinates = (JSONArray) f.getGeometry().toJSON().get("coordinates");
                 double lon = (Double) coordinates.get(0);
                 double lat = (Double) coordinates.get(1);
-                Marker marker = new Marker(f.getProperties().optString("title"),
+                CustomMarker marker = new CustomMarker(
+                        f.getProperties().optString("title"),
                         f.getProperties().optString("description"), new LatLng(lat, lon));
                 if (markerIcon != null) {
                     marker.setIcon(markerIcon);
@@ -147,7 +148,7 @@ public class GeoJsonLoadUtils {
                     JSONArray coordinates = (JSONArray) points.get(j);
                     double lon = (Double) coordinates.get(0);
                     double lat = (Double) coordinates.get(1);
-                    Marker marker = new Marker(f.getProperties().optString("title"),
+                    CustomMarker marker = new CustomMarker(f.getProperties().optString("title"),
                             f.getProperties().optString("description"), new LatLng(lat, lon));
                     if (markerIcon != null) {
                         marker.setIcon(markerIcon);
@@ -251,8 +252,9 @@ public class GeoJsonLoadUtils {
                     JSONArray coordinates = (JSONArray) geometry.toJSON().get("coordinates");
                     double lon = (Double) coordinates.get(0);
                     double lat = (Double) coordinates.get(1);
-                    Marker marker = new Marker(f.getProperties().optString("title"),
+                    CustomMarker marker = new CustomMarker(f.getProperties().optString("title"),
                             f.getProperties().optString("description"), new LatLng(lat, lon));
+                    marker.markerId = f.getProperties().getLong("id");
                     if (markerIcon != null) {
                         marker.setIcon(markerIcon);
                     }

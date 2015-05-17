@@ -18,25 +18,26 @@
 package com.addhen.android.raiburari.sample.app.presentation.ui.activity;
 
 import com.addhen.android.raiburari.presentation.di.HasComponent;
-import com.addhen.android.raiburari.presentation.model.NavDrawerItem;
 import com.addhen.android.raiburari.presentation.ui.activity.BaseActivity;
-import com.addhen.android.raiburari.presentation.ui.listener.NavDrawerListener;
 import com.addhen.android.raiburari.sample.app.R;
 import com.addhen.android.raiburari.sample.app.presentation.di.components.DaggerUserComponent;
 import com.addhen.android.raiburari.sample.app.presentation.di.components.UserComponent;
 import com.addhen.android.raiburari.sample.app.presentation.ui.fragment.MainFragment;
 import com.addhen.android.raiburari.sample.app.presentation.ui.fragment.MapFragment;
+import com.mikepenz.iconics.typeface.FontAwesome;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.Menu;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 
-import java.util.ArrayList;
-import java.util.List;
+import butterknife.InjectView;
 
 public class MainActivity extends BaseActivity implements HasComponent<UserComponent>,
-        NavDrawerListener {
+        Drawer.OnDrawerItemClickListener {
 
     private UserComponent userComponent;
 
@@ -44,8 +45,15 @@ public class MainActivity extends BaseActivity implements HasComponent<UserCompo
 
     private static int MAP_FRAGMENT_POSITION = 1;
 
+    private static int FRAG_CONTAINER_ID = R.id.fragment_container;
+
+    @InjectView(R.id.toolbar)
+    Toolbar mToolbar;
+
+    private Drawer.Result result = null;
+
     public MainActivity() {
-        super(R.layout.activity_navdrawer, 0, R.id.drawerLayout);
+        super(R.layout.activity_navdrawer, 0);
     }
 
 
@@ -53,29 +61,27 @@ public class MainActivity extends BaseActivity implements HasComponent<UserCompo
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         injector();
-        //addFragment(R.id.container, MainFragment.newInstance());
+        initNavDrawerItems(savedInstanceState);
     }
 
-    @Override
-    protected void initNavDrawerItems(Bundle savedInstanceState) {
-        setNavDrawerListener(this);
-        NavDrawerItem homeNavDrawerItem = new NavDrawerItem("Home", R.drawable.ic_action_add, false,
-                HOME_FRAGMENT_POSITION);
-        NavDrawerItem mapNavDrawerItem = new NavDrawerItem("Map", R.drawable.ic_action_add, false,
-                MAP_FRAGMENT_POSITION);
-        List<NavDrawerItem> itemList = new ArrayList<>();
-        itemList.add(homeNavDrawerItem);
-        itemList.add(mapNavDrawerItem);
-
-        setColorDefaultItemNavigation(R.color.navdrawer_background);
-        setColorIconItemNavigation(R.color.navdrawer_icon_tint);
-        setColorSelectedItemNavigation(R.color.navdrawer_text_color);
-        setNavDrawerAdapterItems(itemList);
-
-        setNavDrawerFooterItem("Settings", R.drawable.abc_btn_check_material);
+    private void initNavDrawerItems(Bundle savedInstanceState) {
+        setSupportActionBar(mToolbar);
         if (savedInstanceState == null) {
-            setNavDrawerDefaultStartPosition(0);
+            addFragment(FRAG_CONTAINER_ID, MainFragment.newInstance());
         }
+        result = new Drawer()
+                .withActivity(this)
+                .withToolbar(mToolbar)
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withName(R.string.home).withIcon(
+                                FontAwesome.Icon.faw_home).withIdentifier(HOME_FRAGMENT_POSITION),
+                        new PrimaryDrawerItem().withName(R.string.map)
+                                .withIcon(FontAwesome.Icon.faw_map_marker)
+                                .withIdentifier(MAP_FRAGMENT_POSITION)
+
+                )
+                .withOnDrawerItemClickListener(this)
+                .build();
     }
 
     private void injector() {
@@ -91,31 +97,16 @@ public class MainActivity extends BaseActivity implements HasComponent<UserCompo
         return userComponent;
     }
 
+
     @Override
-    public void onNavDrawerItemClick(int position, int layoutContainerId) {
-        Fragment fragment;
-        if (position == MAP_FRAGMENT_POSITION) {
-            fragment = MapFragment.newInstance();
-            replaceFragment(layoutContainerId, fragment, "map");
-        } else {
-            fragment = MainFragment.newInstance();
-            replaceFragment(layoutContainerId, fragment, "list");
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l,
+            IDrawerItem iDrawerItem) {
+        if (iDrawerItem != null) {
+            if (iDrawerItem.getIdentifier() == MAP_FRAGMENT_POSITION) {
+                replaceFragment(R.id.fragment_container, MapFragment.newInstance());
+            } else {
+                replaceFragment(R.id.fragment_container, MainFragment.newInstance());
+            }
         }
-
-    }
-
-    @Override
-    public void onPrepareOptionsMenusNavDrawer(Menu menu, int position, boolean visible) {
-
-    }
-
-    @Override
-    public void onNavDrawerFooterClick(View v) {
-
-    }
-
-    @Override
-    public void onNavDrawerUserAvatarClick(View v) {
-
     }
 }
