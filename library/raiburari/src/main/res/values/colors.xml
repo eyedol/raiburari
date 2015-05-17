@@ -68,4 +68,7 @@
     <!-- Fab -->
     <color name="fab_color_primary">#8fc266</color>
     <color name="fab_color_pressed">#71a646</color>
+
+    <!-- Context Menu -->
+    <color name="context_menu_item_divider_color">#dddddd</color>
 </resources>

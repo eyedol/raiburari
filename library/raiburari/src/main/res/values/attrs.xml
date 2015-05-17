@@ -65,4 +65,14 @@
             <enum name="horizontal" value="2"/>
         </attr>
     </declare-styleable>
+    <!-- BloatedRecyclerView -->
+    <declare-styleable name="ContextMenu">
+        <attr name="width" format="dimension"/>
+        <attr name="backgroundView" format="reference"/>
+        <attr name="backgroundShadowRes" format="reference"/>
+        <attr name="orientation" format="enum">
+            <enum name="vertical" value="1"/>
+            <enum name="horizontal" value="2"/>
+        </attr>
+    </declare-styleable>
 </resources>

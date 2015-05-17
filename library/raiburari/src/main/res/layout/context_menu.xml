@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (c) 2015 Henry Addo
   ~
@@ -13,12 +14,8 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-
-<resources>
-    <string name="app_name">My Application</string>
-    <string name="home">Home</string>
-    <string name="map">Map</string>
-    <string name="action_settings">Settings</string>
-    <string name="exception_message_generic">There was a generic error</string>
-    <string name="exception_message_user_not_found">User not found</string>
-</resources>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListView android:id="@+id/context_menu_listview"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"/>
+</merge>
