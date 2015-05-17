@@ -1,18 +1,17 @@
 /*
- * Copyright (c) 2015. Henry Addo
+ * Copyright (c) 2015 Henry Addo
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 
 package com.addhen.android.raiburari.presentation.util;
@@ -40,7 +39,7 @@ import java.util.Locale;
 /**
  * @author Henry Addo
  */
-public class Utility {
+public class Utils {
 
     private static final int DEFAULT_BUFFER_SIZE = 8192;
 
@@ -105,7 +104,7 @@ public class Utility {
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static boolean isRtlLayout() {
-        if (Utility.isJellyBeanMR1OrHigher()) {
+        if (Utils.isJellyBeanMR1OrHigher()) {
             int direction = TextUtils.getLayoutDirectionFromLocale(Locale.getDefault());
             return direction == View.LAYOUT_DIRECTION_RTL;
         }
@@ -159,7 +158,7 @@ public class Utility {
     public static int copy(InputStream input, OutputStream output) throws IOException {
         byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
         int count = 0;
-        int n = 0;
+        int n;
         while (-1 != (n = input.read(buffer))) {
             output.write(buffer, 0, n);
             count += n;
@@ -179,7 +178,7 @@ public class Utility {
     public static <T> void executeAsyncTask(AsyncTask<T, ?, ?> task, T... args) {
         // TODO figure out how to subclass abstract and generalized AsyncTask,
         // then put this there
-        if (Utility.isHoneycombOrHigher()) {
+        if (Utils.isHoneycombOrHigher()) {
             task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, args);
         } else {
             task.execute(args);

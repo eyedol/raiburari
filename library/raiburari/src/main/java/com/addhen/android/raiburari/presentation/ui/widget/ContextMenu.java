@@ -14,23 +14,11 @@
  * limitations under the License.
  */
 
-package com.addhen.android.raiburari.sample.app.data.repository.datasource;
-
-import javax.inject.Inject;
+package com.addhen.android.raiburari.presentation.ui.widget;
 
 /**
- * Factory that creates different implementations of {@link UserDataSource}.
- *
  * @author Henry Addo
  */
-public class UserDataStoreFactory {
+public class ContextMenu {
 
-    @Inject
-    public UserDataStoreFactory() {
-
-    }
-
-    public UserDataSource createDummyDataSource() {
-        return new DummyDataSource();
-    }
 }
