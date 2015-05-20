@@ -23,14 +23,14 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:1.2.3'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
-        classpath 'com.github.dcendents:android-maven-plugin:1.2'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
         classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.1"
     }
 }
 
 task wrapper(type: Wrapper) {
-    description 'Creates the gradle wrapper.'
-    gradleVersion '2.2.1'
+  description 'Creates the gradle wrapper.'
+   gradleVersion '2.4'
 }
 
 allprojects {
