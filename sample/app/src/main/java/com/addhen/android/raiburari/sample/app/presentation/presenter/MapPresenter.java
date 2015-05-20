@@ -20,6 +20,7 @@ import com.addhen.android.raiburari.presentation.presenter.Presenter;
 import com.addhen.android.raiburari.sample.app.presentation.ui.view.MapsView;
 import com.addhen.android.raiburari.sample.app.presentation.util.GeoJsonLoadUtils;
 import com.cocoahero.android.geojson.FeatureCollection;
+import com.mapbox.mapboxsdk.overlay.Icon;
 
 import org.json.JSONException;
 
@@ -63,10 +64,11 @@ public class MapPresenter implements Presenter {
 
     private void loadGeoJson() {
         try {
+            Icon icon = new Icon(mMapsView.getAppContext(), Icon.Size.LARGE, "town-hall", "FF0000");
             FeatureCollection features = GeoJsonLoadUtils
                     .loadGeoJSONFromAssets(mMapsView.getAppContext(), "geojson/geojsons.json");
             ArrayList<Object> uiObjects = GeoJsonLoadUtils.createUIObjectsFromGeoJSONObjects(
-                    features, null);
+                    features, icon);
             mMapsView.renderGeoJson(uiObjects);
         } catch (IOException e) {
             e.printStackTrace();

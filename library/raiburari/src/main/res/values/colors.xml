@@ -71,4 +71,5 @@
 
     <!-- Context Menu -->
     <color name="context_menu_item_divider_color">#dddddd</color>
+    <color name="cluster_solid_color">#eb0000</color>
 </resources>
