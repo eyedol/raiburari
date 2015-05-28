@@ -29,14 +29,14 @@ buildscript {
 }
 
 task wrapper(type: Wrapper) {
-  description 'Creates the gradle wrapper.'
-   gradleVersion '2.4'
+    description 'Creates the gradle wrapper.'
+    gradleVersion '2.4'
 }
 
 allprojects {
     ext {
-        androidVersionCode = 110
-        androidVersionName = "1.1.0"
+        androidVersionCode = 120
+        androidVersionName = "1.2.0"
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
     }
 
