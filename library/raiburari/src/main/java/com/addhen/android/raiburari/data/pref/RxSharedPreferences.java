@@ -36,16 +36,12 @@ import rx.subscriptions.Subscriptions;
  */
 public class RxSharedPreferences {
 
-    public static RxSharedPreferences create(SharedPreferences sharedPreferences) {
-        return new RxSharedPreferences(sharedPreferences);
-    }
-
     private final SharedPreferences mSharedPreferences;
 
     private final Observable<String> mChangedKeys;
 
     @Inject
-    public RxSharedPreferences(@NonNull SharedPreferences sharedPreferences) {
+    public RxSharedPreferences(@NonNull final SharedPreferences sharedPreferences) {
         mSharedPreferences = sharedPreferences;
         this.mChangedKeys = Observable.create(new Observable.OnSubscribe<String>() {
             @Override
