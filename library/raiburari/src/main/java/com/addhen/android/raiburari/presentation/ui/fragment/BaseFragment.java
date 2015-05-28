@@ -17,6 +17,8 @@
 package com.addhen.android.raiburari.presentation.ui.fragment;
 
 import com.addhen.android.raiburari.presentation.di.HasComponent;
+import com.nispok.snackbar.Snackbar;
+import com.nispok.snackbar.SnackbarManager;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -204,5 +206,12 @@ public abstract class BaseFragment extends Fragment {
     protected void showToast(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_LONG)
                 .show();
+    }
+
+    /**
+     * Shows a simple {@link Snackbar}
+     */
+    protected void showSnabackar(String message) {
+        SnackbarManager.show(Snackbar.with(getActivity()).text(message));
     }
 }
