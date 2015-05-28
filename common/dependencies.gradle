@@ -40,7 +40,7 @@ ext {
     okHttpVersion = '2.3.0'
     timberVersion = '2.5.1'
     fabVersion = '1.9.0'
-    snackbarVersion = '2.10.6'
+    snackbarVersion = '2.10.9'
     ottoVersion = '1.3.6'
     picassoVersion = '2.5.2'
 
