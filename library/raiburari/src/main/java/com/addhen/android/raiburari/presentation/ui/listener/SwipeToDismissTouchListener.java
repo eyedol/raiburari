@@ -175,6 +175,11 @@ public class SwipeToDismissTouchListener implements RecyclerView.OnItemTouchList
         return false;
     }
 
+    @Override
+    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+    }
+
     private boolean down(MotionEvent motionEvent) {
         if (mPaused) {
             return false;

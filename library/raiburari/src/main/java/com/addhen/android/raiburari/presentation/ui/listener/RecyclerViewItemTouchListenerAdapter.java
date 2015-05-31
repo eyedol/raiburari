@@ -57,6 +57,12 @@ public class RecyclerViewItemTouchListenerAdapter extends GestureDetector.Simple
 
     @Override
     public void onTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
     }
 
     @Override
