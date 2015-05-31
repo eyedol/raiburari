@@ -25,24 +25,8 @@
         <attr name="desaturateOnPress" format="boolean"/>
     </declare-styleable>
 
-    <declare-styleable name="SlidingTabLayout">
-        <attr name="selectedColor" format="color"/>
-        <attr name="indicatorHeight" format="reference|dimension"/>
-        <attr name="dividerColor" format="color"/>
-        <attr name="android:textAppearance"/>
-    </declare-styleable>
-
     <declare-styleable name="FontSupportedTextView">
         <attr name="fontFile" format="string"/>
-    </declare-styleable>
-    <declare-styleable name="FloatLabelLayout">
-        <attr name="floatLabelTextAppearance" format="reference"/>
-        <attr name="floatLabelPaddingLeft" format="reference|dimension"/>
-        <attr name="floatLabelPaddingRight" format="reference|dimension"/>
-        <attr name="floatLabelPaddingTop" format="reference|dimension"/>
-        <attr name="floatLabelPaddingBottom" format="reference|dimension"/>
-        <!-- The hint to display in the floating label -->
-        <attr name="floatLabelHint" format="reference|string"/>
     </declare-styleable>
 
     <!-- BloatedRecyclerView -->
@@ -61,7 +45,7 @@
             <enum name="horizontal" value="2"/>
         </attr>
     </declare-styleable>
-    <!-- BloatedRecyclerView -->
+    <!-- ContextView -->
     <declare-styleable name="ContextMenu">
         <attr name="width" format="dimension"/>
         <attr name="backgroundView" format="reference"/>
