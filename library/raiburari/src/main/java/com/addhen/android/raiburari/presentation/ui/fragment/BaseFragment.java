@@ -17,11 +17,11 @@
 package com.addhen.android.raiburari.presentation.ui.fragment;
 
 import com.addhen.android.raiburari.presentation.di.HasComponent;
-import com.nispok.snackbar.Snackbar;
-import com.nispok.snackbar.SnackbarManager;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -191,11 +191,10 @@ public abstract class BaseFragment extends Fragment {
     /**
      * Shows a {@link Toast} message.
      *
-     * @param message A message resource
+     * @param resId A message resource
      */
-    protected void showToast(int message) {
-        Toast.makeText(getActivity(), getText(message), Toast.LENGTH_LONG)
-                .show();
+    protected void showToast(@StringRes int resId) {
+        showToast(getString(resId));
     }
 
     /**
@@ -210,8 +209,21 @@ public abstract class BaseFragment extends Fragment {
 
     /**
      * Shows a simple {@link Snackbar}
+     *
+     * @param view    The view to anchor the Snackbar to
+     * @param message The message to be showed
      */
-    protected void showSnabackar(String message) {
-        SnackbarManager.show(Snackbar.with(getActivity()).text(message));
+    protected void showSnabackar(View view, String message) {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
+    }
+
+    /**
+     * Shows a simple {@link Snackbar}
+     *
+     * @param view  The view to anchor the Snackbar to
+     * @param resId The message to be showed
+     */
+    protected void showSnabackar(View view, @StringRes int resId) {
+        showSnabackar(view, getString(resId));
     }
 }

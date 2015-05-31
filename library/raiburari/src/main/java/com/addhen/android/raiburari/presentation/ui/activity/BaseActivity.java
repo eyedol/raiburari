@@ -20,16 +20,17 @@ import com.addhen.android.raiburari.presentation.BaseApplication;
 import com.addhen.android.raiburari.presentation.di.component.ApplicationComponent;
 import com.addhen.android.raiburari.presentation.di.module.ActivityModule;
 import com.addhen.android.raiburari.presentation.state.ApplicationState;
-import com.nispok.snackbar.Snackbar;
-import com.nispok.snackbar.SnackbarManager;
 
 import android.os.Bundle;
+import android.support.annotation.StringRes;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
@@ -106,6 +107,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
+     * Shows a {@link Toast} message.
+     *
+     * @param resId A message resource
+     */
+    protected void showToast(@StringRes int resId) {
+        showToast(getString(resId));
+    }
+
+    /**
      * Shows a {@link android.widget.Toast} message with a Long life span of the Toast shown.
      *
      * @param message the message to be shown by the toast.
@@ -116,10 +126,23 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * Shows a {@link Snackbar}
+     * Shows a simple {@link Snackbar}
+     *
+     * @param view    The view to anchor the Snackbar to
+     * @param message The message to be showed
      */
-    protected void showSnabackar(String message) {
-        SnackbarManager.show(Snackbar.with(this).text(message));
+    protected void showSnabackar(View view, String message) {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
+    }
+
+    /**
+     * Shows a simple {@link Snackbar}
+     *
+     * @param view  The view to anchor the Snackbar to
+     * @param resId The message to be showed
+     */
+    protected void showSnabackar(View view, @StringRes int resId) {
+        showSnabackar(view, getString(resId));
     }
 
     @Override

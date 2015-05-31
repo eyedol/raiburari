@@ -16,7 +16,6 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:fab="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -32,17 +31,14 @@
 
     </com.addhen.android.raiburari.presentation.ui.widget.VerticalSwipeRefreshLayout>
 
-    <com.addhen.android.raiburari.presentation.ui.widget.MovableFab
+    <android.support.design.widget.FloatingActionButton
             android:id="@+id/bloated_recycleview_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="16dp"
-            fab:fab_icon="@drawable/ic_action_add"
-            fab:fab_colorNormal="@color/fab_color_primary"
-            fab:fab_colorPressed="@color/fab_color_pressed"/>
+            android:layout_marginBottom="16dp"/>
 
     <ViewStub
             android:id="@+id/bloated_recycleview_view_stub"

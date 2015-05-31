@@ -61,7 +61,7 @@ public class BloatedRecyclerView extends FrameLayout {
 
     public int showLoadMoreItemNum = 3;
 
-    protected MovableFab floatingActionButton;
+    //protected FloatingActionButton floatingActionButton;
 
     protected RecyclerView.OnScrollListener mOnScrollListener;
 
@@ -168,7 +168,7 @@ public class BloatedRecyclerView extends FrameLayout {
             }
         }
 
-        floatingActionButton = (MovableFab) view.findViewById(R.id.bloated_recycleview_fab);
+        //floatingActionButton = (MovableFab) view.findViewById(R.id.bloated_recycleview_fab);
         setDefaultScrollListener();
 
         mEmpty = (ViewStub) view.findViewById(R.id.bloated_recycleview_empty_view);
@@ -966,32 +966,24 @@ public class BloatedRecyclerView extends FrameLayout {
     }
 
 
-    public MovableFab getDefaultFloatingActionButton() {
-        return floatingActionButton;
-    }
-
-    public void setDefaultFloatingActionButton(MovableFab floatingActionButton) {
-        this.floatingActionButton = floatingActionButton;
-    }
-
     public void showFloatingActionButton() {
         if (mFloatingButtonView != null) {
-            ((MovableFab) mFloatingButtonView).hide(false);
+            //((MovableFab) mFloatingButtonView).hide(false);
         }
     }
 
     public void hideFloatingActionButton() {
         if (mFloatingButtonView != null) {
-            ((MovableFab) mFloatingButtonView).hide(true);
+            //((MovableFab) mFloatingButtonView).hide(true);
         }
     }
 
     public void showDefaultFloatingActionButton() {
-        floatingActionButton.hide(false);
+        //floatingActionButton.hide(false);
     }
 
     public void hideDefaultFloatingActionButton() {
-        floatingActionButton.hide(true);
+        //floatingActionButton.hide(true);
     }
 
     /**
@@ -1007,6 +999,6 @@ public class BloatedRecyclerView extends FrameLayout {
      * Displays or hides a default FAB
      */
     public void displayDefaultFloatingActionButton(boolean visibilityState) {
-        floatingActionButton.setVisibility(visibilityState ? VISIBLE : INVISIBLE);
+        //floatingActionButton.setVisibility(visibilityState ? VISIBLE : INVISIBLE);
     }
 }

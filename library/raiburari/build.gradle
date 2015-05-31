@@ -74,11 +74,10 @@ dependencies {
     compile appDependencies.appCompat
     compile appDependencies.cardView
     compile appDependencies.recyclerView
+    compile appDependencies.design
     compile appDependencies.rxJava
     compile appDependencies.rxAndroid
     compile appDependencies.timber
-    compile appDependencies.snackbar
-    compile appDependencies.fab
     compile appDependencies.otto
     compile appDependencies.picasso
 
