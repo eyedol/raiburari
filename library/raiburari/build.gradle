@@ -69,12 +69,10 @@ dependencies {
 
     apt appDependencies.daggerCompiler
     compile appDependencies.dagger
-    compile appDependencies.butterKnife
-    compile appDependencies.support
-    compile appDependencies.appCompat
+    compile appDependencies.design
     compile appDependencies.cardView
     compile appDependencies.recyclerView
-    compile appDependencies.design
+    compile appDependencies.butterKnife
     compile appDependencies.rxJava
     compile appDependencies.rxAndroid
     compile appDependencies.timber

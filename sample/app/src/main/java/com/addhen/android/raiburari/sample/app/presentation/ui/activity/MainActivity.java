@@ -70,7 +70,6 @@ public class MainActivity extends BaseActivity implements HasComponent<UserCompo
         }
         result = new Drawer()
                 .withActivity(this)
-                .withToolbar(mToolbar)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.home).withIcon(
                                 FontAwesome.Icon.faw_home).withIdentifier(HOME_FRAGMENT_POSITION),

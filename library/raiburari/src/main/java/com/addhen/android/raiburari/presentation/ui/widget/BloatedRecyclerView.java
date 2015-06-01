@@ -30,6 +30,7 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -53,7 +54,7 @@ import timber.log.Timber;
  * This extends the base {@link android.support.v7.widget.RecyclerView} to encapsulate
  * swipe to dismiss, endless scroll, pluggable animations, item decorators, FAB and Parallax effect
  *
- * @author Ushahidi Team <team@ushahidi.com>
+ * @author Henry Addo
  */
 public class BloatedRecyclerView extends FrameLayout {
 
@@ -61,7 +62,7 @@ public class BloatedRecyclerView extends FrameLayout {
 
     public int showLoadMoreItemNum = 3;
 
-    //protected FloatingActionButton floatingActionButton;
+    protected FloatingActionButton floatingActionButton;
 
     protected RecyclerView.OnScrollListener mOnScrollListener;
 
@@ -168,7 +169,8 @@ public class BloatedRecyclerView extends FrameLayout {
             }
         }
 
-        //floatingActionButton = (MovableFab) view.findViewById(R.id.bloated_recycleview_fab);
+        floatingActionButton = (FloatingActionButton) view
+                .findViewById(R.id.bloated_recycleview_fab);
         setDefaultScrollListener();
 
         mEmpty = (ViewStub) view.findViewById(R.id.bloated_recycleview_empty_view);
@@ -240,7 +242,6 @@ public class BloatedRecyclerView extends FrameLayout {
                     .getInt(R.styleable.BloatedRecyclerView_recyclerviewScrollbars,
                             SCROLLBARS_NONE);
         } finally {
-
             typedArray.recycle();
         }
     }
@@ -256,7 +257,6 @@ public class BloatedRecyclerView extends FrameLayout {
                     0
             };
         }
-
         recyclerView.addOnItemTouchListener(
                 new SwipeToDismissTouchListener(recyclerView, dismissCallbacks));
     }
@@ -999,6 +999,6 @@ public class BloatedRecyclerView extends FrameLayout {
      * Displays or hides a default FAB
      */
     public void displayDefaultFloatingActionButton(boolean visibilityState) {
-        //floatingActionButton.setVisibility(visibilityState ? VISIBLE : INVISIBLE);
+        floatingActionButton.setVisibility(visibilityState ? VISIBLE : INVISIBLE);
     }
 }
