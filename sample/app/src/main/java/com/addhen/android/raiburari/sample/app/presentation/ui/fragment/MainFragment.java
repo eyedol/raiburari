@@ -20,6 +20,7 @@ import com.addhen.android.raiburari.presentation.ui.adapter.ContextMenuAdapter;
 import com.addhen.android.raiburari.presentation.ui.fragment.BaseRecyclerViewFragment;
 import com.addhen.android.raiburari.presentation.ui.listener.RecyclerViewItemTouchListenerAdapter;
 import com.addhen.android.raiburari.presentation.ui.widget.ContextMenu;
+import com.addhen.android.raiburari.presentation.ui.widget.ContextMenuManager;
 import com.addhen.android.raiburari.sample.app.R;
 import com.addhen.android.raiburari.sample.app.presentation.di.components.UserComponent;
 import com.addhen.android.raiburari.sample.app.presentation.model.UserModel;
@@ -102,18 +103,19 @@ public class MainFragment extends BaseRecyclerViewFragment<UserModel, UserAdapte
                 mBloatedRecyclerView.recyclerView, this);
         mBloatedRecyclerView.addItemDividerDecoration(getActivity());
         mBloatedRecyclerView.recyclerView.addOnItemTouchListener(itemTouchListenerAdapter);
+        mBloatedRecyclerView.recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                ContextMenuManager.getInstance().onScrolled(recyclerView, dx, dy);
+            }
+        });
         mUserAdapter = mRecyclerViewAdapter;
-        /*mUserAdapter.setOnUserItemClickListener(new UserAdapter.OnUserItemClickListener() {
+        mUserAdapter.setOnUserItemClickListener(new UserAdapter.OnUserItemClickListener() {
             @Override
             public void onMoreClick(View v, int position) {
-                if (mContextMenu == null) {
-                    manageContextMenu(v, position);
-                } else {
-                    mContextMenu.hideContextMenu();
-                    mContextMenu = null;
-                }
+                manageContextMenu(v, position);
             }
-        });*/
+        });
     }
 
     @Override
@@ -175,16 +177,13 @@ public class MainFragment extends BaseRecyclerViewFragment<UserModel, UserAdapte
         cm.add(deleteItem);
         cm.add(ContextMenuAdapter.ContextMenuItem.dividerMenuItem());
         cm.add(new ContextMenuAdapter.ContextMenuItem("Cancel"));
-
-        mContextMenu = new ContextMenu(getAppContext());
-        mContextMenu.setContextMenuItems(cm);
-        mContextMenu.setOnContextMenuItemClickListener(
+        ContextMenuManager.getInstance().toggleContextMenuFromView(v, position, cm,
                 new ContextMenu.OnContextMenuItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         showToast("Item selected");
+                        ContextMenuManager.getInstance().hideContextMenu();
                     }
                 });
-        mContextMenu.toggleContextMenuFromView(v, position);
     }
 }

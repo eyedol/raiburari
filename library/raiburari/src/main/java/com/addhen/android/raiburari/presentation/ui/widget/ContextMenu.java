@@ -20,18 +20,11 @@ import com.addhen.android.raiburari.R;
 import com.addhen.android.raiburari.presentation.ui.adapter.ContextMenuAdapter;
 import com.addhen.android.raiburari.presentation.util.Utils;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.OvershootInterpolator;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -47,50 +40,17 @@ public class ContextMenu extends LinearLayout implements AdapterView.OnItemClick
 
     private static final int DEFAULT_CONTEXT_MENU_WIDTH = Utils.dpToPx(240);
 
-    protected int mWidth;
-
-    protected int mBackgroundResId;
-
     private ListView mListView;
 
     private ContextMenuAdapter mContextMenuAdapter;
 
     private OnContextMenuItemClickListener mOnContextMenuItemClickListener;
 
-    private boolean isContextMenuDismissing;
-
-    private boolean isContextMenuShowing;
+    private int mContextMenuItem = -1;
 
     public ContextMenu(Context context) {
         super(context);
         initView(context);
-    }
-
-    public ContextMenu(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        initAttrs(attrs);
-        initView(context);
-    }
-
-    public ContextMenu(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initAttrs(attrs);
-        initView(context);
-    }
-
-    private void initAttrs(AttributeSet attrs) {
-        TypedArray typedArray = getContext()
-                .obtainStyledAttributes(attrs, R.styleable.ContextMenu);
-
-        try {
-            mWidth = (int) typedArray
-                    .getDimension(R.styleable.ContextMenu_width, DEFAULT_CONTEXT_MENU_WIDTH);
-            mBackgroundResId = typedArray
-                    .getResourceId(R.styleable.ContextMenu_backgroundShadowRes,
-                            R.drawable.bg_container_shadow);
-        } finally {
-            typedArray.recycle();
-        }
     }
 
     private void initView(Context context) {
@@ -111,6 +71,10 @@ public class ContextMenu extends LinearLayout implements AdapterView.OnItemClick
                 new LayoutParams(DEFAULT_CONTEXT_MENU_WIDTH, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
+    public void bindToItem(int contextMenuItem) {
+        mContextMenuItem = contextMenuItem;
+    }
+
     public void setContextMenuItems(List<ContextMenuAdapter.ContextMenuItem> contextMenuItems) {
         mContextMenuAdapter.setContextMenuItems(contextMenuItems);
     }
@@ -124,92 +88,12 @@ public class ContextMenu extends LinearLayout implements AdapterView.OnItemClick
         mOnContextMenuItemClickListener = onContextMenuItemClickListener;
     }
 
-    public void toggleContextMenuFromView(View openingView, int position) {
-        if (!isContextMenuShowing) {
-            showContextMenuFromView(openingView, position);
-        } else {
-            hideContextMenu();
-        }
-    }
-
-    private void showContextMenuFromView(final View openingView, int position) {
-        if (!isContextMenuShowing) {
-            isContextMenuShowing = true;
-            //((ViewGroup) openingView.getRootView().findViewById(android.R.id.content))
-            //      .removeAllViews();
-            ((ViewGroup) openingView.getRootView().findViewById(android.R.id.content))
-                    .addView(this);
-
-            getViewTreeObserver()
-                    .addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                        @Override
-                        public boolean onPreDraw() {
-                            getViewTreeObserver().removeOnPreDrawListener(this);
-                            setupContextMenuInitialPosition(openingView);
-                            performShowAnimation();
-                            return false;
-                        }
-                    });
-        }
-    }
-
-    private void setupContextMenuInitialPosition(View openingView) {
-        final int[] openingViewLocation = new int[2];
-        openingView.getLocationOnScreen(openingViewLocation);
-        int additionalBottomMargin = Utils.dpToPx(16);
-        setTranslationX(openingViewLocation[0] - getWidth() / 3);
-        setTranslationY(
-                openingViewLocation[1] - getHeight() - additionalBottomMargin);
-    }
-
-    private void performShowAnimation() {
-        setPivotX(getWidth() / 2);
-        setPivotY(getHeight());
-        setScaleX(0.1f);
-        setScaleY(0.1f);
-        animate()
-                .scaleX(1f).scaleY(1f)
-                .setDuration(150)
-                .setInterpolator(new OvershootInterpolator())
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        isContextMenuShowing = false;
-                    }
-                });
-    }
-
-    public void hideContextMenu() {
-        if (!isContextMenuDismissing) {
-            isContextMenuDismissing = true;
-            performDismissAnimation();
-        }
-    }
-
-    private void performDismissAnimation() {
-        setPivotX(getWidth() / 2);
-        setPivotY(getHeight());
-        animate()
-                .scaleX(0.1f).scaleY(0.1f)
-                .setDuration(150)
-                .setInterpolator(new AccelerateInterpolator())
-                .setStartDelay(100)
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        dismiss();
-                        isContextMenuDismissing = false;
-                    }
-                });
-    }
-
     public void dismiss() {
         ((ViewGroup) getParent()).removeView(ContextMenu.this);
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        hideContextMenu();
         if (mOnContextMenuItemClickListener != null) {
             mOnContextMenuItemClickListener.onItemClick(adapterView, view, i, l);
         }

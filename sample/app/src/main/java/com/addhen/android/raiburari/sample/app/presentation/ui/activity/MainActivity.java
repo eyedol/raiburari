@@ -22,9 +22,6 @@ import com.addhen.android.raiburari.sample.app.R;
 import com.addhen.android.raiburari.sample.app.presentation.di.components.DaggerUserComponent;
 import com.addhen.android.raiburari.sample.app.presentation.di.components.UserComponent;
 import com.addhen.android.raiburari.sample.app.presentation.ui.fragment.MainFragment;
-import com.addhen.android.raiburari.sample.app.presentation.ui.fragment.MapFragment;
-import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -41,23 +38,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.InjectView;
 
-public class MainActivity extends BaseActivity implements HasComponent<UserComponent>,
-        Drawer.OnDrawerItemClickListener {
+public class MainActivity extends BaseActivity implements HasComponent<UserComponent> {
 
     private UserComponent userComponent;
-
-    private static int HOME_FRAGMENT_POSITION = 0;
-
-    private static int MAP_FRAGMENT_POSITION = 1;
-
-    private static int FRAG_CONTAINER_ID = R.id.fragment_container;
 
     @InjectView(R.id.toolbar)
     Toolbar mToolbar;
@@ -154,19 +143,6 @@ public class MainActivity extends BaseActivity implements HasComponent<UserCompo
     @Override
     public UserComponent getComponent() {
         return userComponent;
-    }
-
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l,
-            IDrawerItem iDrawerItem) {
-        if (iDrawerItem != null) {
-            if (iDrawerItem.getIdentifier() == MAP_FRAGMENT_POSITION) {
-                replaceFragment(R.id.fragment_container, MapFragment.newInstance());
-            } else {
-                replaceFragment(R.id.fragment_container, MainFragment.newInstance());
-            }
-        }
     }
 
     static class Adapter extends FragmentPagerAdapter {
