@@ -55,12 +55,6 @@ public class MainFragment extends BaseRecyclerViewFragment<UserModel, UserAdapte
 
     private static MainFragment mMainFragment;
 
-    //@InjectView(R.id.toolbar)
-    //Toolbar mToolbar;
-
-    //@InjectView(R.id.tab_layout)
-    //TabLayout mTabLayout;
-
     /**
      * BaseFragment
      */
@@ -103,15 +97,13 @@ public class MainFragment extends BaseRecyclerViewFragment<UserModel, UserAdapte
     private void initialize() {
         getComponent(UserComponent.class).inject(this);
         userListPresenter.setView(this);
-        //mTabLayout.addTab(mTabLayout.newTab().setText("Today"));
-        //mTabLayout.addTab(mTabLayout.newTab().setText("This Week"));
         RecyclerViewItemTouchListenerAdapter itemTouchListenerAdapter
                 = new RecyclerViewItemTouchListenerAdapter(
                 mBloatedRecyclerView.recyclerView, this);
         mBloatedRecyclerView.addItemDividerDecoration(getActivity());
         mBloatedRecyclerView.recyclerView.addOnItemTouchListener(itemTouchListenerAdapter);
         mUserAdapter = mRecyclerViewAdapter;
-        mUserAdapter.setOnUserItemClickListener(new UserAdapter.OnUserItemClickListener() {
+        /*mUserAdapter.setOnUserItemClickListener(new UserAdapter.OnUserItemClickListener() {
             @Override
             public void onMoreClick(View v, int position) {
                 if (mContextMenu == null) {
@@ -121,7 +113,7 @@ public class MainFragment extends BaseRecyclerViewFragment<UserModel, UserAdapte
                     mContextMenu = null;
                 }
             }
-        });
+        });*/
     }
 
     @Override

@@ -22,7 +22,6 @@ import com.addhen.android.raiburari.presentation.ui.listener.ObservableScrollSta
 import com.addhen.android.raiburari.presentation.ui.listener.ObservableScrollViewListener;
 import com.addhen.android.raiburari.presentation.ui.listener.SwipeToDismissTouchListener;
 
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -30,13 +29,11 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
@@ -61,8 +58,6 @@ public class BloatedRecyclerView extends FrameLayout {
     public RecyclerView recyclerView;
 
     public int showLoadMoreItemNum = 3;
-
-    protected FloatingActionButton floatingActionButton;
 
     protected RecyclerView.OnScrollListener mOnScrollListener;
 
@@ -158,9 +153,7 @@ public class BloatedRecyclerView extends FrameLayout {
                 .findViewById(R.id.swipe_refresh_layout);
         setScrollbars();
         mSwipeRefreshLayout.setEnabled(false);
-
         if (recyclerView != null) {
-
             recyclerView.setClipToPadding(mClipToPadding);
             if (mPadding != -1.1f) {
                 recyclerView.setPadding(mPadding, mPadding, mPadding, mPadding);
@@ -168,23 +161,14 @@ public class BloatedRecyclerView extends FrameLayout {
                 recyclerView.setPadding(mPaddingLeft, mPaddingTop, mPaddingRight, mPaddingBottom);
             }
         }
-
-        floatingActionButton = (FloatingActionButton) view
-                .findViewById(R.id.bloated_recycleview_fab);
-        setDefaultScrollListener();
-
         mEmpty = (ViewStub) view.findViewById(R.id.bloated_recycleview_empty_view);
         mFloatingButtonViewStub = (ViewStub) view.findViewById(R.id.bloated_recycleview_view_stub);
-
         mEmpty.setLayoutResource(mEmptyId);
-
         mFloatingButtonViewStub.setLayoutResource(mFloatingButtonId);
-
         if (mEmptyId != 0) {
             mEmptyView = mEmpty.inflate();
         }
         mEmpty.setVisibility(View.GONE);
-
         if (mFloatingButtonId != 0) {
             mFloatingButtonView = mFloatingButtonViewStub.inflate();
             mFloatingButtonView.setVisibility(View.VISIBLE);
@@ -219,7 +203,6 @@ public class BloatedRecyclerView extends FrameLayout {
     protected void initAttrs(AttributeSet attrs) {
         TypedArray typedArray = getContext()
                 .obtainStyledAttributes(attrs, R.styleable.BloatedRecyclerView);
-
         try {
             mPadding = (int) typedArray
                     .getDimension(R.styleable.BloatedRecyclerView_recyclerviewPadding, -1.1f);
@@ -824,9 +807,6 @@ public class BloatedRecyclerView extends FrameLayout {
             this.superState = superState != EMPTY_STATE ? superState : null;
         }
 
-        /**
-         * Called by CREATOR.
-         */
         private SavedState(Parcel in) {
             // Parcel 'in' has its parent(RecyclerView)'s saved state.
             // To restore it, class loader that loaded RecyclerView is required.
@@ -925,80 +905,5 @@ public class BloatedRecyclerView extends FrameLayout {
             }
         }
         return super.onTouchEvent(ev);
-    }
-
-    public boolean toolbarIsShown(Toolbar mToolbar) {
-        return mToolbar.getTranslationY() == 0;
-    }
-
-    public boolean toolbarIsHidden(Toolbar mToolbar) {
-        return mToolbar.getTranslationY() == -mToolbar.getHeight();
-    }
-
-    public void showToolbar(Toolbar mToolbar, BloatedRecyclerView recyclerView, int screenHeight) {
-        moveToolbar(mToolbar, recyclerView, screenHeight, 0);
-    }
-
-    public void hideToolbar(Toolbar mToolbar, BloatedRecyclerView recyclerView, int screenHeight) {
-        moveToolbar(mToolbar, recyclerView, screenHeight, -mToolbar.getHeight());
-    }
-
-    protected void moveToolbar(final Toolbar mToolbar, final BloatedRecyclerView recyclerView,
-            final int screenHeight, float toTranslationY) {
-        if (mToolbar.getTranslationY() == toTranslationY) {
-            return;
-        }
-        ValueAnimator animator = ValueAnimator.ofFloat(mToolbar.getTranslationY(), toTranslationY)
-                .setDuration(200);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float translationY = (float) animation.getAnimatedValue();
-                mToolbar.setTranslationY(translationY);
-
-                MarginLayoutParams layoutParams = (MarginLayoutParams) ((View) recyclerView)
-                        .getLayoutParams();
-                layoutParams.height = (int) (-translationY + screenHeight - layoutParams.topMargin);
-                ((View) recyclerView).requestLayout();
-            }
-        });
-        animator.start();
-    }
-
-
-    public void showFloatingActionButton() {
-        if (mFloatingButtonView != null) {
-            //((MovableFab) mFloatingButtonView).hide(false);
-        }
-    }
-
-    public void hideFloatingActionButton() {
-        if (mFloatingButtonView != null) {
-            //((MovableFab) mFloatingButtonView).hide(true);
-        }
-    }
-
-    public void showDefaultFloatingActionButton() {
-        //floatingActionButton.hide(false);
-    }
-
-    public void hideDefaultFloatingActionButton() {
-        //floatingActionButton.hide(true);
-    }
-
-    /**
-     * Displays or hides a custom FAB view
-     */
-    public void displayCustomFloatingActionView(boolean visibilityState) {
-        if (mFloatingButtonView != null) {
-            mFloatingButtonView.setVisibility(visibilityState ? VISIBLE : INVISIBLE);
-        }
-    }
-
-    /**
-     * Displays or hides a default FAB
-     */
-    public void displayDefaultFloatingActionButton(boolean visibilityState) {
-        floatingActionButton.setVisibility(visibilityState ? VISIBLE : INVISIBLE);
     }
 }
