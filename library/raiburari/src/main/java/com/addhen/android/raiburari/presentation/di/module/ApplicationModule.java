@@ -24,7 +24,6 @@ import com.addhen.android.raiburari.data.task.TaskExecutor;
 import com.addhen.android.raiburari.domain.executor.PostExecutionThread;
 import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 import com.addhen.android.raiburari.presentation.BaseApplication;
-import com.addhen.android.raiburari.presentation.state.ApplicationState;
 import com.addhen.android.raiburari.presentation.ui.UiThread;
 import com.squareup.otto.Bus;
 
@@ -69,11 +68,5 @@ public class ApplicationModule {
     @Singleton
     public Bus provideEventBus() {
         return new Bus();
-    }
-
-    @Provides
-    @Singleton
-    public ApplicationState provideApplicationState(Bus bus) {
-        return new ApplicationState(bus);
     }
 }

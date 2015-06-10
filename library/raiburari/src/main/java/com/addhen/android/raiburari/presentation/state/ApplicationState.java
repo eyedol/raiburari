@@ -23,9 +23,9 @@ import android.support.annotation.NonNull;
 /**
  * @author Henry Addo
  */
-public class ApplicationState implements State {
+public abstract class ApplicationState implements State {
 
-    private final Bus mEventBus;
+    protected final Bus mEventBus;
 
     public ApplicationState(@NonNull Bus eventBus) {
         mEventBus = eventBus;

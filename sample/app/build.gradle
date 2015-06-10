@@ -48,7 +48,7 @@ dependencies {
     apt appDependencies.daggerCompiler
     provided appDependencies.javaxAnnotation
 
-    compile('com.mapbox.mapboxsdk:mapbox-android-sdk:0.7.4-SNAPSHOT@aar') {
+    compile('com.mapbox.mapboxsdk:mapbox-android-sdk:0.7.4@aar') {
         transitive = true
     }
 }

@@ -19,7 +19,6 @@ package com.addhen.android.raiburari.presentation.ui.activity;
 import com.addhen.android.raiburari.presentation.BaseApplication;
 import com.addhen.android.raiburari.presentation.di.component.ApplicationComponent;
 import com.addhen.android.raiburari.presentation.di.module.ActivityModule;
-import com.addhen.android.raiburari.presentation.state.ApplicationState;
 
 import android.os.Bundle;
 import android.support.annotation.StringRes;
@@ -33,8 +32,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
-
-import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 
@@ -63,10 +60,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private ActionBar mActionBarToolbar;
 
-    @Inject
-    ApplicationState mApplicationState;
-
-
     public BaseActivity(int layout, int menu) {
         mLayout = layout;
         mMenu = menu;
@@ -90,13 +83,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        mApplicationState.registerEvent(this);
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        mApplicationState.unregisterEvent(this);
         super.onPause();
     }
 

@@ -46,6 +46,4 @@ public interface ApplicationComponent {
     PostExecutionThread postExecutionThread();
 
     Bus bus();
-
-    ApplicationState applicationState();
 }
