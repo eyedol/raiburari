@@ -6,8 +6,9 @@ _2015-06-19_
 
 * Downgrade minimum Android SDK support from `14` to `8`
 * Upgrade build tools.
-* Add chang log file
-* Remove `ContextMenu` because it uses API from SDK 12
+* Add change log file.
+* Remove `ContextMenu` because it uses API from SDK 12.
+* Switch to using the `LruCache` from the support library.
 
 ## v2.1.0
 _2015-05-23_
