@@ -22,10 +22,7 @@ import android.widget.TextView;
 
 /**
  * Custom view to capitalize the first letter of a sentence. Sadly Android doest support this out
- * of
- * the box.
- *
- * @author Ushahidi Team <team@ushahidi.com>
+ * of the box.
  */
 public class CapitalizedTextView extends TextView {
 
