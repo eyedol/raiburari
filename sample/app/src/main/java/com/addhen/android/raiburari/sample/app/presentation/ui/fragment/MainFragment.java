@@ -16,11 +16,8 @@
 
 package com.addhen.android.raiburari.sample.app.presentation.ui.fragment;
 
-import com.addhen.android.raiburari.presentation.ui.adapter.ContextMenuAdapter;
 import com.addhen.android.raiburari.presentation.ui.fragment.BaseRecyclerViewFragment;
 import com.addhen.android.raiburari.presentation.ui.listener.RecyclerViewItemTouchListenerAdapter;
-import com.addhen.android.raiburari.presentation.ui.widget.ContextMenu;
-import com.addhen.android.raiburari.presentation.ui.widget.ContextMenuManager;
 import com.addhen.android.raiburari.sample.app.R;
 import com.addhen.android.raiburari.sample.app.presentation.di.components.UserComponent;
 import com.addhen.android.raiburari.sample.app.presentation.model.UserModel;
@@ -32,7 +29,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -49,8 +45,6 @@ public class MainFragment extends BaseRecyclerViewFragment<UserModel, UserAdapte
 
     @Inject
     UserListPresenter userListPresenter;
-
-    ContextMenu mContextMenu;
 
     UserAdapter mUserAdapter;
 
@@ -103,19 +97,7 @@ public class MainFragment extends BaseRecyclerViewFragment<UserModel, UserAdapte
                 mBloatedRecyclerView.recyclerView, this);
         mBloatedRecyclerView.addItemDividerDecoration(getActivity());
         mBloatedRecyclerView.recyclerView.addOnItemTouchListener(itemTouchListenerAdapter);
-        mBloatedRecyclerView.recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                ContextMenuManager.getInstance().onScrolled(recyclerView, dx, dy);
-            }
-        });
         mUserAdapter = mRecyclerViewAdapter;
-        mUserAdapter.setOnUserItemClickListener(new UserAdapter.OnUserItemClickListener() {
-            @Override
-            public void onMoreClick(View v, int position) {
-                manageContextMenu(v, position);
-            }
-        });
     }
 
     @Override
@@ -164,26 +146,5 @@ public class MainFragment extends BaseRecyclerViewFragment<UserModel, UserAdapte
     @Override
     public void onItemLongClick(RecyclerView parent, View clickedView, int position) {
         // DO nothing
-    }
-
-    public void manageContextMenu(View v, int position) {
-        // Set up context menu
-        ContextMenuAdapter.ContextMenuItem contextMenuItem = new ContextMenuAdapter.ContextMenuItem(
-                "Edit");
-        ContextMenuAdapter.ContextMenuItem deleteItem = new ContextMenuAdapter.ContextMenuItem(
-                R.drawable.ic_action_add, "Delete");
-        List<ContextMenuAdapter.ContextMenuItem> cm = new ArrayList<>();
-        cm.add(contextMenuItem);
-        cm.add(deleteItem);
-        cm.add(ContextMenuAdapter.ContextMenuItem.dividerMenuItem());
-        cm.add(new ContextMenuAdapter.ContextMenuItem("Cancel"));
-        ContextMenuManager.getInstance().toggleContextMenuFromView(v, position, cm,
-                new ContextMenu.OnContextMenuItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        showToast("Item selected");
-                        ContextMenuManager.getInstance().hideContextMenu();
-                    }
-                });
     }
 }

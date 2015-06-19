@@ -33,7 +33,7 @@ import timber.log.Timber;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
-public class BaseRecyclerViewFragment<M extends Model, L extends BaseRecyclerViewAdapter>
+public abstract class BaseRecyclerViewFragment<M extends Model, L extends BaseRecyclerViewAdapter>
         extends BaseFragment {
 
     private static String TAG = BaseRecyclerViewFragment.class.getSimpleName();
