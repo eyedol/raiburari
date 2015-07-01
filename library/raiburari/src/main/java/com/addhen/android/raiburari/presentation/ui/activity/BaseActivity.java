@@ -219,7 +219,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * ButterKnife annotations like @InjectView with the proper value.
      */
     private void injectViews() {
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
     }
 
     /**

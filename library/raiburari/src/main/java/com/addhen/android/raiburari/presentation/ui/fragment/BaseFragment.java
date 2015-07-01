@@ -185,7 +185,7 @@ public abstract class BaseFragment extends Fragment {
      * @param view to extract each widget injected in the fragment.
      */
     private void injectViews(final View view) {
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
     }
 
     /**

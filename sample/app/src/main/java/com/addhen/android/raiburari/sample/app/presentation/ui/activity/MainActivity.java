@@ -41,29 +41,29 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.InjectView;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity implements HasComponent<UserComponent> {
 
     private UserComponent userComponent;
 
-    @InjectView(R.id.toolbar)
+    @Bind(R.id.toolbar)
     Toolbar mToolbar;
 
-    @InjectView(R.id.drawer_layout)
+    @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
 
-    @InjectView((R.id.nav_view))
+    @Bind((R.id.nav_view))
     NavigationView mNavigationView;
 
-    @InjectView(R.id.viewpager)
+    @Bind(R.id.viewpager)
     ViewPager viewPager;
 
-    @InjectView(R.id.fab)
+    @Bind(R.id.fab)
     FloatingActionButton fab;
 
-    @InjectView(R.id.tabs)
+    @Bind(R.id.tabs)
     TabLayout mTabLayout;
 
     public MainActivity() {

@@ -31,7 +31,7 @@ ext {
     cardViewVersion = '22.2.0'
     recyclerViewVersion = '22.2.0'
     daggerVersion = '2.0'
-    butterKnifeVersion = '6.1.0'
+    butterKnifeVersion = '7.0.1'
     rxJavaVersion = '1.0.12'
     rxAndroidVersion = '0.24.0'
     javaxAnnotationVersion = '10.0-b28'

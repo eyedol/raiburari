@@ -25,7 +25,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.InflateException;
 import android.view.View;
 
-import butterknife.InjectView;
 import timber.log.Timber;
 
 /**
@@ -51,7 +50,7 @@ public abstract class BaseRecyclerViewFragment<M extends Model, L extends BaseRe
     /**
      * RecyclerView
      */
-    @InjectView(android.R.id.list)
+    //@Bind(android.R.id.list)
     protected BloatedRecyclerView mBloatedRecyclerView;
 
     protected BaseRecyclerViewFragment(Class<L> adapterClass, int layout, int menu) {
