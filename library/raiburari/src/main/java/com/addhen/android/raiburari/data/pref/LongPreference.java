@@ -18,6 +18,8 @@ package com.addhen.android.raiburari.data.pref;
 
 import android.content.SharedPreferences;
 
+import javax.inject.Inject;
+
 /**
  * Preference for saving Long values
  *
@@ -31,6 +33,7 @@ public class LongPreference extends BasePreference<Long> {
      * @param sharedPreferences SharedPreferences to be used for storing the value.
      * @param key               The key for the preference
      */
+    @Inject
     public LongPreference(SharedPreferences sharedPreferences, String key) {
         this(sharedPreferences, key, 0);
     }

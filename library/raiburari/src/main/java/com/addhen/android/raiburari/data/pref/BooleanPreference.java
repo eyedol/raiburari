@@ -18,6 +18,8 @@ package com.addhen.android.raiburari.data.pref;
 
 import android.content.SharedPreferences;
 
+import javax.inject.Inject;
+
 /**
  * Preference for saving Boolean values
  *
@@ -31,6 +33,7 @@ public class BooleanPreference extends BasePreference<Boolean> {
      * @param sharedPreferences SharedPreferences to be used for storing the value.
      * @param key               The key for the preference
      */
+    @Inject
     public BooleanPreference(SharedPreferences sharedPreferences, String key) {
         this(sharedPreferences, key, false);
     }
