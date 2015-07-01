@@ -4,7 +4,8 @@ Change Log
 ## v2.3.0
 _2015-07-01_
 
-* Upgrade `ButterKnife` to `7.0.1` to make use of the new APIs
+* Upgrade `ButterKnife` to `7.0.1` to make use of the new APIs.
+* Add `Inject` to the Typed SharedPreferences so they can be injected via Dagger.
 
 ## v2.2.0
 _2015-06-19_
