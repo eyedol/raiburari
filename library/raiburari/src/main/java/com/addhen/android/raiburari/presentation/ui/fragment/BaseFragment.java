@@ -97,6 +97,12 @@ public abstract class BaseFragment extends Fragment {
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         if (this.mMenu != 0) {
             inflater.inflate(this.mMenu, menu);
