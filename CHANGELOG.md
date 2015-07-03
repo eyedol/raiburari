@@ -1,6 +1,11 @@
 Change Log
 =========
 
+## v2.3.1
+_2015-07-03_
+
+* Unbind fragment's views after it has been destroyed.
+
 ## v2.3.0
 _2015-07-01_
 
