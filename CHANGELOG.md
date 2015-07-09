@@ -1,6 +1,11 @@
 Change Log
 =========
 
+## v2.4.0
+_2015-07-09_
+
+* Make TypedPreference support devices below Gingerbread.
+
 ## v2.3.1
 _2015-07-03_
 
