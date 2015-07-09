@@ -16,7 +16,9 @@
 
 package com.addhen.android.raiburari.data.pref;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
@@ -67,11 +69,14 @@ public class BooleanPreference extends BasePreference<Boolean> {
      * @param value The Boolean value to be saved
      */
     @Override
-    public void set(Boolean value) {
+    public void set(@NonNull Boolean value) {
         this.set((boolean) value);
     }
 
+    /** Set the value for the preference */
+    @SuppressLint("CommitPrefEdits")
     public void set(boolean value) {
-        getSharedPreferences().edit().putBoolean(getKey(), value).apply();
+        SharedPreferences.Editor editor = getSharedPreferences().edit().putBoolean(getKey(), value);
+        PREF_SAVER.save(editor);
     }
 }

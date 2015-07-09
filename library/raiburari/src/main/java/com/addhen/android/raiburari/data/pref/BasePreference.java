@@ -16,7 +16,9 @@
 
 package com.addhen.android.raiburari.data.pref;
 
+import android.annotation.TargetApi;
 import android.content.SharedPreferences;
+import android.os.Build;
 
 /**
  * Base class for creating Typed base Preference
@@ -75,4 +77,45 @@ public abstract class BasePreference<T> implements AppPreference<T> {
         return mSharedPreferences;
     }
 
+    /** Get the implementation to save shared prefereneces based on api level */
+    protected PrefSaver getPrefSaver() {
+        return PREF_SAVER;
+    }
+
+    interface PrefSaver {
+
+        void save(SharedPreferences.Editor editor);
+    }
+
+    static class PrefSaverDefault implements PrefSaver {
+
+        @Override
+        public void save(SharedPreferences.Editor editor) {
+            editor.commit();
+        }
+    }
+
+    static class PrefSaverGingerbread implements PrefSaver {
+
+        @TargetApi(Build.VERSION_CODES.GINGERBREAD)
+        @Override
+        public void save(SharedPreferences.Editor editor) {
+            editor.apply();
+        }
+    }
+
+    /**
+     * Wrapper for saving the preference. Switches between
+     * {@link android.content.SharedPreferences.Editor#commit()}, and
+     * {@link android.content.SharedPreferences.Editor#apply()} based of of the api level
+     */
+    static final PrefSaver PREF_SAVER;
+
+    static {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+            PREF_SAVER = new PrefSaverGingerbread();
+        } else {
+            PREF_SAVER = new PrefSaverDefault();
+        }
+    }
 }

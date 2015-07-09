@@ -16,7 +16,9 @@
 
 package com.addhen.android.raiburari.data.pref;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
@@ -61,7 +63,7 @@ public class IntPreference extends BasePreference<Integer> {
      * @param value The Integer value to be saved
      */
     @Override
-    public void set(Integer value) {
+    public void set(@NonNull Integer value) {
         this.set((int) value);
     }
 
@@ -70,7 +72,9 @@ public class IntPreference extends BasePreference<Integer> {
      *
      * @param value The Integer value to be saved
      */
+    @SuppressLint("CommitPrefEdits")
     public void set(int value) {
-        getSharedPreferences().edit().putInt(getKey(), value).apply();
+        SharedPreferences.Editor editor = getSharedPreferences().edit().putInt(getKey(), value);
+        PREF_SAVER.save(editor);
     }
 }

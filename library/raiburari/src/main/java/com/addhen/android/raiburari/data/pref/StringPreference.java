@@ -16,6 +16,7 @@
 
 package com.addhen.android.raiburari.data.pref;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 
 import javax.inject.Inject;
@@ -60,13 +61,11 @@ public class StringPreference extends BasePreference<String> {
         return getSharedPreferences().getString(getKey(), getDefaultValue());
     }
 
-    /**
-     * Set the string to be saved
-     *
-     * @param value The String value to be saved
-     */
+    /** Set the value for the preference */
+    @SuppressLint("CommitPrefEdits")
     @Override
     public void set(String value) {
-        getSharedPreferences().edit().putString(getKey(), value).apply();
+        SharedPreferences.Editor editor = getSharedPreferences().edit().putString(getKey(), value);
+        PREF_SAVER.save(editor);
     }
 }

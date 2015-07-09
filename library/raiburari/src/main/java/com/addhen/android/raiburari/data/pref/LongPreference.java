@@ -16,7 +16,9 @@
 
 package com.addhen.android.raiburari.data.pref;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
@@ -61,16 +63,13 @@ public class LongPreference extends BasePreference<Long> {
      * @param value The Integer value to be saved
      */
     @Override
-    public void set(Long value) {
-        this.set(value);
+    public void set(@NonNull Long value) {
+        this.set((long) value);
     }
 
-    /**
-     * Convenient method for setting the Integer to be saved and to avoid clumsy autoboxing.
-     *
-     * @param value The Integer value to be saved
-     */
+    @SuppressLint("CommitPrefEdits")
     public void set(long value) {
-        getSharedPreferences().edit().putLong(getKey(), value).apply();
+        SharedPreferences.Editor editor = getSharedPreferences().edit().putLong(getKey(), value);
+        PREF_SAVER.save(editor);
     }
 }
