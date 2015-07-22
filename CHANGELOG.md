@@ -2,6 +2,11 @@ Change Log
 =========
 
 ## v2.4.0
+_2015-07-23_
+
+* Update Android support library to v2.2.1.
+
+## v2.4.0
 _2015-07-09_
 
 * Make TypedPreference support devices below Gingerbread.
