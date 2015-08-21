@@ -1,7 +1,12 @@
 Change Log
 =========
+## v2.6.0
+_2015-08-22_
 
-## v2.4.0
+* Update Android support library to v23.0.0.
+* Target Android API level 23
+
+## v2.5.0
 _2015-07-23_
 
 * Update Android support library to v2.2.1.
