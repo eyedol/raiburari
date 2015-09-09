@@ -1,5 +1,11 @@
 Change Log
 =========
+
+## v2.6.1
+_2015-09-09_
+
+* Update Android support library to v23.0.1.
+
 ## v2.6.0
 _2015-08-22_
 
