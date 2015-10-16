@@ -1,6 +1,13 @@
 Change Log
 =========
 
+## v2.7.0
+_2015-10-16_
+
+* Update Android support library to v23.1.0
+* Update most of the dependencies to their latest version
+* Fix typo in a method name. Now `showSnabackar` has been renamed to `showSnackbar`
+
 ## v2.6.1
 _2015-09-09_
 
