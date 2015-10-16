@@ -219,7 +219,7 @@ public abstract class BaseFragment extends Fragment {
      * @param view    The view to anchor the Snackbar to
      * @param message The message to be showed
      */
-    protected void showSnabackar(View view, String message) {
+    protected void showSnackbar(View view, String message) {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
     }
 
@@ -229,7 +229,7 @@ public abstract class BaseFragment extends Fragment {
      * @param view  The view to anchor the Snackbar to
      * @param resId The message to be showed
      */
-    protected void showSnabackar(View view, @StringRes int resId) {
-        showSnabackar(view, getString(resId));
+    protected void showSnackbar(View view, @StringRes int resId) {
+        showSnackbar(view, getString(resId));
     }
 }
