@@ -1,6 +1,12 @@
 Change Log
 =========
 
+## v2.8.0
+_2015-11-13_
+
+* Update Android support library to v23.1.1.
+* Implement Rx base location manager for fetching the users location via GPS or the network.
+
 ## v2.7.0
 _2015-10-16_
 
