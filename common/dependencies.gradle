@@ -32,7 +32,7 @@ ext {
     recyclerViewVersion = '23.1.1'
     daggerVersion = '2.0.1'
     butterKnifeVersion = '7.0.1'
-    rxJavaVersion = '1.0.14'
+    rxJavaVersion = '1.1.0'
     rxAndroidVersion = '1.0.1'
     javaxAnnotationVersion = '1.0'
     gsonVersion = '2.3.1'
