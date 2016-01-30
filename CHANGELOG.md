@@ -1,6 +1,12 @@
 Change Log
 =========
 
+## v2.9.0
+_2016-01-30_
+
+* Add a workaround for ButterKnife not binding the super class BloatedRecyclerview when the child class binds it views using butterknife
+* Upgrade Android gradle plugin
+
 ## v2.8.0
 _2015-11-13_
 
