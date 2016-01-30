@@ -29,12 +29,15 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import butterknife.Bind;
 
 /**
  * @author Henry Addo
@@ -46,7 +49,8 @@ public class MainFragment extends BaseRecyclerViewFragment<UserModel, UserAdapte
     @Inject
     UserListPresenter userListPresenter;
 
-    UserAdapter mUserAdapter;
+    @Bind(R.id.user_progressbar)
+    ProgressBar mProgressBar;
 
     private static MainFragment mMainFragment;
 
@@ -97,7 +101,6 @@ public class MainFragment extends BaseRecyclerViewFragment<UserModel, UserAdapte
                 mBloatedRecyclerView.recyclerView, this);
         mBloatedRecyclerView.addItemDividerDecoration(getActivity());
         mBloatedRecyclerView.recyclerView.addOnItemTouchListener(itemTouchListenerAdapter);
-        mUserAdapter = mRecyclerViewAdapter;
     }
 
     @Override

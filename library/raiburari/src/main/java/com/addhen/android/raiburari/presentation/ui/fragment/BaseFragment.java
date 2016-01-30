@@ -86,7 +86,6 @@ public abstract class BaseFragment extends Fragment {
         if (mLayout != 0) {
             root = inflater.inflate(mLayout, container, false);
         }
-
         return root;
     }
 

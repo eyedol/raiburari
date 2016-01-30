@@ -25,7 +25,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.InflateException;
 import android.view.View;
 
-import butterknife.Bind;
 import timber.log.Timber;
 
 /**
@@ -51,7 +50,6 @@ public abstract class BaseRecyclerViewFragment<M extends Model, L extends BaseRe
     /**
      * RecyclerView
      */
-    @Bind(android.R.id.list)
     protected BloatedRecyclerView mBloatedRecyclerView;
 
     protected BaseRecyclerViewFragment(Class<L> adapterClass, int layout, int menu) {
@@ -94,6 +92,7 @@ public abstract class BaseRecyclerViewFragment<M extends Model, L extends BaseRe
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mBloatedRecyclerView = (BloatedRecyclerView) view.findViewById(android.R.id.list);
         if (mBloatedRecyclerView != null) {
             mRecyclerViewAdapter = BaseRecyclerViewFragment
                     .createInstance(mRecyclerViewAdapterClass);
