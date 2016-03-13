@@ -1,10 +1,18 @@
 Change Log
 =========
 
+## v2.11.0
+_2016-03-13_
+
+* Update Android support and design libraries to v23.2.1
+* Update `Timber` to v4.1.1
+* Update `Gson` to v2.6.2
+* Update `buildTools` to 24.0.0 rc1
+
 ## v2.10.0
 _2016-02-25_
 
-* Update Android support and design libraries to v23.2.1
+* Update Android support and design libraries to v23.2.0
 * Update Dagger 2 to v2.0.2
 * Update `RxJava` to v1.1.1 
 
