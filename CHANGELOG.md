@@ -1,5 +1,12 @@
 Change Log
-=========
+==========
+
+## v2.12.0
+_2016-04-22_
+
+* Update Android support and design libraries to v23.3.0
+* Downgrade `Timber` to v3.0.0 for minSDK 9 support
+* Update `buildTools` to 24.0.0 rc2
 
 ## v2.11.0
 _2016-03-13_
