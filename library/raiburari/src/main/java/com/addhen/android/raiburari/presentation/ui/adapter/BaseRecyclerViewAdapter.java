@@ -70,17 +70,17 @@ public abstract class BaseRecyclerViewAdapter<M extends Model>
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int position) {
 
-        if (position == VIEW_TYPES.FOOTER) {
+        if (position == ViewTypes.FOOTER) {
             RecyclerView.ViewHolder viewHolder = new CustomViewViewHolder(mInfiniteScrollView);
             if (getAdapterItemCount() == 0) {
                 viewHolder.itemView.setVisibility(View.GONE);
             }
             return viewHolder;
-        } else if (position == VIEW_TYPES.HEADER) {
+        } else if (position == ViewTypes.HEADER) {
             if (customHeaderView != null) {
                 return new CustomViewViewHolder(customHeaderView);
             }
-        } else if (position == VIEW_TYPES.CHANGED_FOOTER) {
+        } else if (position == ViewTypes.CHANGED_FOOTER) {
             RecyclerView.ViewHolder viewHolder = new CustomViewViewHolder(mInfiniteScrollView);
             if (getAdapterItemCount() == 0) {
                 viewHolder.itemView.setVisibility(View.GONE);
@@ -106,11 +106,12 @@ public abstract class BaseRecyclerViewAdapter<M extends Model>
     }
 
     public void addItem(M item, int position) {
-        mItems.add(position, item);
+        int pos = position;
+        mItems.add(pos, item);
         if (customHeaderView != null) {
-            position++;
+            pos++;
         }
-        notifyItemInserted(position);
+        notifyItemInserted(pos);
     }
 
     public void removeItem(M item) {
@@ -155,15 +156,15 @@ public abstract class BaseRecyclerViewAdapter<M extends Model>
     public int getItemViewType(int position) {
         if (position == getItemCount() - 1 && mInfiniteScrollView != null) {
             if (isLoadMoreChanged) {
-                return VIEW_TYPES.CHANGED_FOOTER;
+                return ViewTypes.CHANGED_FOOTER;
             } else {
-                return VIEW_TYPES.FOOTER;
+                return ViewTypes.FOOTER;
             }
 
         } else if (position == 0 && customHeaderView != null) {
-            return VIEW_TYPES.HEADER;
+            return ViewTypes.HEADER;
         } else {
-            return VIEW_TYPES.NORMAL;
+            return ViewTypes.NORMAL;
         }
     }
 
@@ -175,7 +176,7 @@ public abstract class BaseRecyclerViewAdapter<M extends Model>
 
     }
 
-    private class VIEW_TYPES {
+    private static class ViewTypes {
 
         public static final int NORMAL = 0;
 

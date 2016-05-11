@@ -61,7 +61,7 @@ public class BloatedRecyclerView extends FrameLayout {
 
     private static final int SCROLLBARS_HORIZONTAL = 2;
 
-    private final float SCROLL_MULTIPLIER = 0.5f;
+    private static final float SCROLL_MULTIPLIER = 0.5f;
 
     public RecyclerView recyclerView;
 
@@ -293,7 +293,8 @@ public class BloatedRecyclerView extends FrameLayout {
                         layoutManagerType = LAYOUT_MANAGER_TYPE.STAGGERED_GRID;
                     } else {
                         throw new RuntimeException(
-                                "Unsupported LayoutManager used. Valid ones are LinearLayoutManager, GridLayoutManager and StaggeredGridLayoutManager");
+                                "Unsupported LayoutManager used. Valid ones are LinearLayoutManager"
+                                        + ", GridLayoutManager and StaggeredGridLayoutManager");
                     }
                 }
 
@@ -316,6 +317,8 @@ public class BloatedRecyclerView extends FrameLayout {
                         staggeredGridLayoutManager.findLastVisibleItemPositions(lastPositions);
                         lastVisibleItemPosition = findMax(lastPositions);
                         break;
+                    default:
+                        break;
                 }
                 enableShoworHideToolbarAndFloatingButton(recyclerView);
 
@@ -328,8 +331,8 @@ public class BloatedRecyclerView extends FrameLayout {
                 RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
                 int visibleItemCount = layoutManager.getChildCount();
                 int totalItemCount = layoutManager.getItemCount();
-                if ((visibleItemCount > 0 && currentScrollState == RecyclerView.SCROLL_STATE_IDLE &&
-                        (lastVisibleItemPosition) >= totalItemCount - 1) && !isLoadingMore) {
+                if ((visibleItemCount > 0 && currentScrollState == RecyclerView.SCROLL_STATE_IDLE
+                        && (lastVisibleItemPosition) >= totalItemCount - 1) && !isLoadingMore) {
                     isLoadingMore = true;
                     if (onLoadMoreListener != null) {
                         isLoadingMore = false;
@@ -451,8 +454,8 @@ public class BloatedRecyclerView extends FrameLayout {
     }
 
     public void addItemDividerDecoration(Context context) {
-        RecyclerView.ItemDecoration itemDecoration =
-                new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST);
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(context,
+                DividerItemDecoration.VERTICAL_LIST);
         recyclerView.addItemDecoration(itemDecoration);
     }
 
@@ -724,7 +727,8 @@ public class BloatedRecyclerView extends FrameLayout {
         if (mCallbacks != null) {
             switch (ev.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN:
-                    mFirstScroll = mDragging = true;
+                    mFirstScroll = true;
+                    mDragging = true;
                     mCallbacks.onDownMotionEvent();
                     break;
                 case MotionEvent.ACTION_UP:
@@ -732,6 +736,8 @@ public class BloatedRecyclerView extends FrameLayout {
                     //mIntercepted = false;
                     mDragging = false;
                     mCallbacks.onUpOrCancelMotionEvent(mObservableScrollState);
+                    break;
+                default:
                     break;
             }
         }
@@ -748,6 +754,8 @@ public class BloatedRecyclerView extends FrameLayout {
                     //mIntercepted = false;
                     mDragging = false;
                     mCallbacks.onUpOrCancelMotionEvent(mObservableScrollState);
+                    break;
+                default:
                     break;
             }
         }
