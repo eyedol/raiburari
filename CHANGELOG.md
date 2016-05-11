@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+## v2.13.2
+_2016-05-07_
+
+* Change `getLasKnowLocation` to `getLastKnowLocation` minor typo 
+* Make `LocationUpdatesObservable` and `LastKnownLocationObservable` constructors protected. 
+
 ## v2.13.1
 _2016-05-07_
 
