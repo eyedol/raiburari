@@ -16,6 +16,8 @@
 
 package com.addhen.android.raiburari.presentation.location;
 
+import com.addhen.android.raiburari.R;
+
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
@@ -26,8 +28,11 @@ import rx.Observer;
 
 public class LocationUpdatesObservable extends BaseLocationObservable<Location> {
 
+    private final Context mContext;
+
     protected LocationUpdatesObservable(Context context) {
         super(context);
+        mContext = context;
     }
 
     public static Observable<Location> createObservable(Context context) {
@@ -41,6 +46,8 @@ public class LocationUpdatesObservable extends BaseLocationObservable<Location> 
             public void onLocationChanged(Location location) {
                 if (location != null) {
                     observer.onNext(location);
+                } else {
+                    observer.onError(new Exception(mContext.getString(R.string.no_location_found)));
                 }
                 stopLocating();
                 observer.onCompleted();

@@ -16,6 +16,8 @@
 
 package com.addhen.android.raiburari.presentation.location;
 
+import com.addhen.android.raiburari.R;
+
 import android.content.Context;
 import android.location.Location;
 
@@ -27,8 +29,11 @@ import rx.Observer;
  */
 public class LastKnownLocationObservable extends BaseLocationObservable<Location> {
 
+    private final Context mContext;
+
     protected LastKnownLocationObservable(Context context) {
         super(context);
+        mContext = context;
     }
 
     public static Observable<Location> createObservable(Context ctx) {
@@ -40,6 +45,8 @@ public class LastKnownLocationObservable extends BaseLocationObservable<Location
         Location location = getLasKnowLocation(observer);
         if (location != null) {
             observer.onNext(location);
+        } else {
+            observer.onError(new Exception(mContext.getString(R.string.no_location_found)));
         }
         observer.onCompleted();
     }
