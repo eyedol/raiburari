@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-apply from: 'common/dependencies.gradle'
+apply from: 'config/dependencies.gradle'
 
 buildscript {
     repositories {
