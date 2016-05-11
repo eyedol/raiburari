@@ -24,10 +24,10 @@ import android.content.Context;
 
 /**
  * Implement this interface to show error messages to the activity at implements it.
- * It almost facilitates presenting users with data from {@link com.addhen.android.raiburari.presentation.presenter.Presenter}
- * to Activities.
+ * It almost facilitates presenting users with data from
+ * {@link com.addhen.android.raiburari.presentation.presenter.Presenter} to Activities.
  *
- * @author Ushahidi Team <team@ushahidi.com>
+ * @author Henry Addo
  */
 public interface UiView {
 

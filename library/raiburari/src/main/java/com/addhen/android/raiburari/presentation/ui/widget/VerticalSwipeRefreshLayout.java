@@ -42,7 +42,6 @@ public class VerticalSwipeRefreshLayout extends SwipeRefreshLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
-
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mPrevX = MotionEvent.obtain(event).getX();
@@ -55,6 +54,8 @@ public class VerticalSwipeRefreshLayout extends SwipeRefreshLayout {
                 if (xDiff > mTouchSlop) {
                     return false;
                 }
+            default:
+                break;
         }
 
         return super.onInterceptTouchEvent(event);

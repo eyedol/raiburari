@@ -42,13 +42,17 @@ import java.util.Locale;
 /**
  * @author Henry Addo
  */
-public class Utils {
+public final class Utils {
 
     private static final int DEFAULT_BUFFER_SIZE = 8192;
 
-    private static int screenWidth = 0;
+    private static int screenWidth;
 
-    private static int screenHeight = 0;
+    private static int screenHeight;
+
+    private Utils() {
+        // No instance allowed
+    }
 
     public static boolean isKitKatOrHigher() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
@@ -205,6 +209,7 @@ public class Utils {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
 
+    @TargetApi(13)
     public static int getScreenHeight(Context c) {
         if (screenHeight == 0) {
             WindowManager wm = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
@@ -217,6 +222,7 @@ public class Utils {
         return screenHeight;
     }
 
+    @TargetApi(13)
     public static int getScreenWidth(Context c) {
         if (screenWidth == 0) {
             WindowManager wm = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
@@ -225,7 +231,6 @@ public class Utils {
             display.getSize(size);
             screenWidth = size.x;
         }
-
         return screenWidth;
     }
 }
