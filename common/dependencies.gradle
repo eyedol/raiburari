@@ -32,8 +32,7 @@ ext {
     recyclerViewVersion = '23.3.0'
     daggerVersion = '2.0.2'
     butterKnifeVersion = '7.0.1'
-    rxJavaVersion = '1.1.1'
-    rxAndroidVersion = '1.1.0'
+    rxAndroidVersion = '1.2.0'
     javaxAnnotationVersion = '1.0'
     gsonVersion = '2.6.2'
     okHttpVersion = '2.5.0'
@@ -56,7 +55,6 @@ ext {
             daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
             dagger         : "com.google.dagger:dagger:${daggerVersion}",
             butterKnife    : "com.jakewharton:butterknife:${butterKnifeVersion}",
-            rxJava         : "io.reactivex:rxjava:${rxJavaVersion}",
             rxAndroid      : "io.reactivex:rxandroid:${rxAndroidVersion}",
             javaxAnnotation: "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
             timber         : "com.jakewharton.timber:timber:${timberVersion}",
