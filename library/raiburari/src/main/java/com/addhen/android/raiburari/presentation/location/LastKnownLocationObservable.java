@@ -31,7 +31,7 @@ public class LastKnownLocationObservable extends BaseLocationObservable<Location
 
     private final Context mContext;
 
-    public LastKnownLocationObservable(Context context) {
+    protected LastKnownLocationObservable(Context context) {
         super(context);
         mContext = context;
     }

@@ -30,7 +30,7 @@ public class LocationUpdatesObservable extends BaseLocationObservable<Location> 
 
     private final Context mContext;
 
-    public LocationUpdatesObservable(Context context) {
+    protected LocationUpdatesObservable(Context context) {
         super(context);
         mContext = context;
     }
