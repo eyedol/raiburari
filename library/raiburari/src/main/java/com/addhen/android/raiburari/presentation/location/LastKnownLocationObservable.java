@@ -31,7 +31,7 @@ public class LastKnownLocationObservable extends BaseLocationObservable<Location
 
     private final Context mContext;
 
-    protected LastKnownLocationObservable(Context context) {
+    public LastKnownLocationObservable(Context context) {
         super(context);
         mContext = context;
     }
@@ -45,9 +45,9 @@ public class LastKnownLocationObservable extends BaseLocationObservable<Location
         Location location = getLasKnowLocation(observer);
         if (location != null) {
             observer.onNext(location);
+            observer.onCompleted();
         } else {
             observer.onError(new Exception(mContext.getString(R.string.no_location_found)));
         }
-        observer.onCompleted();
     }
 }

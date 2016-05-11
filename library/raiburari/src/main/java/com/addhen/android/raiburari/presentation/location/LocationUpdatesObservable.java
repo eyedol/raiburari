@@ -30,7 +30,7 @@ public class LocationUpdatesObservable extends BaseLocationObservable<Location> 
 
     private final Context mContext;
 
-    protected LocationUpdatesObservable(Context context) {
+    public LocationUpdatesObservable(Context context) {
         super(context);
         mContext = context;
     }
@@ -46,11 +46,11 @@ public class LocationUpdatesObservable extends BaseLocationObservable<Location> 
             public void onLocationChanged(Location location) {
                 if (location != null) {
                     observer.onNext(location);
+                    stopLocating();
+                    observer.onCompleted();
                 } else {
                     observer.onError(new Exception(mContext.getString(R.string.no_location_found)));
                 }
-                stopLocating();
-                observer.onCompleted();
             }
 
             @Override
