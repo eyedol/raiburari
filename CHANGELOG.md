@@ -1,5 +1,12 @@
 Change Log
 ==========
+
+## v2.13.1
+_2016-05-07_
+
+* Call onComplete right after onNext is called because we're calling onError 
+* Make `LocationUpdatesObservable` and `LastKnownLocationObservable` constructors public
+
 ## v2.13.0
 _2016-05-07_
 
