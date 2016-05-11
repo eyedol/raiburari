@@ -255,6 +255,7 @@ public class BloatedRecyclerView extends FrameLayout {
     /**
      * Enable loading more of the recyclerview
      */
+    @SuppressWarnings("InflateParams")
     public void enableInfiniteScroll() {
         mOnScrollListener = new RecyclerView.OnScrollListener() {
             private int[] lastPositions;
@@ -335,6 +336,7 @@ public class BloatedRecyclerView extends FrameLayout {
         }
     }
 
+    @SuppressWarnings("InflateParams")
     public void disableInfiniteScroll() {
         setDefaultScrollListener();
         mAdapter.setInfiniteScrollView(LayoutInflater.from(getContext())

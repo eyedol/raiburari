@@ -33,6 +33,8 @@ import timber.log.Timber;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
+// Implementing app should request for the needed permissions
+@SuppressWarnings("MissingPermission")
 public abstract class BaseLocationObservable<T> implements Observable.OnSubscribe<T> {
 
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 30; // 30 meters

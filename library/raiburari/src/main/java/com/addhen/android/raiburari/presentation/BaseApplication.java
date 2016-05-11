@@ -28,9 +28,15 @@ import android.app.Application;
  *
  * @author Henry Addo
  */
+// This should registered by the implementing class
+@SuppressWarnings("Registered")
 public class BaseApplication extends Application {
 
     private ApplicationComponent mApplicationComponent;
+
+    protected BaseApplication() {
+        // No-op
+    }
 
     @Override
     public void onCreate() {
