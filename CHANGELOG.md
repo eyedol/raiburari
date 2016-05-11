@@ -1,14 +1,19 @@
 Change Log
 ==========
 
+## v2.14.0
+_2016-05-12_
+
+* Update changelog 
+
 ## v2.13.2
-_2016-05-07_
+_2016-05-11_
 
 * Change `getLasKnowLocation` to `getLastKnowLocation` minor typo 
 * Make `LocationUpdatesObservable` and `LastKnownLocationObservable` constructors protected. 
 
 ## v2.13.1
-_2016-05-07_
+_2016-05-11_
 
 * Call onComplete right after onNext is called because we're calling onError 
 * Make `LocationUpdatesObservable` and `LastKnownLocationObservable` constructors public
