@@ -27,6 +27,21 @@ import android.os.Build;
  */
 public abstract class BasePreference<T> implements AppPreference<T> {
 
+    /**
+     * Wrapper for saving the preference. Switches between
+     * {@link android.content.SharedPreferences.Editor#commit()}, and
+     * {@link android.content.SharedPreferences.Editor#apply()} based of of the api level
+     */
+    static final PrefSaver PREF_SAVER;
+
+    static {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+            PREF_SAVER = new PrefSaverGingerbread();
+        } else {
+            PREF_SAVER = new PrefSaverDefault();
+        }
+    }
+
     private final SharedPreferences mSharedPreferences;
 
     private final String mKey;
@@ -38,7 +53,6 @@ public abstract class BasePreference<T> implements AppPreference<T> {
         mKey = key;
         mDefaultValue = defaultValue;
     }
-
 
     @Override
     public boolean isSet() {
@@ -101,21 +115,6 @@ public abstract class BasePreference<T> implements AppPreference<T> {
         @Override
         public void save(SharedPreferences.Editor editor) {
             editor.apply();
-        }
-    }
-
-    /**
-     * Wrapper for saving the preference. Switches between
-     * {@link android.content.SharedPreferences.Editor#commit()}, and
-     * {@link android.content.SharedPreferences.Editor#apply()} based of of the api level
-     */
-    static final PrefSaver PREF_SAVER;
-
-    static {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-            PREF_SAVER = new PrefSaverGingerbread();
-        } else {
-            PREF_SAVER = new PrefSaverDefault();
         }
     }
 }

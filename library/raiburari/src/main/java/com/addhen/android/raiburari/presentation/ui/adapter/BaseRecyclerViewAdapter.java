@@ -35,11 +35,17 @@ import java.util.List;
 public abstract class BaseRecyclerViewAdapter<M extends Model>
         extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    public boolean isLoadMoreChanged = false;
+
+    protected BloatedRecyclerView.CustomRelativeWrapper customHeaderView = null;
+
     private List<M> mItems;
 
     private View mInfiniteScrollView = null;
 
-    public boolean isLoadMoreChanged = false;
+    public BaseRecyclerViewAdapter() {
+        mItems = new ArrayList<>();
+    }
 
     public abstract RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent);
 
@@ -50,21 +56,15 @@ public abstract class BaseRecyclerViewAdapter<M extends Model>
      */
     public abstract int getAdapterItemCount();
 
+    public BloatedRecyclerView.CustomRelativeWrapper getCustomHeaderView() {
+        return customHeaderView;
+    }
+
     /**
      * Set the header view of the adapter.
      */
     public void setCustomHeaderView(BloatedRecyclerView.CustomRelativeWrapper customHeaderView) {
         this.customHeaderView = customHeaderView;
-    }
-
-    public BloatedRecyclerView.CustomRelativeWrapper getCustomHeaderView() {
-        return customHeaderView;
-    }
-
-    protected BloatedRecyclerView.CustomRelativeWrapper customHeaderView = null;
-
-    public BaseRecyclerViewAdapter() {
-        mItems = new ArrayList<>();
     }
 
     @Override
@@ -122,10 +122,6 @@ public abstract class BaseRecyclerViewAdapter<M extends Model>
         notifyItemRemoved(position);
     }
 
-    public void setInfiniteScrollView(View customview) {
-        mInfiniteScrollView = customview;
-    }
-
     public void swipeInfiniteScrollView(View customview) {
         mInfiniteScrollView = customview;
         isLoadMoreChanged = true;
@@ -133,6 +129,10 @@ public abstract class BaseRecyclerViewAdapter<M extends Model>
 
     public View getInfiniteScrollView() {
         return mInfiniteScrollView;
+    }
+
+    public void setInfiniteScrollView(View customview) {
+        mInfiniteScrollView = customview;
     }
 
     @Override

@@ -19,7 +19,6 @@ package com.addhen.android.raiburari.presentation.di.component;
 import com.addhen.android.raiburari.domain.executor.PostExecutionThread;
 import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 import com.addhen.android.raiburari.presentation.di.module.ApplicationModule;
-import com.addhen.android.raiburari.presentation.state.ApplicationState;
 import com.addhen.android.raiburari.presentation.ui.activity.BaseActivity;
 import com.squareup.otto.Bus;
 

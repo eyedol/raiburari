@@ -55,6 +55,14 @@ import timber.log.Timber;
  */
 public class BloatedRecyclerView extends FrameLayout {
 
+    private static final int SCROLLBARS_NONE = 0;
+
+    private static final int SCROLLBARS_VERTICAL = 1;
+
+    private static final int SCROLLBARS_HORIZONTAL = 2;
+
+    private final float SCROLL_MULTIPLIER = 0.5f;
+
     public RecyclerView recyclerView;
 
     public int showLoadMoreItemNum = 3;
@@ -119,13 +127,13 @@ public class BloatedRecyclerView extends FrameLayout {
 
     private boolean mDragging;
 
-    private static final int SCROLLBARS_NONE = 0;
-
-    private static final int SCROLLBARS_VERTICAL = 1;
-
-    private static final int SCROLLBARS_HORIZONTAL = 2;
-
     private int mScrollbarsStyle;
+
+    private CustomRelativeWrapper mHeader;
+
+    private int mTotalYScrolled;
+
+    private OnParallaxScroll mParallaxScroll;
 
     public BloatedRecyclerView(Context context) {
         super(context);
@@ -479,6 +487,19 @@ public class BloatedRecyclerView extends FrameLayout {
     }
 
     /**
+     * Gets the current ItemAnimator for this RecyclerView. A null return value
+     * indicates that there is no animator and that item changes will happen without
+     * any animations. By default, RecyclerView instantiates and
+     * uses an instance of {@link android.support.v7.widget.DefaultItemAnimator}.
+     *
+     * @return ItemAnimator The current ItemAnimator. If null, no animations will occur
+     * when changes occur to the items in this RecyclerView.
+     */
+    public RecyclerView.ItemAnimator getItemAnimator() {
+        return recyclerView.getItemAnimator();
+    }
+
+    /**
      * Sets the {@link RecyclerView.ItemAnimator} that will handle animations involving changes
      * to the items in this RecyclerView. By default, RecyclerView instantiates and
      * uses an instance of {@link android.support.v7.widget.DefaultItemAnimator}. Whether item
@@ -492,19 +513,6 @@ public class BloatedRecyclerView extends FrameLayout {
      */
     public void setItemAnimator(RecyclerView.ItemAnimator animator) {
         recyclerView.setItemAnimator(animator);
-    }
-
-    /**
-     * Gets the current ItemAnimator for this RecyclerView. A null return value
-     * indicates that there is no animator and that item changes will happen without
-     * any animations. By default, RecyclerView instantiates and
-     * uses an instance of {@link android.support.v7.widget.DefaultItemAnimator}.
-     *
-     * @return ItemAnimator The current ItemAnimator. If null, no animations will occur
-     * when changes occur to the items in this RecyclerView.
-     */
-    public RecyclerView.ItemAnimator getItemAnimator() {
-        return recyclerView.getItemAnimator();
     }
 
     /**
@@ -526,7 +534,6 @@ public class BloatedRecyclerView extends FrameLayout {
     public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
         this.onLoadMoreListener = onLoadMoreListener;
     }
-
 
     /**
      * Set the layout manager to the recycler
@@ -625,7 +632,6 @@ public class BloatedRecyclerView extends FrameLayout {
         }
     }
 
-
     /**
      * Enable or disable the SwipeRefreshLayout.
      * Default is false
@@ -634,18 +640,6 @@ public class BloatedRecyclerView extends FrameLayout {
         if (mSwipeRefreshLayout != null) {
             mSwipeRefreshLayout.setEnabled(isSwipeRefresh);
         }
-    }
-
-
-    public interface OnLoadMoreListener {
-
-        void loadMore(int itemsCount, int maxLastVisiblePosition);
-    }
-
-    public enum LAYOUT_MANAGER_TYPE {
-        LINEAR,
-        GRID,
-        STAGGERED_GRID
     }
 
     private int findMax(int[] lastPositions) {
@@ -657,14 +651,6 @@ public class BloatedRecyclerView extends FrameLayout {
         }
         return max;
     }
-
-    private CustomRelativeWrapper mHeader;
-
-    private int mTotalYScrolled;
-
-    private final float SCROLL_MULTIPLIER = 0.5f;
-
-    private OnParallaxScroll mParallaxScroll;
 
     /**
      * Set the parallax header of the recyclerview
@@ -703,34 +689,6 @@ public class BloatedRecyclerView extends FrameLayout {
         }
     }
 
-    public interface OnParallaxScroll {
-
-        void onParallaxScroll(float percentage, float offset, View parallax);
-    }
-
-    /**
-     * Custom layout for the Parallax Header.
-     */
-    public static class CustomRelativeWrapper extends RelativeLayout {
-
-        private int mOffset;
-
-        public CustomRelativeWrapper(Context context) {
-            super(context);
-        }
-
-        @Override
-        protected void dispatchDraw(Canvas canvas) {
-            canvas.clipRect(new Rect(getLeft(), getTop(), getRight(), getBottom() + mOffset));
-            super.dispatchDraw(canvas);
-        }
-
-        public void setClipY(int offset) {
-            mOffset = offset;
-            invalidate();
-        }
-    }
-
     public void setScrollViewCallbacks(ObservableScrollViewListener listener) {
         mCallbacks = listener;
     }
@@ -760,6 +718,81 @@ public class BloatedRecyclerView extends FrameLayout {
         return ss;
     }
 
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+
+        if (mCallbacks != null) {
+            switch (ev.getActionMasked()) {
+                case MotionEvent.ACTION_DOWN:
+                    mFirstScroll = mDragging = true;
+                    mCallbacks.onDownMotionEvent();
+                    break;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    //mIntercepted = false;
+                    mDragging = false;
+                    mCallbacks.onUpOrCancelMotionEvent(mObservableScrollState);
+                    break;
+            }
+        }
+        return super.onInterceptTouchEvent(ev);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        Timber.d("mCallbacks   " + (mCallbacks == null));
+        if (mCallbacks != null) {
+            switch (ev.getActionMasked()) {
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    //mIntercepted = false;
+                    mDragging = false;
+                    mCallbacks.onUpOrCancelMotionEvent(mObservableScrollState);
+                    break;
+            }
+        }
+        return super.onTouchEvent(ev);
+    }
+
+    public enum LAYOUT_MANAGER_TYPE {
+        LINEAR,
+        GRID,
+        STAGGERED_GRID
+    }
+
+    public interface OnLoadMoreListener {
+
+        void loadMore(int itemsCount, int maxLastVisiblePosition);
+    }
+
+    public interface OnParallaxScroll {
+
+        void onParallaxScroll(float percentage, float offset, View parallax);
+    }
+
+    /**
+     * Custom layout for the Parallax Header.
+     */
+    public static class CustomRelativeWrapper extends RelativeLayout {
+
+        private int mOffset;
+
+        public CustomRelativeWrapper(Context context) {
+            super(context);
+        }
+
+        @Override
+        protected void dispatchDraw(Canvas canvas) {
+            canvas.clipRect(new Rect(getLeft(), getTop(), getRight(), getBottom() + mOffset));
+            super.dispatchDraw(canvas);
+        }
+
+        public void setClipY(int offset) {
+            mOffset = offset;
+            invalidate();
+        }
+    }
+
     /**
      * This saved state class is a Parcelable and should not extend
      * {@link BaseSavedState} nor {@link android.view.AbsSavedState}
@@ -776,6 +809,19 @@ public class BloatedRecyclerView extends FrameLayout {
     static class SavedState implements Parcelable {
 
         public static final SavedState EMPTY_STATE = new SavedState() {
+        };
+
+        public static final Creator<SavedState> CREATOR
+                = new Creator<SavedState>() {
+            @Override
+            public SavedState createFromParcel(Parcel in) {
+                return new SavedState(in);
+            }
+
+            @Override
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
         };
 
         int prevFirstVisiblePosition;
@@ -856,54 +902,5 @@ public class BloatedRecyclerView extends FrameLayout {
         public Parcelable getSuperState() {
             return superState;
         }
-
-        public static final Creator<SavedState> CREATOR
-                = new Creator<SavedState>() {
-            @Override
-            public SavedState createFromParcel(Parcel in) {
-                return new SavedState(in);
-            }
-
-            @Override
-            public SavedState[] newArray(int size) {
-                return new SavedState[size];
-            }
-        };
-    }
-
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-
-        if (mCallbacks != null) {
-            switch (ev.getActionMasked()) {
-                case MotionEvent.ACTION_DOWN:
-                    mFirstScroll = mDragging = true;
-                    mCallbacks.onDownMotionEvent();
-                    break;
-                case MotionEvent.ACTION_UP:
-                case MotionEvent.ACTION_CANCEL:
-                    //mIntercepted = false;
-                    mDragging = false;
-                    mCallbacks.onUpOrCancelMotionEvent(mObservableScrollState);
-                    break;
-            }
-        }
-        return super.onInterceptTouchEvent(ev);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        Timber.d("mCallbacks   " + (mCallbacks == null));
-        if (mCallbacks != null) {
-            switch (ev.getActionMasked()) {
-                case MotionEvent.ACTION_UP:
-                case MotionEvent.ACTION_CANCEL:
-                    //mIntercepted = false;
-                    mDragging = false;
-                    mCallbacks.onUpOrCancelMotionEvent(mObservableScrollState);
-                    break;
-            }
-        }
-        return super.onTouchEvent(ev);
     }
 }

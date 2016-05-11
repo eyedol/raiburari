@@ -68,6 +68,15 @@ public class RxSharedPreferences {
         }).share();
     }
 
+    private static Func1<String, Boolean> matchesKey(final String key) {
+        return new Func1<String, Boolean>() {
+            @Override
+            public Boolean call(String value) {
+                return key.equals(value);
+            }
+        };
+    }
+
     public Observable<String> getString(String key) {
         return getString(key, null);
     }
@@ -129,14 +138,5 @@ public class RxSharedPreferences {
                         return mSharedPreferences.getInt(changedKey, defaultValue);
                     }
                 });
-    }
-
-    private static Func1<String, Boolean> matchesKey(final String key) {
-        return new Func1<String, Boolean>() {
-            @Override
-            public Boolean call(String value) {
-                return key.equals(value);
-            }
-        };
     }
 }
