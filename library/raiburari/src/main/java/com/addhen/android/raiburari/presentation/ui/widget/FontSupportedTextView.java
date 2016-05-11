@@ -64,7 +64,7 @@ public class FontSupportedTextView extends AppCompatTextView {
         }
     }
 
-    private class TypefaceManager {
+    private static class TypefaceManager {
 
         private final LruCache<String, Typeface> mCache;
 

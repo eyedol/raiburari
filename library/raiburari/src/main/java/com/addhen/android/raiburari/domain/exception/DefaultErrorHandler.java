@@ -21,6 +21,8 @@ package com.addhen.android.raiburari.domain.exception;
  */
 public class DefaultErrorHandler implements ErrorHandler {
 
+    private static final String DEFAULT_ERROR_MSG = "Unknown error";
+
     private final Exception exception;
 
     public DefaultErrorHandler(Exception exception) {
@@ -34,11 +36,7 @@ public class DefaultErrorHandler implements ErrorHandler {
 
     @Override
     public String getErrorMessage() {
-        String message = "";
-        if (this.exception != null) {
-            this.exception.getMessage();
-        }
-        return message;
+        return exception != null ? this.exception.getMessage() : DEFAULT_ERROR_MSG;
     }
 
 }

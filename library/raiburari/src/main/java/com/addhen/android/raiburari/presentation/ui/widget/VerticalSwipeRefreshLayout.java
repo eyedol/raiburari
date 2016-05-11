@@ -35,9 +35,7 @@ public class VerticalSwipeRefreshLayout extends SwipeRefreshLayout {
 
     public VerticalSwipeRefreshLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
-
     }
 
     @Override

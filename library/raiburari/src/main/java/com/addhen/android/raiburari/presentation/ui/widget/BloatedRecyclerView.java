@@ -62,6 +62,8 @@ public class BloatedRecyclerView extends FrameLayout {
 
     private static final float SCROLL_MULTIPLIER = 0.5f;
 
+    private static final float EPSILON = .0000001f;
+
     public RecyclerView recyclerView;
 
     public int showLoadMoreItemNum = 3;
@@ -162,7 +164,7 @@ public class BloatedRecyclerView extends FrameLayout {
         mSwipeRefreshLayout.setEnabled(false);
         if (recyclerView != null) {
             recyclerView.setClipToPadding(mClipToPadding);
-            if (mPadding != -1.1f) {
+            if (Math.abs(mPadding - (-1.1f)) < EPSILON) {
                 recyclerView.setPadding(mPadding, mPadding, mPadding, mPadding);
             } else {
                 recyclerView.setPadding(mPaddingLeft, mPaddingTop, mPaddingRight, mPaddingBottom);
@@ -599,7 +601,7 @@ public class BloatedRecyclerView extends FrameLayout {
             }
 
         });
-        if ((adapter == null || adapter.getItemCount() == 0) && mEmptyId != 0) {
+        if ((mAdapter == null || mAdapter.getItemCount() == 0) && mEmptyId != 0) {
             mEmpty.setVisibility(View.VISIBLE);
         }
 
