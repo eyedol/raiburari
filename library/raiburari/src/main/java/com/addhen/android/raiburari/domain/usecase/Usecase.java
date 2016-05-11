@@ -53,14 +53,14 @@ public abstract class Usecase {
     /**
      * Executes the current use case.
      *
-     * @param UseCaseSubscriber Usecase observable {@link #buildUseCaseObservable()}.
+     * @param usecaseSubscriber Usecase observable {@link #buildUseCaseObservable()}.
      */
     @SuppressWarnings("unchecked")
-    public void execute(Subscriber UseCaseSubscriber) {
+    public void execute(Subscriber usecaseSubscriber) {
         this.subscription = this.buildUseCaseObservable()
                 .subscribeOn(Schedulers.from(threadExecutor))
                 .observeOn(postExecutionThread.getScheduler())
-                .subscribe(UseCaseSubscriber);
+                .subscribe(usecaseSubscriber);
     }
 
     /**

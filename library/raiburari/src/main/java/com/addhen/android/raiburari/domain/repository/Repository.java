@@ -16,48 +16,46 @@
 
 package com.addhen.android.raiburari.domain.repository;
 
-import com.addhen.android.raiburari.domain.entity.Entity;
-
 import java.util.List;
 
 import rx.Observable;
 
 /**
- * Base Interface that represents Repository for fetching {@link Entity}
- * related data. It provides a list and a singe item of {@link Entity}
+ * Base Interface that represents Repository for fetching {@link E}
+ * related data. It provides a list and a singe item of {@link E}
  *
  * @author Henry Addo
  */
 public interface Repository<E> {
 
     /**
-     * Get an {@link Observable} which will emit a List of {@link Entity}.
+     * Get an {@link Observable} which will emit a List of {@link E}.
      */
     Observable<List<E>> getEntities();
 
     /**
-     * Get an {@link Observable} which will emit a {@link Entity}.
+     * Get an {@link Observable} which will emit a {@link E}.
      *
      * @param entityId The entity id used to retrieve the entity data.
      */
     Observable<E> getEntity(final Long entityId);
 
     /**
-     * Add an {@link Entity} to a storage.
+     * Add an {@link E} to a storage.
      *
      * @param entity The entity to be added.
      */
     Observable<Long> addEntity(E entity);
 
     /**
-     * Update an existing {@link Entity} in a storage.
+     * Update an existing {@link E} in a storage.
      *
      * @param entity The entity to be updated.
      */
     Observable<Long> updateEntity(E entity);
 
     /**
-     * Delete an existing {@link Entity} in a storage.
+     * Delete an existing {@link E} in a storage.
      *
      * @param id The entity's id to be deleted.
      */
