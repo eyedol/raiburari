@@ -35,7 +35,7 @@ import timber.log.Timber;
 public abstract class BaseRecyclerViewFragment<M extends Model, L extends BaseRecyclerViewAdapter>
         extends BaseFragment {
 
-    private static String TAG = BaseRecyclerViewFragment.class.getSimpleName();
+    private static final String TAG = BaseRecyclerViewFragment.class.getSimpleName();
 
     /**
      * RecyclerViewAdapter class
