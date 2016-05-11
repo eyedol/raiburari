@@ -20,7 +20,6 @@ import com.addhen.android.raiburari.R;
 import com.addhen.android.raiburari.presentation.ui.adapter.BaseRecyclerViewAdapter;
 import com.addhen.android.raiburari.presentation.ui.listener.ObservableScrollState;
 import com.addhen.android.raiburari.presentation.ui.listener.ObservableScrollViewListener;
-import com.addhen.android.raiburari.presentation.ui.listener.SwipeToDismissTouchListener;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -48,8 +47,8 @@ import android.widget.RelativeLayout;
 import timber.log.Timber;
 
 /**
- * This extends the base {@link android.support.v7.widget.RecyclerView} to encapsulate
- * swipe to dismiss, endless scroll, pluggable animations, item decorators, FAB and Parallax effect
+ * This extends the base {@link android.support.v7.widget.RecyclerView} to encapsulate endless
+ * scroll, pluggable animations, item decorators, FAB and Parallax effect
  *
  * @author Henry Addo
  */
@@ -235,21 +234,6 @@ public class BloatedRecyclerView extends FrameLayout {
         } finally {
             typedArray.recycle();
         }
-    }
-
-    /**
-     * Set a swipe-to-dismiss OnItemTouchListener for RecyclerView
-     */
-    public void setSwipeToDismissCallback(
-            SwipeToDismissTouchListener.DismissCallbacks dismissCallbacks) {
-        int[] notToDismiss = null;
-        if (mAdapter.getCustomHeaderView() != null) {
-            notToDismiss = new int[]{
-                    0
-            };
-        }
-        recyclerView.addOnItemTouchListener(
-                new SwipeToDismissTouchListener(recyclerView, dismissCallbacks));
     }
 
     void setDefaultScrollListener() {
