@@ -81,16 +81,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
     protected void setActionBarTitle(String title) {
         if (mActionBarToolbar != null) {
             mActionBarToolbar.setTitle(title);
@@ -146,7 +136,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
@@ -154,31 +143,22 @@ public abstract class BaseActivity extends AppCompatActivity {
             default:
                 break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        return super.onContextItemSelected(item);
-    }
-
-    protected android.view.View fadeIn(final android.view.View view, final boolean animate) {
+    protected View fadeIn(final View view, final boolean animate) {
         if (view != null) {
             if (animate) {
                 view.startAnimation(AnimationUtils.loadAnimation(this,
                         android.R.anim.fade_in));
             } else {
-
                 view.clearAnimation();
             }
         }
-
         return view;
-
     }
 
-    protected android.view.View fadeOut(final android.view.View view, final boolean animate) {
+    protected View fadeOut(final View view, final boolean animate) {
         if (view != null) {
             if (animate) {
                 view.startAnimation(AnimationUtils.loadAnimation(this,
@@ -188,14 +168,13 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         }
         return view;
-
     }
 
-    protected <V extends android.view.View> V setViewGone(final V view) {
+    protected <V extends View> V setViewGone(final V view) {
         return setViewGone(view, true);
     }
 
-    protected <V extends android.view.View> V setViewGone(final V view, final boolean gone) {
+    protected <V extends View> V setViewGone(final V view, final boolean gone) {
         if (view != null) {
             if (gone) {
                 if (GONE != view.getVisibility()) {
