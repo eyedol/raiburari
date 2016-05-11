@@ -42,7 +42,7 @@ public class LastKnownLocationObservable extends BaseLocationObservable<Location
 
     @Override
     protected void onLocationFixed(Observer<? super Location> observer) {
-        Location location = getLasKnowLocation(observer);
+        Location location = getLastKnowLocation(observer);
         if (location != null) {
             observer.onNext(location);
             observer.onCompleted();

@@ -72,7 +72,7 @@ public abstract class BaseLocationObservable<T> implements Observable.OnSubscrib
         return mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
-    protected Location getLasKnowLocation(Observer<? super T> observer) {
+    protected Location getLastKnowLocation(Observer<? super T> observer) {
         Location location = null;
         try {
             if (isNetworkEnabled()) {
