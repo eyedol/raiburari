@@ -1,5 +1,11 @@
 Change Log
 ==========
+## v2.13.0
+_2016-05-07_
+
+* Add android-check for static analysis 
+* Lot's of code and resources clean up
+* Fix bug with location observable throwing error when location object is null
 
 ## v2.12.0
 _2016-04-22_
