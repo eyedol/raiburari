@@ -38,11 +38,6 @@ public abstract class BaseRecyclerViewFragment<M extends Model, L extends BaseRe
     private static final String TAG = BaseRecyclerViewFragment.class.getSimpleName();
 
     /**
-     * RecyclerViewAdapter class
-     */
-    private final Class<L> mRecyclerViewAdapterClass;
-
-    /**
      * RecyclerViewAdapter
      */
     protected L mRecyclerViewAdapter;
@@ -51,6 +46,11 @@ public abstract class BaseRecyclerViewFragment<M extends Model, L extends BaseRe
      * RecyclerView
      */
     protected BloatedRecyclerView mBloatedRecyclerView;
+
+    /**
+     * RecyclerViewAdapter class
+     */
+    private final Class<L> mRecyclerViewAdapterClass;
 
     protected BaseRecyclerViewFragment(Class<L> adapterClass, int layout, int menu) {
         super(layout, menu);
