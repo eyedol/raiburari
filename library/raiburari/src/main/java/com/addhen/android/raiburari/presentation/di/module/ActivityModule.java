@@ -32,10 +32,10 @@ import dagger.Provides;
 @Module
 public class ActivityModule {
 
-    private final Activity activity;
+    private final Activity mActivity;
 
     public ActivityModule(Activity activity) {
-        this.activity = activity;
+        mActivity = activity;
     }
 
     /**
@@ -44,6 +44,6 @@ public class ActivityModule {
     @Provides
     @ActivityScope
     Activity activity() {
-        return this.activity;
+        return mActivity;
     }
 }

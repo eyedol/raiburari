@@ -58,9 +58,9 @@ public class BezelImageView extends ImageView {
 
     private ColorMatrixColorFilter mDesaturateColorFilter;
 
-    private boolean mDesaturateOnPress = false;
+    private boolean mDesaturateOnPress;
 
-    private boolean mCacheValid = false;
+    private boolean mCacheValid;
 
     private Bitmap mCacheBitmap;
 
@@ -93,9 +93,7 @@ public class BezelImageView extends ImageView {
             mBorderDrawable.setCallback(this);
         }
 
-        mDesaturateOnPress = a.getBoolean(R.styleable.BezelImageView_desaturateOnPress,
-                mDesaturateOnPress);
-
+        mDesaturateOnPress = a.getBoolean(R.styleable.BezelImageView_desaturateOnPress, false);
         a.recycle();
 
         // Other initialization
@@ -210,7 +208,7 @@ public class BezelImageView extends ImageView {
 
     @Override
     public void invalidateDrawable(Drawable who) {
-        if (who == mBorderDrawable || who == mMaskDrawable) {
+        if (who.equals(mBorderDrawable) || who.equals(mMaskDrawable)) {
             invalidate();
         } else {
             super.invalidateDrawable(who);
@@ -219,6 +217,7 @@ public class BezelImageView extends ImageView {
 
     @Override
     protected boolean verifyDrawable(Drawable who) {
-        return who == mBorderDrawable || who == mMaskDrawable || super.verifyDrawable(who);
+        return who.equals(mBorderDrawable) || who.equals(mMaskDrawable)
+                || super.verifyDrawable(who);
     }
 }

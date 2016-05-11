@@ -102,9 +102,7 @@ public class BloatedRecyclerView extends FrameLayout {
 
     private int lastVisibleItemPosition;
 
-    private boolean isLoadingMore = false;
-
-    private int currentScrollState = 0;
+    private boolean isLoadingMore;
 
     private BaseRecyclerViewAdapter mAdapter;
 
@@ -313,7 +311,7 @@ public class BloatedRecyclerView extends FrameLayout {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                currentScrollState = newState;
+                int currentScrollState = newState;
                 RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
                 int visibleItemCount = layoutManager.getChildCount();
                 int totalItemCount = layoutManager.getItemCount();
@@ -352,86 +350,85 @@ public class BloatedRecyclerView extends FrameLayout {
     }
 
     protected void enableShoworHideToolbarAndFloatingButton(RecyclerView recyclerView) {
-        if (mCallbacks != null) {
-            if (getChildCount() > 0) {
-                int firstVisiblePosition = recyclerView
-                        .getChildAdapterPosition(recyclerView.getChildAt(0));
-                int lastVisiblePosition = recyclerView
-                        .getChildAdapterPosition(recyclerView.getChildAt(getChildCount() - 1));
-                for (int i = firstVisiblePosition, j = 0; i <= lastVisiblePosition; i++, j++) {
-                    if (mChildrenHeights.indexOfKey(i) < 0
-                            || recyclerView.getChildAt(j).getHeight() != mChildrenHeights.get(i)) {
-                        mChildrenHeights.put(i, recyclerView.getChildAt(j).getHeight());
-                    }
-                }
+        if (mCallbacks != null && getChildCount() > 0) {
 
-                View firstVisibleChild = recyclerView.getChildAt(0);
-                if (firstVisibleChild != null) {
-                    if (mPrevFirstVisiblePosition < firstVisiblePosition) {
-                        // scroll down
-                        int skippedChildrenHeight = 0;
-                        if (firstVisiblePosition - mPrevFirstVisiblePosition != 1) {
-                            for (int i = firstVisiblePosition - 1; i > mPrevFirstVisiblePosition;
-                                    i--) {
-                                if (0 < mChildrenHeights.indexOfKey(i)) {
-                                    skippedChildrenHeight += mChildrenHeights.get(i);
-                                } else {
-                                    // Approximate each item's height to the first visible child.
-                                    // It may be incorrect, but without this, scrollY will be broken
-                                    // when scrolling from the bottom.
-                                    skippedChildrenHeight += firstVisibleChild.getHeight();
-                                }
-                            }
-                        }
-                        mPrevScrolledChildrenHeight += mPrevFirstVisibleChildHeight
-                                + skippedChildrenHeight;
-                        mPrevFirstVisibleChildHeight = firstVisibleChild.getHeight();
-                    } else if (firstVisiblePosition < mPrevFirstVisiblePosition) {
-                        // scroll up
-                        int skippedChildrenHeight = 0;
-                        if (mPrevFirstVisiblePosition - firstVisiblePosition != 1) {
-                            for (int i = mPrevFirstVisiblePosition - 1; i > firstVisiblePosition;
-                                    i--) {
-                                if (0 < mChildrenHeights.indexOfKey(i)) {
-                                    skippedChildrenHeight += mChildrenHeights.get(i);
-                                } else {
-                                    // Approximate each item's height to the first visible child.
-                                    // It may be incorrect, but without this, scrollY will be broken
-                                    // when scrolling from the bottom.
-                                    skippedChildrenHeight += firstVisibleChild.getHeight();
-                                }
-                            }
-                        }
-                        mPrevScrolledChildrenHeight -= firstVisibleChild.getHeight()
-                                + skippedChildrenHeight;
-                        mPrevFirstVisibleChildHeight = firstVisibleChild.getHeight();
-                    } else if (firstVisiblePosition == 0) {
-                        mPrevFirstVisibleChildHeight = firstVisibleChild.getHeight();
-                    }
-                    if (mPrevFirstVisibleChildHeight < 0) {
-                        mPrevFirstVisibleChildHeight = 0;
-                    }
-                    mScrollY = mPrevScrolledChildrenHeight - firstVisibleChild.getTop();
-                    mPrevFirstVisiblePosition = firstVisiblePosition;
-
-                    mCallbacks.onScrollChanged(mScrollY, mFirstScroll, mDragging);
-                    if (mFirstScroll) {
-                        mFirstScroll = false;
-                    }
-
-                    if (mPrevScrollY < mScrollY) {
-                        //down
-                        mObservableScrollState = ObservableScrollState.UP;
-                    } else if (mScrollY < mPrevScrollY) {
-                        //up
-                        mObservableScrollState = ObservableScrollState.DOWN;
-                    } else {
-                        mObservableScrollState = ObservableScrollState.STOP;
-                    }
-                    mPrevScrollY = mScrollY;
+            int firstVisiblePosition = recyclerView
+                    .getChildAdapterPosition(recyclerView.getChildAt(0));
+            int lastVisiblePosition = recyclerView
+                    .getChildAdapterPosition(recyclerView.getChildAt(getChildCount() - 1));
+            int k = firstVisiblePosition;
+            for (int j = 0; k <= lastVisiblePosition; k++, j++) {
+                if (mChildrenHeights.indexOfKey(k) < 0
+                        || recyclerView.getChildAt(j).getHeight() != mChildrenHeights.get(k)) {
+                    mChildrenHeights.put(k, recyclerView.getChildAt(j).getHeight());
                 }
             }
 
+            View firstVisibleChild = recyclerView.getChildAt(0);
+            if (firstVisibleChild != null) {
+                if (mPrevFirstVisiblePosition < firstVisiblePosition) {
+                    // scroll down
+                    int skippedChildrenHeight = 0;
+                    if (firstVisiblePosition - mPrevFirstVisiblePosition != 1) {
+                        for (int i = firstVisiblePosition - 1; i > mPrevFirstVisiblePosition;
+                                i--) {
+                            if (0 < mChildrenHeights.indexOfKey(i)) {
+                                skippedChildrenHeight += mChildrenHeights.get(i);
+                            } else {
+                                // Approximate each item's height to the first visible child.
+                                // It may be incorrect, but without this, scrollY will be broken
+                                // when scrolling from the bottom.
+                                skippedChildrenHeight += firstVisibleChild.getHeight();
+                            }
+                        }
+                    }
+                    mPrevScrolledChildrenHeight += mPrevFirstVisibleChildHeight
+                            + skippedChildrenHeight;
+                    mPrevFirstVisibleChildHeight = firstVisibleChild.getHeight();
+                } else if (firstVisiblePosition < mPrevFirstVisiblePosition) {
+                    // scroll up
+                    int skippedChildrenHeight = 0;
+                    if (mPrevFirstVisiblePosition - firstVisiblePosition != 1) {
+                        for (int i = mPrevFirstVisiblePosition - 1; i > firstVisiblePosition;
+                                i--) {
+                            if (0 < mChildrenHeights.indexOfKey(i)) {
+                                skippedChildrenHeight += mChildrenHeights.get(i);
+                            } else {
+                                // Approximate each item's height to the first visible child.
+                                // It may be incorrect, but without this, scrollY will be broken
+                                // when scrolling from the bottom.
+                                skippedChildrenHeight += firstVisibleChild.getHeight();
+                            }
+                        }
+                    }
+                    mPrevScrolledChildrenHeight -= firstVisibleChild.getHeight()
+                            + skippedChildrenHeight;
+                    mPrevFirstVisibleChildHeight = firstVisibleChild.getHeight();
+                } else if (firstVisiblePosition == 0) {
+                    mPrevFirstVisibleChildHeight = firstVisibleChild.getHeight();
+                }
+                if (mPrevFirstVisibleChildHeight < 0) {
+                    mPrevFirstVisibleChildHeight = 0;
+                }
+                mScrollY = mPrevScrolledChildrenHeight - firstVisibleChild.getTop();
+                mPrevFirstVisiblePosition = firstVisiblePosition;
+
+                mCallbacks.onScrollChanged(mScrollY, mFirstScroll, mDragging);
+                if (mFirstScroll) {
+                    mFirstScroll = false;
+                }
+
+                if (mPrevScrollY < mScrollY) {
+                    //down
+                    mObservableScrollState = ObservableScrollState.UP;
+                } else if (mScrollY < mPrevScrollY) {
+                    //up
+                    mObservableScrollState = ObservableScrollState.DOWN;
+                } else {
+                    mObservableScrollState = ObservableScrollState.STOP;
+                }
+                mPrevScrollY = mScrollY;
+            }
         }
     }
 
@@ -631,7 +628,7 @@ public class BloatedRecyclerView extends FrameLayout {
         }
     }
 
-    private int findMax(int[] lastPositions) {
+    private int findMax(int... lastPositions) {
         int max = Integer.MIN_VALUE;
         for (int value : lastPositions) {
             if (value > max) {
@@ -843,11 +840,11 @@ public class BloatedRecyclerView extends FrameLayout {
         /**
          * Called by onSaveInstanceState.
          */
-        SavedState(Parcelable superState) {
-            this.superState = superState != EMPTY_STATE ? superState : null;
+        protected SavedState(Parcelable superState) {
+            this.superState = !superState.equals(EMPTY_STATE) ? superState : null;
         }
 
-        private SavedState(Parcel in) {
+        protected SavedState(Parcel in) {
             // Parcel 'in' has its parent(RecyclerView)'s saved state.
             // To restore it, class loader that loaded RecyclerView is required.
             Parcelable superState = in.readParcelable(RecyclerView.class.getClassLoader());

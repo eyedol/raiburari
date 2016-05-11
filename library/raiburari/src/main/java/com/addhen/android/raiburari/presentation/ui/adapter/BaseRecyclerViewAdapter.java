@@ -35,13 +35,13 @@ import java.util.List;
 public abstract class BaseRecyclerViewAdapter<M extends Model>
         extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    public boolean isLoadMoreChanged = false;
+    public boolean isLoadMoreChanged;
 
-    protected BloatedRecyclerView.CustomRelativeWrapper customHeaderView = null;
+    protected BloatedRecyclerView.CustomRelativeWrapper customHeaderView;
 
-    private List<M> mItems;
+    private final List<M> mItems;
 
-    private View mInfiniteScrollView = null;
+    private View mInfiniteScrollView;
 
     public BaseRecyclerViewAdapter() {
         mItems = new ArrayList<>();

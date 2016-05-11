@@ -37,6 +37,7 @@ public class UiThread implements PostExecutionThread {
 
     @Inject
     public UiThread() {
+        //No-op
     }
 
     @Override

@@ -42,7 +42,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
             android.R.attr.listDivider
     };
 
-    private Drawable mDivider;
+    private final Drawable mDivider;
 
     private int mOrientation;
 

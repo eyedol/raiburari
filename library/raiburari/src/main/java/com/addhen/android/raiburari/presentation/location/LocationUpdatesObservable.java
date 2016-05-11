@@ -48,17 +48,17 @@ public class LocationUpdatesObservable extends BaseLocationObservable<Location> 
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
-
+                // No-op
             }
 
             @Override
             public void onProviderEnabled(String provider) {
-
+                // No-op
             }
 
             @Override
             public void onProviderDisabled(String provider) {
-
+                // No-op
             }
         });
         getLocationUpdates(observer);

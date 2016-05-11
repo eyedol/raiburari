@@ -21,7 +21,11 @@ package com.addhen.android.raiburari.domain.entity;
  *
  * @author Henry Addo
  */
-public abstract class Entity {
+public class Entity {
 
     public Long _id;
+
+    protected Entity() {
+        // No-op
+    }
 }

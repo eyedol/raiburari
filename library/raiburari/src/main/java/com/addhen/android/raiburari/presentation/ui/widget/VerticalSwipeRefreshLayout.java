@@ -27,11 +27,14 @@ import android.view.ViewConfiguration;
  *
  * @author Ushahidi Team <team@ushahidi.com>
  */
+// Tracking the value in prevX in the switch construct. In this case this rule doesn't hold for
+// the prevX variable
+@SuppressWarnings("PMD.SingularField")
 public class VerticalSwipeRefreshLayout extends SwipeRefreshLayout {
 
-    private int mTouchSlop;
+    private final int mTouchSlop;
 
-    private float mPrevX;
+    private float prevX;
 
     public VerticalSwipeRefreshLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -42,20 +45,17 @@ public class VerticalSwipeRefreshLayout extends SwipeRefreshLayout {
     public boolean onInterceptTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                mPrevX = MotionEvent.obtain(event).getX();
+                prevX = MotionEvent.obtain(event).getX();
                 break;
-
             case MotionEvent.ACTION_MOVE:
                 final float eventX = event.getX();
-                float xDiff = Math.abs(eventX - mPrevX);
-
+                float xDiff = Math.abs(eventX - prevX);
                 if (xDiff > mTouchSlop) {
                     return false;
                 }
             default:
                 break;
         }
-
         return super.onInterceptTouchEvent(event);
     }
 }

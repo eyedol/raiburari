@@ -41,9 +41,10 @@ public abstract class BaseLocationObservable<T> implements Observable.OnSubscrib
 
     protected LocationManager mLocationManager;
 
+    private final Context mContext;
+
     private LocationListener mLocationListener;
 
-    private Context mContext;
 
     protected BaseLocationObservable(Context context) {
         mContext = context;

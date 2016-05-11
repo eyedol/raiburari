@@ -21,7 +21,11 @@ package com.addhen.android.raiburari.presentation.model;
  *
  * @author Henry Addo
  */
-public abstract class Model {
+public class Model {
 
     public Long _id;
+
+    protected Model() {
+        // No-op
+    }
 }

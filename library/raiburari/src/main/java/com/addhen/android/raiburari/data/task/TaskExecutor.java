@@ -47,18 +47,14 @@ public class TaskExecutor implements ThreadExecutor {
     // Sets the Time Unit to seconds
     private static final TimeUnit KEEP_ALIVE_TIME_UNIT = TimeUnit.SECONDS;
 
-    private final BlockingQueue<Runnable> workQueue;
-
-    private final ThreadPoolExecutor threadPoolExecutor;
-
-    private final ThreadFactory threadFactory;
+    private final ThreadPoolExecutor mThreadPoolExecutor;
 
     @Inject
     public TaskExecutor() {
-        this.workQueue = new LinkedBlockingQueue<>();
-        this.threadFactory = new TaskThreadFactory();
-        this.threadPoolExecutor = new ThreadPoolExecutor(INITIAL_POOL_SIZE, MAX_POOL_SIZE,
-                KEEP_ALIVE_TIME, KEEP_ALIVE_TIME_UNIT, this.workQueue, this.threadFactory);
+        final BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<>();
+        final ThreadFactory threadFactory = new TaskThreadFactory();
+        this.mThreadPoolExecutor = new ThreadPoolExecutor(INITIAL_POOL_SIZE, MAX_POOL_SIZE,
+                KEEP_ALIVE_TIME, KEEP_ALIVE_TIME_UNIT, workQueue, threadFactory);
     }
 
     @Override
@@ -66,18 +62,16 @@ public class TaskExecutor implements ThreadExecutor {
         if (runnable == null) {
             throw new IllegalArgumentException("Runnable to execute cannot be null");
         }
-        this.threadPoolExecutor.execute(runnable);
+        this.mThreadPoolExecutor.execute(runnable);
     }
 
     private static class TaskThreadFactory implements ThreadFactory {
 
         private static final String THREAD_NAME = "android_";
 
-        private int counter = 0;
-
         @Override
         public Thread newThread(Runnable runnable) {
-            return new Thread(runnable, THREAD_NAME + counter);
+            return new Thread(runnable, THREAD_NAME + 0);
         }
     }
 }

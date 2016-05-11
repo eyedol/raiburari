@@ -32,11 +32,11 @@ import android.view.View;
 public class RecyclerViewItemTouchListenerAdapter extends GestureDetector.SimpleOnGestureListener
         implements RecyclerView.OnItemTouchListener {
 
-    private RecyclerViewOnItemClickListener listener;
+    private final RecyclerViewOnItemClickListener mListener;
 
-    private RecyclerView recyclerView;
+    private final RecyclerView mRecyclerView;
 
-    private GestureDetector gestureDetector;
+    private final GestureDetector mGestureDetector;
 
     public RecyclerViewItemTouchListenerAdapter(RecyclerView recyclerView,
             RecyclerViewOnItemClickListener listener) {
@@ -44,25 +44,25 @@ public class RecyclerViewItemTouchListenerAdapter extends GestureDetector.Simple
             throw new IllegalArgumentException(
                     "RecyclerView and Listener arguments can not be null");
         }
-        this.recyclerView = recyclerView;
-        this.listener = listener;
-        this.gestureDetector = new GestureDetector(recyclerView.getContext(), this);
+        mRecyclerView = recyclerView;
+        mListener = listener;
+        mGestureDetector = new GestureDetector(recyclerView.getContext(), this);
     }
 
     @Override
     public boolean onInterceptTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
-        gestureDetector.onTouchEvent(motionEvent);
+        mGestureDetector.onTouchEvent(motionEvent);
         return false;
     }
 
     @Override
     public void onTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
-
+        // No-op
     }
 
     @Override
     public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
+        // No-op
     }
 
     @Override
@@ -81,8 +81,8 @@ public class RecyclerViewItemTouchListenerAdapter extends GestureDetector.Simple
         }
 
         view.setPressed(false);
-        int position = recyclerView.getChildAdapterPosition(view);
-        listener.onItemClick(recyclerView, view, position);
+        int position = mRecyclerView.getChildAdapterPosition(view);
+        mListener.onItemClick(mRecyclerView, view, position);
         return true;
     }
 
@@ -91,14 +91,14 @@ public class RecyclerViewItemTouchListenerAdapter extends GestureDetector.Simple
         if (view == null) {
             return;
         }
-        int position = recyclerView.getChildAdapterPosition(view);
-        listener.onItemLongClick(recyclerView, view, position);
+        int position = mRecyclerView.getChildAdapterPosition(view);
+        mListener.onItemLongClick(mRecyclerView, view, position);
         view.setPressed(false);
     }
 
     @Nullable
     private View getChildViewUnder(MotionEvent e) {
-        return recyclerView.findChildViewUnder(e.getX(), e.getY());
+        return mRecyclerView.findChildViewUnder(e.getX(), e.getY());
     }
 
     public interface RecyclerViewOnItemClickListener {
