@@ -51,6 +51,7 @@ android {
         disable 'InvalidPackage'  // Some libraries have issues with this
         disable 'OldTargetApi'
         disable 'IconMissingDensityFolder' // Ignore for now
+        disable 'UnusedResources' // Ignore for now.
         warningsAsErrors true
         if (System.env.CI == 'true') {
             abortOnError true
