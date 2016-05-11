@@ -18,6 +18,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.noveogroup.android.check'
 
 def globalConfiguration = rootProject.extensions.getByName("ext")
 
@@ -46,10 +47,22 @@ android {
     }
 
     lintOptions {
-        abortOnError false;
+        abortOnError true
         disable 'InvalidPackage'  // Some libraries have issues with this
         disable 'OldTargetApi'
-        // Due to Robolectric that modifies the manifest when running tests
+        disable 'IconMissingDensityFolder' // Ignore for now
+        warningsAsErrors true
+        if (System.env.CI == 'true') {
+            abortOnError true
+            htmlReport false
+            xmlReport false
+            textReport true
+            textOutput 'stdout'
+        }
+    }
+
+    check {
+        abortOnError true
     }
 
     dexOptions {
