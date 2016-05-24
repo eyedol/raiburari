@@ -47,10 +47,10 @@
     </declare-styleable>
     <!-- ContextView -->
     <declare-styleable name="RaiContextMenu">
-        <attr name="width" format="dimension"/>
-        <attr name="backgroundView" format="reference"/>
-        <attr name="backgroundShadowRes" format="reference"/>
-        <attr name="orientation" format="enum">
+        <attr name="contextMenuWidth" format="dimension"/>
+        <attr name="contextMenuBackgroundView" format="reference"/>
+        <attr name="contextMenuBackgroundShadowRes" format="reference"/>
+        <attr name="contextMenuOrientation" format="enum">
             <enum name="vertical" value="1"/>
             <enum name="horizontal" value="2"/>
         </attr>

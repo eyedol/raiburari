@@ -1,8 +1,13 @@
 Change Log
 ==========
 
+## v2.14.2
+_2016-05-24_
+
+* Add the name of a styleable as a prefix to `attrs` name otherwise some of the name conflicts with Android's `attrs` name
+
 ## v2.14.1
-_2016-05-12_
+_2016-05-24_
 
 * Add Rai prefix to `attrs` name otherwise some of the name conflicts with Android's `attrs` name 
 
