@@ -48,9 +48,9 @@ public class FontSupportedTextView extends AppCompatTextView {
         super(context, attrs, defStyle);
         mTypefaceManager = new TypefaceManager(context.getAssets());
         if (!isInEditMode()) {
-            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.FontSupportedTextView);
-            if (a.hasValue(R.styleable.FontSupportedTextView_fontFile)) {
-                setFont(a.getString(R.styleable.FontSupportedTextView_fontFile));
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RaiFontSupportedTextView);
+            if (a.hasValue(R.styleable.RaiFontSupportedTextView_fontFile)) {
+                setFont(a.getString(R.styleable.RaiFontSupportedTextView_fontFile));
             }
             a.recycle();
         }

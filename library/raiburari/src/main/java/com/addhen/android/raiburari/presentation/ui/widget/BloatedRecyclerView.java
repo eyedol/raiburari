@@ -209,27 +209,27 @@ public class BloatedRecyclerView extends FrameLayout {
 
     protected void initAttrs(AttributeSet attrs) {
         TypedArray typedArray = getContext()
-                .obtainStyledAttributes(attrs, R.styleable.BloatedRecyclerView);
+                .obtainStyledAttributes(attrs, R.styleable.RaiBloatedRecyclerView);
         try {
             mPadding = (int) typedArray
-                    .getDimension(R.styleable.BloatedRecyclerView_recyclerviewPadding, -1.1f);
+                    .getDimension(R.styleable.RaiBloatedRecyclerView_recyclerviewPadding, -1.1f);
             mPaddingTop = (int) typedArray
-                    .getDimension(R.styleable.BloatedRecyclerView_recyclerviewPaddingTop, 0.0f);
+                    .getDimension(R.styleable.RaiBloatedRecyclerView_recyclerviewPaddingTop, 0.0f);
             mPaddingBottom = (int) typedArray
-                    .getDimension(R.styleable.BloatedRecyclerView_recyclerviewPaddingBottom, 0.0f);
+                    .getDimension(R.styleable.RaiBloatedRecyclerView_recyclerviewPaddingBottom, 0.0f);
             mPaddingLeft = (int) typedArray
-                    .getDimension(R.styleable.BloatedRecyclerView_recyclerviewPaddingLeft, 0.0f);
+                    .getDimension(R.styleable.RaiBloatedRecyclerView_recyclerviewPaddingLeft, 0.0f);
             mPaddingRight = (int) typedArray
-                    .getDimension(R.styleable.BloatedRecyclerView_recyclerviewPaddingRight, 0.0f);
+                    .getDimension(R.styleable.RaiBloatedRecyclerView_recyclerviewPaddingRight, 0.0f);
             mClipToPadding = typedArray
-                    .getBoolean(R.styleable.BloatedRecyclerView_recyclerviewClipToPadding, false);
+                    .getBoolean(R.styleable.RaiBloatedRecyclerView_recyclerviewClipToPadding, false);
             mEmptyId = typedArray
-                    .getResourceId(R.styleable.BloatedRecyclerView_recyclerviewEmptyView, 0);
+                    .getResourceId(R.styleable.RaiBloatedRecyclerView_recyclerviewEmptyView, 0);
             mFloatingButtonId = typedArray
-                    .getResourceId(R.styleable.BloatedRecyclerView_recyclerviewFloatingActionView,
+                    .getResourceId(R.styleable.RaiBloatedRecyclerView_recyclerviewFloatingActionView,
                             0);
             mScrollbarsStyle = typedArray
-                    .getInt(R.styleable.BloatedRecyclerView_recyclerviewScrollbars,
+                    .getInt(R.styleable.RaiBloatedRecyclerView_recyclerviewScrollbars,
                             SCROLLBARS_NONE);
         } finally {
             typedArray.recycle();

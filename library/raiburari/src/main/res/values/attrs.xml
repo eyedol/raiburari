@@ -25,12 +25,12 @@
         <attr name="desaturateOnPress" format="boolean"/>
     </declare-styleable>
 
-    <declare-styleable name="FontSupportedTextView">
+    <declare-styleable name="RaiFontSupportedTextView">
         <attr name="fontFile" format="string"/>
     </declare-styleable>
 
     <!-- BloatedRecyclerView -->
-    <declare-styleable name="BloatedRecyclerView">
+    <declare-styleable name="RaiBloatedRecyclerView">
         <attr name="recyclerviewClipToPadding" format="boolean"/>
         <attr name="recyclerviewPadding" format="dimension"/>
         <attr name="recyclerviewPaddingTop" format="dimension"/>
@@ -46,7 +46,7 @@
         </attr>
     </declare-styleable>
     <!-- ContextView -->
-    <declare-styleable name="ContextMenu">
+    <declare-styleable name="RaiContextMenu">
         <attr name="width" format="dimension"/>
         <attr name="backgroundView" format="reference"/>
         <attr name="backgroundShadowRes" format="reference"/>

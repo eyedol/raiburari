@@ -1,10 +1,16 @@
 Change Log
 ==========
 
+## v2.14.1
+_2016-05-12_
+
+* Add Rai prefix to `attrs` name otherwise some of the name conflicts with Android's `attrs` name 
+
+
 ## v2.14.0
 _2016-05-12_
 
-* Update changelog 
+* Update support library to v23.4.0 
 
 ## v2.13.2
 _2016-05-11_
