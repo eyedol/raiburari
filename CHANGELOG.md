@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+## v2.15.0
+_2016-06-02_
+
+* Remove Picasso as a dependency
+* Upgrade ButterKnife to v8.0.1. It now uses `apt` for annotation-processing so you need to add it as a dependency.
+
 ## v2.14.2
 _2016-05-24_
 
@@ -20,7 +26,7 @@ _2016-05-12_
 ## v2.13.2
 _2016-05-11_
 
-* Change `getLasKnowLocation` to `getLastKnowLocation` minor typo 
+* Change `getLasKnowLocation` to `getLastKnownLocation` minor typo 
 * Make `LocationUpdatesObservable` and `LastKnownLocationObservable` constructors protected. 
 
 ## v2.13.1
