@@ -85,7 +85,6 @@ dependencies {
     compile appDependencies.rxAndroid
     compile appDependencies.timber
     compile appDependencies.otto
-    compile appDependencies.picasso
 
     // Data dependencies
     compile appDependencies.gson

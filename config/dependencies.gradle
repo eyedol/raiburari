@@ -35,10 +35,8 @@ ext {
     rxAndroidVersion = '1.2.0'
     javaxAnnotationVersion = '1.0'
     gsonVersion = '2.6.2'
-    okHttpVersion = '2.5.0'
     timberVersion = '3.1.0'
     ottoVersion = '1.3.8'
-    picassoVersion = '2.5.2'
 
     //Testing
     robolectricVersion = '3.0'
@@ -60,9 +58,7 @@ ext {
             javaxAnnotation: "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
             timber         : "com.jakewharton.timber:timber:${timberVersion}",
             otto           : "com.squareup:otto:${ottoVersion}",
-            okHttp         : "com.squareup.okhttp:okhttp:${okHttpVersion}",
             gson           : "com.google.code.gson:gson:${gsonVersion}",
-            picasso        : "com.squareup.picasso:picasso:${picassoVersion}",
     ]
 
     appTestDependencies = [
