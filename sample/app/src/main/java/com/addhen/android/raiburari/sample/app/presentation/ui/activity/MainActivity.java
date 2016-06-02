@@ -41,29 +41,29 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
-import butterknife.Bind;
-import butterknife.ButterKnife;
+
+import butterknife.BindView;
 
 public class MainActivity extends BaseActivity implements HasComponent<UserComponent> {
 
     private UserComponent userComponent;
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    @Bind(R.id.drawer_layout)
+    @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
 
-    @Bind((R.id.nav_view))
+    @BindView((R.id.nav_view))
     NavigationView mNavigationView;
 
-    @Bind(R.id.viewpager)
+    @BindView(R.id.viewpager)
     ViewPager viewPager;
 
-    @Bind(R.id.fab)
+    @BindView(R.id.fab)
     FloatingActionButton fab;
 
-    @Bind(R.id.tabs)
+    @BindView(R.id.tabs)
     TabLayout mTabLayout;
 
     public MainActivity() {
@@ -81,8 +81,10 @@ public class MainActivity extends BaseActivity implements HasComponent<UserCompo
     private void initViews() {
         setSupportActionBar(mToolbar);
         final ActionBar ab = getSupportActionBar();
-        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
-        ab.setDisplayHomeAsUpEnabled(true);
+        if (ab != null) {
+            ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
 
         if (mNavigationView != null) {
             setupDrawerContent(mNavigationView);

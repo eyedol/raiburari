@@ -31,6 +31,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -51,6 +52,8 @@ public abstract class BaseFragment extends Fragment {
      * Menu resource mId
      */
     protected final int mMenu;
+
+    protected Unbinder mUnbinder;
 
     /**
      * BaseFragment
@@ -81,7 +84,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        mUnbinder.unbind();
     }
 
     @Override
@@ -157,7 +160,7 @@ public abstract class BaseFragment extends Fragment {
      * @param view to extract each widget injected in the fragment.
      */
     private void injectViews(final View view) {
-        ButterKnife.bind(this, view);
+        mUnbinder = ButterKnife.bind(this, view);
     }
 
     /**

@@ -45,6 +45,7 @@ android {
 
 dependencies {
     compile project(':library:raiburari')
+    apt appDependencies.butterKnifeComplier
     apt appDependencies.daggerCompiler
     provided appDependencies.javaxAnnotation
 }

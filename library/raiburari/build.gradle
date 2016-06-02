@@ -76,6 +76,7 @@ dependencies {
     def appTestDependencies = rootProject.ext.appTestDependencies
 
     apt appDependencies.daggerCompiler
+    apt appDependencies.butterKnifeComplier
     compile appDependencies.dagger
     compile appDependencies.design
     compile appDependencies.cardView

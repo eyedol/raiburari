@@ -34,6 +34,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -58,7 +59,10 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected final int mMenu;
 
+    protected Unbinder mUnbinder;
+
     private ActionBar mActionBarToolbar;
+
 
     public BaseActivity(int layout, int menu) {
         mLayout = layout;
@@ -79,6 +83,11 @@ public abstract class BaseActivity extends AppCompatActivity {
             mActionBarToolbar.setDisplayHomeAsUpEnabled(true);
             mActionBarToolbar.setHomeButtonEnabled(true);
         }
+    }
+
+    public void onDestroy() {
+        super.onDestroy();
+        mUnbinder.unbind();
     }
 
     protected void setActionBarTitle(String title) {
@@ -102,8 +111,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param message the message to be shown by the toast.
      */
     protected void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG)
-                .show();
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     /**
@@ -200,7 +208,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * ButterKnife annotations like @InjectView with the proper value.
      */
     private void injectViews() {
-        ButterKnife.bind(this);
+        mUnbinder = ButterKnife.bind(this);
     }
 
     /**

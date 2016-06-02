@@ -37,7 +37,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * @author Henry Addo
@@ -49,7 +49,7 @@ public class MainFragment extends BaseRecyclerViewFragment<UserModel, UserAdapte
     @Inject
     UserListPresenter userListPresenter;
 
-    @Bind(R.id.user_progressbar)
+    @BindView(R.id.user_progressbar)
     ProgressBar mProgressBar;
 
     private static MainFragment mMainFragment;
@@ -113,27 +113,27 @@ public class MainFragment extends BaseRecyclerViewFragment<UserModel, UserAdapte
 
     @Override
     public void showLoading() {
-
+        // No-op
     }
 
     @Override
     public void hideLoading() {
-
+        // No-op
     }
 
     @Override
     public void showRetry() {
-
+        // No-op
     }
 
     @Override
     public void hideRetry() {
-
+        // No-op
     }
 
     @Override
     public void showError(String message) {
-
+        // No-op
     }
 
     @Override
@@ -148,6 +148,6 @@ public class MainFragment extends BaseRecyclerViewFragment<UserModel, UserAdapte
 
     @Override
     public void onItemLongClick(RecyclerView parent, View clickedView, int position) {
-        // DO nothing
+        // No-op
     }
 }
