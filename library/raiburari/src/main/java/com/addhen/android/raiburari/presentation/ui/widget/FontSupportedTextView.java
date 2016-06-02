@@ -19,11 +19,9 @@ package com.addhen.android.raiburari.presentation.ui.widget;
 import com.addhen.android.raiburari.R;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.support.annotation.NonNull;
 import android.support.v4.util.LruCache;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
@@ -33,8 +31,6 @@ import android.util.AttributeSet;
  * @author Henry Addo
  */
 public class FontSupportedTextView extends AppCompatTextView {
-
-    private TypefaceManager mTypefaceManager;
 
     public FontSupportedTextView(Context context) {
         this(context, null);
@@ -46,18 +42,19 @@ public class FontSupportedTextView extends AppCompatTextView {
 
     public FontSupportedTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        mTypefaceManager = new TypefaceManager(context.getAssets());
         if (!isInEditMode()) {
-            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RaiFontSupportedTextView);
+            TypedArray a = context
+                    .obtainStyledAttributes(attrs, R.styleable.RaiFontSupportedTextView);
             if (a.hasValue(R.styleable.RaiFontSupportedTextView_fontFile)) {
-                setFont(a.getString(R.styleable.RaiFontSupportedTextView_fontFile));
+                setFont(context, a.getString(R.styleable.RaiFontSupportedTextView_fontFile));
             }
             a.recycle();
         }
     }
 
-    public void setFont(final String customFont) {
-        Typeface typeface = mTypefaceManager.getTypeface(customFont);
+    public void setFont(Context context, final String customFont) {
+        final TypefaceManager typefaceManager = new TypefaceManager();
+        final Typeface typeface = typefaceManager.getTypeface(context, customFont);
         if (typeface != null) {
             setPaintFlags(getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG);
             setTypeface(typeface);
@@ -68,21 +65,17 @@ public class FontSupportedTextView extends AppCompatTextView {
 
         private final LruCache<String, Typeface> mCache;
 
-        private final AssetManager mAssetManager;
-
-        public TypefaceManager(@NonNull AssetManager assetManager) {
-            mAssetManager = assetManager;
+        public TypefaceManager() {
             mCache = new LruCache<>(3);
         }
 
-        public Typeface getTypeface(final String filename) {
+        public Typeface getTypeface(final Context context, final String filename) {
             Typeface typeface = mCache.get(filename);
             if (typeface == null) {
-                typeface = Typeface.createFromAsset(mAssetManager, "fonts/" + filename);
+                typeface = Typeface.createFromAsset(context.getAssets(), "fonts/" + filename);
                 mCache.put(filename, typeface);
             }
             return typeface;
         }
-
     }
 }
