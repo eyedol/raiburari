@@ -21,20 +21,20 @@ allprojects {
 
 ext {
     //Android
-    androidBuildToolsVersion = "23.0.3"
+    androidBuildToolsVersion = "24.0.0"
     androidMinSdkVersion = 9
-    androidTargetSdkVersion = 23
-    androidCompileSdkVersion = 23
+    androidTargetSdkVersion = 24
+    androidCompileSdkVersion = 24
 
     //Libraries
-    designVersion = '23.4.0'
-    cardViewVersion = '23.4.0'
-    recyclerViewVersion = '23.4.0'
-    daggerVersion = '2.0.2'
+    designVersion = '24.0.0'
+    cardViewVersion = '24.0.0'
+    recyclerViewVersion = '24.0.0'
+    daggerVersion = '2.5'
     butterKnifeVersion = '8.0.1'
     rxAndroidVersion = '1.2.0'
     javaxAnnotationVersion = '1.0'
-    gsonVersion = '2.6.2'
+    gsonVersion = '2.7'
     timberVersion = '3.1.0'
     ottoVersion = '1.3.8'
 
@@ -47,18 +47,18 @@ ext {
     testingSupportLibVersion = '0.1'
 
     appDependencies = [
-            design         : "com.android.support:design:${designVersion}",
-            cardView       : "com.android.support:cardview-v7:${cardViewVersion}",
-            recyclerView   : "com.android.support:recyclerview-v7:${recyclerViewVersion}",
-            daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
-            dagger         : "com.google.dagger:dagger:${daggerVersion}",
-            butterKnife    : "com.jakewharton:butterknife:${butterKnifeVersion}",
-            butterKnifeComplier    : "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
-            rxAndroid      : "io.reactivex:rxandroid:${rxAndroidVersion}",
-            javaxAnnotation: "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
-            timber         : "com.jakewharton.timber:timber:${timberVersion}",
-            otto           : "com.squareup:otto:${ottoVersion}",
-            gson           : "com.google.code.gson:gson:${gsonVersion}",
+            design             : "com.android.support:design:${designVersion}",
+            cardView           : "com.android.support:cardview-v7:${cardViewVersion}",
+            recyclerView       : "com.android.support:recyclerview-v7:${recyclerViewVersion}",
+            daggerCompiler     : "com.google.dagger:dagger-compiler:${daggerVersion}",
+            dagger             : "com.google.dagger:dagger:${daggerVersion}",
+            butterKnife        : "com.jakewharton:butterknife:${butterKnifeVersion}",
+            butterKnifeComplier: "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
+            rxAndroid          : "io.reactivex:rxandroid:${rxAndroidVersion}",
+            javaxAnnotation    : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
+            timber             : "com.jakewharton.timber:timber:${timberVersion}",
+            otto               : "com.squareup:otto:${ottoVersion}",
+            gson               : "com.google.code.gson:gson:${gsonVersion}",
     ]
 
     appTestDependencies = [
