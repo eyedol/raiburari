@@ -1,5 +1,12 @@
 Change Log
 ==========
+## v2.16.0
+_2016-06-24_
+
+* Remove Timber as a dependency.
+* Upgrade support library to `v24.0.0`.
+* Upgrade dagger to `v2.5`.
+* Add `SerializedName` with `id` value to data entity to be usable by Gson.
 
 ## v2.15.0
 _2016-06-02_
