@@ -16,6 +16,8 @@
 
 package com.addhen.android.raiburari.data.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Base entity class that all entities must subclass
  *
@@ -23,6 +25,7 @@ package com.addhen.android.raiburari.data.entity;
  */
 public class DataEntity {
 
+    @SerializedName("id")
     public Long _id;
 
     protected DataEntity() {
