@@ -735,7 +735,7 @@ public class BloatedRecyclerView extends FrameLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        Log.d("BloatedRecyclerView","mCallbacks   " + (mCallbacks == null));
+        Log.d("BloatedRecyclerView", "mCallbacks   " + (mCallbacks == null));
         if (mCallbacks != null) {
             switch (ev.getActionMasked()) {
                 case MotionEvent.ACTION_UP:
