@@ -26,7 +26,6 @@ import android.util.Log;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
-import timber.log.Timber;
 
 /**
  * Base class to
@@ -78,13 +77,13 @@ public abstract class BaseLocationObservable<T> implements Observable.OnSubscrib
             if (isNetworkEnabled()) {
                 location = mLocationManager
                         .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                Timber.i("NETWORK_PROVIDER %s", "Enabled");
+                Log.i("NETWORK_PROVIDER %s", "Enabled");
             }
 
             if (isGPSEnabled() && location == null) {
                 location = mLocationManager
                         .getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                Timber.i("GPS_PROVIDER %s", "Enabled");
+                Log.i("GPS_PROVIDER %s", "Enabled");
             }
         } catch (Exception e) {
             observer.onError(e);
@@ -102,7 +101,7 @@ public abstract class BaseLocationObservable<T> implements Observable.OnSubscrib
                         LocationManager.NETWORK_PROVIDER,
                         MIN_TIME_BW_UPDATES,
                         MIN_DISTANCE_CHANGE_FOR_UPDATES, mLocationListener, Looper.getMainLooper());
-                Timber.i("NETWORK_PROVIDER %s", "Enabled");
+                Log.i("NETWORK_PROVIDER %s", "Enabled");
                 return;
             }
             if (isGPSEnabled()) {
@@ -110,7 +109,7 @@ public abstract class BaseLocationObservable<T> implements Observable.OnSubscrib
                         LocationManager.GPS_PROVIDER,
                         MIN_TIME_BW_UPDATES,
                         MIN_DISTANCE_CHANGE_FOR_UPDATES, mLocationListener, Looper.getMainLooper());
-                Timber.i("GPS_PROVIDER %s", "Enabled");
+                Log.i("GPS_PROVIDER %s", "Enabled");
             }
         } catch (Exception e) {
             observer.onError(e);

@@ -34,6 +34,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -44,7 +45,6 @@ import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-import timber.log.Timber;
 
 /**
  * This extends the base {@link android.support.v7.widget.RecyclerView} to encapsulate endless
@@ -216,17 +216,21 @@ public class BloatedRecyclerView extends FrameLayout {
             mPaddingTop = (int) typedArray
                     .getDimension(R.styleable.RaiBloatedRecyclerView_recyclerviewPaddingTop, 0.0f);
             mPaddingBottom = (int) typedArray
-                    .getDimension(R.styleable.RaiBloatedRecyclerView_recyclerviewPaddingBottom, 0.0f);
+                    .getDimension(R.styleable.RaiBloatedRecyclerView_recyclerviewPaddingBottom,
+                            0.0f);
             mPaddingLeft = (int) typedArray
                     .getDimension(R.styleable.RaiBloatedRecyclerView_recyclerviewPaddingLeft, 0.0f);
             mPaddingRight = (int) typedArray
-                    .getDimension(R.styleable.RaiBloatedRecyclerView_recyclerviewPaddingRight, 0.0f);
+                    .getDimension(R.styleable.RaiBloatedRecyclerView_recyclerviewPaddingRight,
+                            0.0f);
             mClipToPadding = typedArray
-                    .getBoolean(R.styleable.RaiBloatedRecyclerView_recyclerviewClipToPadding, false);
+                    .getBoolean(R.styleable.RaiBloatedRecyclerView_recyclerviewClipToPadding,
+                            false);
             mEmptyId = typedArray
                     .getResourceId(R.styleable.RaiBloatedRecyclerView_recyclerviewEmptyView, 0);
             mFloatingButtonId = typedArray
-                    .getResourceId(R.styleable.RaiBloatedRecyclerView_recyclerviewFloatingActionView,
+                    .getResourceId(
+                            R.styleable.RaiBloatedRecyclerView_recyclerviewFloatingActionView,
                             0);
             mScrollbarsStyle = typedArray
                     .getInt(R.styleable.RaiBloatedRecyclerView_recyclerviewScrollbars,
@@ -731,7 +735,7 @@ public class BloatedRecyclerView extends FrameLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        Timber.d("mCallbacks   " + (mCallbacks == null));
+        Log.d("BloatedRecyclerView","mCallbacks   " + (mCallbacks == null));
         if (mCallbacks != null) {
             switch (ev.getActionMasked()) {
                 case MotionEvent.ACTION_UP:

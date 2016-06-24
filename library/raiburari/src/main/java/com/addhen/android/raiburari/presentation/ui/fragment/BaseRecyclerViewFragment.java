@@ -22,10 +22,10 @@ import com.addhen.android.raiburari.presentation.ui.widget.BloatedRecyclerView;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.InflateException;
 import android.view.View;
 
-import timber.log.Timber;
 
 /**
  * Base {@link android.app.ListFragment} that every fragment list will extend from.
@@ -67,19 +67,19 @@ public abstract class BaseRecyclerViewFragment<M extends Model, L extends BaseRe
         try {
             return (T) targetClass.newInstance();
         } catch (IllegalAccessException e) {
-            Timber.e(TAG, "IllegalAccessException", e);
+            Log.e(TAG, "IllegalAccessException", e);
         } catch (IllegalStateException e) {
-            Timber.e(TAG, "IllegalStateException", e);
+            Log.e(TAG, "IllegalStateException", e);
         } catch (SecurityException e) {
-            Timber.e(TAG, "SecurityException", e);
+            Log.e(TAG, "SecurityException", e);
             for (StackTraceElement exception : e.getStackTrace()) {
-                Timber.e(TAG,
+                Log.e(TAG,
                         String.format("%s", exception.toString()));
             }
         } catch (InflateException e) {
-            Timber.e(TAG, "InflateException", e);
+            Log.e(TAG, "InflateException", e);
         } catch (java.lang.InstantiationException e) {
-            Timber.e(TAG, "InstantiationException", e);
+            Log.e(TAG, "InstantiationException", e);
         }
         return null;
     }

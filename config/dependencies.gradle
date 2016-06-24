@@ -35,7 +35,6 @@ ext {
     rxAndroidVersion = '1.2.0'
     javaxAnnotationVersion = '1.0'
     gsonVersion = '2.7'
-    timberVersion = '3.1.0'
     ottoVersion = '1.3.8'
 
     //Testing
@@ -56,7 +55,6 @@ ext {
             butterKnifeComplier: "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
             rxAndroid          : "io.reactivex:rxandroid:${rxAndroidVersion}",
             javaxAnnotation    : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
-            timber             : "com.jakewharton.timber:timber:${timberVersion}",
             otto               : "com.squareup:otto:${ottoVersion}",
             gson               : "com.google.code.gson:gson:${gsonVersion}",
     ]

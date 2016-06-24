@@ -83,7 +83,6 @@ dependencies {
     compile appDependencies.recyclerView
     compile appDependencies.butterKnife
     compile appDependencies.rxAndroid
-    compile appDependencies.timber
     compile appDependencies.otto
 
     // Data dependencies
