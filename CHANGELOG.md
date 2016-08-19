@@ -1,6 +1,6 @@
 Change Log
 ==========
-## v2.16.0
+## v2.17.0
 _2016-08-19_
 
 * Upgrade support library to `v24.2.0`.
