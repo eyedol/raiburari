@@ -73,7 +73,6 @@ android {
 
 dependencies {
     def appDependencies = rootProject.ext.appDependencies
-    def appTestDependencies = rootProject.ext.appTestDependencies
 
     apt appDependencies.daggerCompiler
     apt appDependencies.butterKnifeComplier
@@ -88,14 +87,6 @@ dependencies {
     // Data dependencies
     compile appDependencies.gson
     provided appDependencies.javaxAnnotation
-
-    androidTestCompile appTestDependencies.mockito
-    androidTestCompile appTestDependencies.dexmaker
-    androidTestCompile appTestDependencies.dexmakerMockito
-    androidTestCompile appTestDependencies.espresso
-    androidTestCompile appTestDependencies.testingSupportLib
-    testCompile appTestDependencies.junit
-    testCompile appTestDependencies.mockito
 }
 
 // Upload artifact to bintray repo
