@@ -1,5 +1,10 @@
 Change Log
 ==========
+## v2.17.1
+_2016-08-19_
+
+* Add ButterKnife's library support in v8.2.0
+
 ## v2.17.0
 _2016-08-19_
 
