@@ -1,6 +1,15 @@
 Change Log
 ==========
 ## v2.16.0
+_2016-08-19_
+
+* Upgrade support library to `v24.2.0`.
+* Upgrade dagger to `v2.6`.
+* Upgrade Otto.
+* Upgrade ButterKnife.
+* Remove unused test dependencies.
+
+## v2.16.0
 _2016-06-24_
 
 * Remove Timber as a dependency.
