@@ -66,10 +66,6 @@ android {
     check {
         abortOnError true
     }
-
-    dexOptions {
-        incremental true
-    }
 }
 
 dependencies {

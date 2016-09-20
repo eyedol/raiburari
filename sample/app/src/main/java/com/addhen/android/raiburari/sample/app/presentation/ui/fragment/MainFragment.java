@@ -18,6 +18,7 @@ package com.addhen.android.raiburari.sample.app.presentation.ui.fragment;
 
 import com.addhen.android.raiburari.presentation.ui.fragment.BaseRecyclerViewFragment;
 import com.addhen.android.raiburari.presentation.ui.listener.RecyclerViewItemTouchListenerAdapter;
+import com.addhen.android.raiburari.presentation.ui.widget.BloatedRecyclerView;
 import com.addhen.android.raiburari.sample.app.R;
 import com.addhen.android.raiburari.sample.app.presentation.di.components.UserComponent;
 import com.addhen.android.raiburari.sample.app.presentation.model.UserModel;
@@ -27,6 +28,7 @@ import com.addhen.android.raiburari.sample.app.presentation.ui.view.UserListView
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -101,6 +103,22 @@ public class MainFragment extends BaseRecyclerViewFragment<UserModel, UserAdapte
                 mBloatedRecyclerView.recyclerView, this);
         mBloatedRecyclerView.addItemDividerDecoration(getActivity());
         mBloatedRecyclerView.recyclerView.addOnItemTouchListener(itemTouchListenerAdapter);
+        mBloatedRecyclerView
+                .setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        mBloatedRecyclerView.setRefreshing(true);
+                        // Hide progress bar when pull refresh is in action
+                        mBloatedRecyclerView.recyclerView.smoothScrollToPosition(0);
+                    }
+                });
+        mBloatedRecyclerView.enableInfiniteScroll();
+        mBloatedRecyclerView.setOnLoadMoreListener(new BloatedRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void loadMore(int itemsCount, int maxLastVisiblePosition) {
+
+            }
+        });
     }
 
     @Override

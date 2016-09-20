@@ -48,10 +48,14 @@ public class UserAdapter extends BaseRecyclerViewAdapter<UserModel>
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        ((Widgets) viewHolder).title.setText(getItem(position).fullName);
-        ((Widgets) viewHolder).email.setText(getItem(position).email);
-        ((Widgets) viewHolder).more.setTag(position);
-        ((Widgets) viewHolder).more.setOnClickListener(this);
+        if ((position < getItemCount()) && (customHeaderView != null ? position
+                <= getAdapterItemCount() : position < getAdapterItemCount())
+                && (customHeaderView != null ? position > 0 : true)) {
+            ((Widgets) viewHolder).title.setText(getItem(position).fullName);
+            ((Widgets) viewHolder).email.setText(getItem(position).email);
+            ((Widgets) viewHolder).more.setTag(position);
+            ((Widgets) viewHolder).more.setOnClickListener(this);
+        }
     }
 
     @Override

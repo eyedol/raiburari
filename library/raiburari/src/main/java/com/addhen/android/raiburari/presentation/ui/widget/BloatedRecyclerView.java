@@ -310,7 +310,6 @@ public class BloatedRecyclerView extends FrameLayout {
                         break;
                 }
                 enableShoworHideToolbarAndFloatingButton(recyclerView);
-
             }
 
             @Override
@@ -330,7 +329,6 @@ public class BloatedRecyclerView extends FrameLayout {
                                 lastVisibleItemPosition);
                     }
                 }
-
             }
         };
         recyclerView.addOnScrollListener(mOnScrollListener);
