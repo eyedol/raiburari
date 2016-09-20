@@ -1,5 +1,13 @@
 Change Log
 ==========
+## v2.18.0
+_2016-09-20_
+
+* Upgrade support library to `v24.2.1`
+* Fix minor bug in sample code.
+
+Change Log
+==========
 ## v2.17.1
 _2016-08-19_
 
