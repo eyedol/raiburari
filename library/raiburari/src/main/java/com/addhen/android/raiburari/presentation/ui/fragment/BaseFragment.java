@@ -72,13 +72,8 @@ public abstract class BaseFragment extends Fragment {
         if (mLayout != 0) {
             root = inflater.inflate(mLayout, container, false);
         }
+        injectViews(root);
         return root;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        injectViews(view);
     }
 
     @Override

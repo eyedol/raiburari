@@ -24,7 +24,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.InflateException;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 
 /**
@@ -90,8 +92,15 @@ public abstract class BaseRecyclerViewFragment<M extends Model, L extends BaseRe
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onDestroyView() {
+        super.onDestroyView();
+        mBloatedRecyclerView.setAdapter(null);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater,
+            ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
         mBloatedRecyclerView = (BloatedRecyclerView) view.findViewById(android.R.id.list);
         if (mBloatedRecyclerView != null) {
             mRecyclerViewAdapter = BaseRecyclerViewFragment
@@ -102,5 +111,6 @@ public abstract class BaseRecyclerViewFragment<M extends Model, L extends BaseRe
             mBloatedRecyclerView.setHasFixedSize(true);
             mBloatedRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         }
+        return view;
     }
 }

@@ -548,64 +548,65 @@ public class BloatedRecyclerView extends FrameLayout {
         if (mSwipeRefreshLayout != null) {
             mSwipeRefreshLayout.setRefreshing(false);
         }
-        mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onItemRangeChanged(int positionStart, int itemCount) {
-                super.onItemRangeChanged(positionStart, itemCount);
-                update();
-            }
-
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                super.onItemRangeInserted(positionStart, itemCount);
-                update();
-            }
-
-            @Override
-            public void onItemRangeRemoved(int positionStart, int itemCount) {
-                super.onItemRangeRemoved(positionStart, itemCount);
-                update();
-            }
-
-            @Override
-            public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
-                super.onItemRangeMoved(fromPosition, toPosition, itemCount);
-                update();
-            }
-
-            @Override
-            public void onChanged() {
-                super.onChanged();
-                update();
-            }
-
-            private void update() {
-                isLoadingMore = false;
-                if (mSwipeRefreshLayout != null) {
-                    mSwipeRefreshLayout.setRefreshing(false);
+        if (mAdapter != null) {
+            mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                @Override
+                public void onItemRangeChanged(int positionStart, int itemCount) {
+                    super.onItemRangeChanged(positionStart, itemCount);
+                    update();
                 }
 
-                if (recyclerView.getAdapter().getItemCount() == 0 && mEmptyId != 0) {
-                    mEmpty.setVisibility(View.VISIBLE);
-                } else if (mEmptyId != 0) {
-                    mEmpty.setVisibility(View.GONE);
+                @Override
+                public void onItemRangeInserted(int positionStart, int itemCount) {
+                    super.onItemRangeInserted(positionStart, itemCount);
+                    update();
                 }
-                if (mAdapter.getItemCount() >= showLoadMoreItemNum
-                        && mAdapter.getInfiniteScrollView() != null
-                        && mAdapter.getInfiniteScrollView().getVisibility() == View.GONE) {
-                    mAdapter.getInfiniteScrollView().setVisibility(View.VISIBLE);
-                }
-                if (mAdapter.getItemCount() < showLoadMoreItemNum
-                        && mAdapter.getInfiniteScrollView() != null) {
-                    mAdapter.getInfiniteScrollView().setVisibility(View.GONE);
-                }
-            }
 
-        });
-        if ((mAdapter == null || mAdapter.getItemCount() == 0) && mEmptyId != 0) {
-            mEmpty.setVisibility(View.VISIBLE);
+                @Override
+                public void onItemRangeRemoved(int positionStart, int itemCount) {
+                    super.onItemRangeRemoved(positionStart, itemCount);
+                    update();
+                }
+
+                @Override
+                public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
+                    super.onItemRangeMoved(fromPosition, toPosition, itemCount);
+                    update();
+                }
+
+                @Override
+                public void onChanged() {
+                    super.onChanged();
+                    update();
+                }
+
+                private void update() {
+                    isLoadingMore = false;
+                    if (mSwipeRefreshLayout != null) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+
+                    if (recyclerView.getAdapter().getItemCount() == 0 && mEmptyId != 0) {
+                        mEmpty.setVisibility(View.VISIBLE);
+                    } else if (mEmptyId != 0) {
+                        mEmpty.setVisibility(View.GONE);
+                    }
+                    if (mAdapter.getItemCount() >= showLoadMoreItemNum
+                            && mAdapter.getInfiniteScrollView() != null
+                            && mAdapter.getInfiniteScrollView().getVisibility() == View.GONE) {
+                        mAdapter.getInfiniteScrollView().setVisibility(View.VISIBLE);
+                    }
+                    if (mAdapter.getItemCount() < showLoadMoreItemNum
+                            && mAdapter.getInfiniteScrollView() != null) {
+                        mAdapter.getInfiniteScrollView().setVisibility(View.GONE);
+                    }
+                }
+
+            });
+            if ((mAdapter == null || mAdapter.getItemCount() == 0) && mEmptyId != 0) {
+                mEmpty.setVisibility(View.VISIBLE);
+            }
         }
-
     }
 
     public void setHasFixedSize(boolean hasFixedSize) {

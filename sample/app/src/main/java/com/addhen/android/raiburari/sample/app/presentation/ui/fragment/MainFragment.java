@@ -30,7 +30,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
@@ -61,18 +63,35 @@ public class MainFragment extends BaseRecyclerViewFragment<UserModel, UserAdapte
      */
     public MainFragment() {
         super(UserAdapter.class, R.layout.list_users, R.menu.menu_main);
+        setRetainInstance(true);
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        this.initialize();
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getComponent(UserComponent.class).inject(this);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        initialize();
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        userListPresenter.setView(this);
+        if (savedInstanceState == null) {
+            userListPresenter.initialize();
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        this.userListPresenter.resume();
     }
 
     @Override
@@ -88,16 +107,11 @@ public class MainFragment extends BaseRecyclerViewFragment<UserModel, UserAdapte
     }
 
     public static MainFragment newInstance() {
-        if (mMainFragment == null) {
-            mMainFragment = new MainFragment();
-        }
-        return mMainFragment;
+        return new MainFragment();
     }
 
 
     private void initialize() {
-        getComponent(UserComponent.class).inject(this);
-        userListPresenter.setView(this);
         RecyclerViewItemTouchListenerAdapter itemTouchListenerAdapter
                 = new RecyclerViewItemTouchListenerAdapter(
                 mBloatedRecyclerView.recyclerView, this);
