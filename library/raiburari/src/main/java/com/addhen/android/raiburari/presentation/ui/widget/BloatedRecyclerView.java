@@ -264,6 +264,8 @@ public class BloatedRecyclerView extends FrameLayout {
         mOnScrollListener = new RecyclerView.OnScrollListener() {
             private int[] lastPositions;
 
+            int y;
+
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -310,6 +312,7 @@ public class BloatedRecyclerView extends FrameLayout {
                         break;
                 }
                 enableShoworHideToolbarAndFloatingButton(recyclerView);
+                y = dy;
             }
 
             @Override
@@ -319,14 +322,20 @@ public class BloatedRecyclerView extends FrameLayout {
                 RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
                 int visibleItemCount = layoutManager.getChildCount();
                 int totalItemCount = layoutManager.getItemCount();
-                if ((visibleItemCount > 0 && currentScrollState == RecyclerView.SCROLL_STATE_IDLE
-                        && (lastVisibleItemPosition) >= totalItemCount - 1) && !isLoadingMore) {
-                    isLoadingMore = true;
-                    if (onLoadMoreListener != null) {
-                        isLoadingMore = false;
-                        onLoadMoreListener.loadMore(
-                                BloatedRecyclerView.this.recyclerView.getAdapter().getItemCount(),
-                                lastVisibleItemPosition);
+                if (currentScrollState == RecyclerView.SCROLL_STATE_IDLE) {
+                    if (y > 0) {
+                        if ((visibleItemCount > 0
+                                && (lastVisibleItemPosition) >= totalItemCount - 1)
+                                && !isLoadingMore) {
+                            isLoadingMore = true;
+                            if (onLoadMoreListener != null) {
+                                isLoadingMore = false;
+                                onLoadMoreListener.loadMore(
+                                        BloatedRecyclerView.this.recyclerView.getAdapter()
+                                                .getItemCount(),
+                                        lastVisibleItemPosition);
+                            }
+                        }
                     }
                 }
             }
@@ -603,7 +612,7 @@ public class BloatedRecyclerView extends FrameLayout {
                 }
 
             });
-            if ((mAdapter == null || mAdapter.getItemCount() == 0) && mEmptyId != 0) {
+            if ((mAdapter == null || mAdapter.getAdapterItemCount() == 0) && mEmptyId != 0) {
                 mEmpty.setVisibility(View.VISIBLE);
             }
         }

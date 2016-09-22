@@ -52,10 +52,45 @@ public class DummyDataSource implements UserDataSource {
                 userEntity3.description = "Hey there";
                 userEntity3.fullName = "FindReels";
 
+                UserEntity userEntity4 = new UserEntity();
+                userEntity4._id = 4l;
+                userEntity4.email = "emailaddress";
+                userEntity4.description = "Hey there 4";
+                userEntity4.fullName = "FindReels";
+
+                UserEntity userEntity5 = new UserEntity();
+                userEntity5._id = 5l;
+                userEntity5.email = "emailaddress";
+                userEntity5.description = "Hey there 4";
+                userEntity5.fullName = "FindReels";
+
+                UserEntity userEntity6 = new UserEntity();
+                userEntity6._id = 6l;
+                userEntity6.email = "emailaddress";
+                userEntity6.description = "Hey there 4";
+                userEntity6.fullName = "FindReels";
+
+                UserEntity userEntity7 = new UserEntity();
+                userEntity7._id = 7l;
+                userEntity7.email = "emailaddress";
+                userEntity7.description = "Hey there 4";
+                userEntity7.fullName = "FindReels";
+
+                UserEntity userEntity8 = new UserEntity();
+                userEntity8._id = 8l;
+                userEntity8.email = "emailaddress";
+                userEntity8.description = "Hey there 4";
+                userEntity8.fullName = "FindReels";
+
                 List<UserEntity> listUser = new ArrayList<>();
                 listUser.add(userEntity);
                 listUser.add(userEntity2);
                 listUser.add(userEntity3);
+                listUser.add(userEntity4);
+                listUser.add(userEntity5);
+                listUser.add(userEntity6);
+                listUser.add(userEntity7);
+                listUser.add(userEntity8);
                 subscriber.onNext(listUser);
                 subscriber.onCompleted();
             }
