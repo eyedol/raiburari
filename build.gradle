@@ -37,8 +37,8 @@ task wrapper(type: Wrapper) {
 
 allprojects {
     ext {
-        androidVersionCode = 223
-        androidVersionName = "2.18.0"
+        androidVersionCode = 224
+        androidVersionName = "2.19.0"
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
     }
 
