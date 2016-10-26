@@ -1,9 +1,13 @@
 Change Log
 ==========
+
+## v2.20.0
+* Upgrade support library to 'v25.0.0`
+
 ## v2.19.0
 _2016-09-22_
 
-* Fix how UI element a initialized respective to fragment lifecycle
+* Fix how UI element is initialized respective to fragment lifecycle.
 * Fix bug where BloatedRecyclerView infinite scroll is always executed when user scroll instead when only scrolled up.
 
 
@@ -16,7 +20,7 @@ _2016-09-20_
 ## v2.17.1
 _2016-08-19_
 
-* Add ButterKnife's library support in v8.2.0
+* Add ButterKnife's library support in v8.2.0.
 
 ## v2.17.0
 _2016-08-19_
@@ -33,7 +37,7 @@ _2016-06-24_
 * Remove Timber as a dependency.
 * Upgrade support library to `v24.0.0`.
 * Upgrade dagger to `v2.5`.
-* Add `SerializedName` with `id` value to data entity to be usable by Gson.
+* Add `SerializedName` to  the`id` variable in the data entity for use by `Gson`.
 
 ## v2.15.0
 _2016-06-02_
