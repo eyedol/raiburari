@@ -86,11 +86,11 @@ public class DummyDataSource implements UserDataSource {
                 listUser.add(userEntity);
                 listUser.add(userEntity2);
                 listUser.add(userEntity3);
-                listUser.add(userEntity4);
+                /*listUser.add(userEntity4);
                 listUser.add(userEntity5);
                 listUser.add(userEntity6);
                 listUser.add(userEntity7);
-                listUser.add(userEntity8);
+                listUser.add(userEntity8);*/
                 subscriber.onNext(listUser);
                 subscriber.onCompleted();
             }

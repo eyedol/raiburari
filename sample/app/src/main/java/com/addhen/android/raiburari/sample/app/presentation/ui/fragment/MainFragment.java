@@ -140,6 +140,7 @@ public class MainFragment extends BaseRecyclerViewFragment<UserModel, UserAdapte
         if (userModelCollection != null) {
             List userList = new ArrayList(userModelCollection);
             mRecyclerViewAdapter.setItems(userList);
+            mBloatedRecyclerView.setAdapter(mRecyclerViewAdapter);
         }
     }
 
