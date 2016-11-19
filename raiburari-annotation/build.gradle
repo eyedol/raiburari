@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Henry Addo
+ * Copyright (c) 2016 Henry Addo
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,4 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-include ':library:raiburari', ':sample:app', ':raiburari-annotation', ':raiburari-processor'
+
+apply plugin: 'java'
+apply plugin: 'checkstyle'
+
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
+
+checkstyle {
+    configFile rootProject.file('config/checkstyle.xml')
+    showViolations true
+    //Remove this when tests are less verbose, i.e. using JavaPoet
+    sourceSets = [sourceSets.main]
+}
+

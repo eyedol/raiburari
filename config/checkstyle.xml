@@ -3,7 +3,9 @@
         "-//Puppy Crawl//DTD Check Configuration 1.2//EN"
         "http://www.puppycrawl.com/dtds/configuration_1_2.dtd">
 <module name="Checker">
-    <property name="fileExtensions" value="java, xml, properties"/>
+    <module name="TreeWalker">
+        <property name="fileExtensions" value="java, xml, properties"/>
+    </module>
     <module name="FileLength">
         <property name="max" value="1000"/>
         <property name="fileExtensions" value=""/>

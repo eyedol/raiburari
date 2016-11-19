@@ -52,6 +52,7 @@ import android.widget.RelativeLayout;
  *
  * @author Henry Addo
  */
+@SuppressWarnings("PMD.CollapsibleIfStatements")
 public class BloatedRecyclerView extends FrameLayout {
 
     private static final int SCROLLBARS_NONE = 0;
@@ -262,9 +263,9 @@ public class BloatedRecyclerView extends FrameLayout {
     @SuppressWarnings("InflateParams")
     public void enableInfiniteScroll() {
         mOnScrollListener = new RecyclerView.OnScrollListener() {
-            private int[] lastPositions;
-
             int y;
+
+            private int[] lastPositions;
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -323,20 +324,20 @@ public class BloatedRecyclerView extends FrameLayout {
                 int visibleItemCount = layoutManager.getChildCount();
                 int totalItemCount = layoutManager.getItemCount();
                 if (currentScrollState == RecyclerView.SCROLL_STATE_IDLE) {
-                    if (y > 0) {
-                        if ((visibleItemCount > 0
-                                && (lastVisibleItemPosition) >= totalItemCount - 1)
-                                && !isLoadingMore) {
-                            isLoadingMore = true;
-                            if (onLoadMoreListener != null) {
-                                isLoadingMore = false;
-                                onLoadMoreListener.loadMore(
-                                        BloatedRecyclerView.this.recyclerView.getAdapter()
-                                                .getItemCount(),
-                                        lastVisibleItemPosition);
-                            }
+
+                    if (y > 0 && (visibleItemCount > 0
+                            && (lastVisibleItemPosition) >= totalItemCount - 1)
+                            && !isLoadingMore) {
+                        isLoadingMore = true;
+                        if (onLoadMoreListener != null) {
+                            isLoadingMore = false;
+                            onLoadMoreListener.loadMore(
+                                    BloatedRecyclerView.this.recyclerView.getAdapter()
+                                            .getItemCount(),
+                                    lastVisibleItemPosition);
                         }
                     }
+
                 }
             }
         };

@@ -28,7 +28,7 @@ public class DataEntity {
     @SerializedName("id")
     public Long _id;
 
-    protected DataEntity() {
+    public DataEntity() {
         // No-op
     }
 }

@@ -41,7 +41,10 @@ android {
 
 dependencies {
     compile project(':library:raiburari')
+    compile project(':raiburari-annotation');
+    compile project(':raiburari-processor');
     apt appDependencies.butterKnifeComplier
     apt appDependencies.daggerCompiler
+    apt project(':raiburari-processor')
     provided appDependencies.javaxAnnotation
 }
