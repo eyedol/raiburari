@@ -16,22 +16,20 @@
 
 package com.addhen.android.raiburari.annotations;
 
-import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
-/**
- * @author Henry Addo
- */
-
+// no class level
+@Target(TYPE)
+// not needed at runtime
 @Retention(SOURCE)
-@Documented
-@Target({FIELD, METHOD})
-public @interface TransformField {
+public @interface TransformEntity {
 
-    String name() default "";
+    /**
+     * The name of the class to transform to
+     */
+    Class to();
 }

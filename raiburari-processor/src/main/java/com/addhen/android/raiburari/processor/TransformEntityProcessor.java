@@ -19,7 +19,7 @@ package com.addhen.android.raiburari.processor;
 import com.google.auto.service.AutoService;
 
 import com.addhen.android.raiburari.annotations.Transform;
-import com.addhen.android.raiburari.annotations.TransformField;
+import com.addhen.android.raiburari.annotations.TransformEntity;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -41,7 +41,7 @@ import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 
 @AutoService(Processor.class)
-public final class TransformProcessor extends AbstractProcessor {
+public final class TransformEntityProcessor extends AbstractProcessor {
 
     private Elements mElements;
 
@@ -51,7 +51,7 @@ public final class TransformProcessor extends AbstractProcessor {
 
     private Filer mFiler;
 
-    private Set<TransformAnnotatedClasses> mAnnotatedClasses = new HashSet<>();
+    private Set<TransformEntityAnnotatedClasses> mAnnotatedClasses = new HashSet<>();
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
@@ -65,8 +65,8 @@ public final class TransformProcessor extends AbstractProcessor {
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         Set<String> annotations = new LinkedHashSet<>();
+        annotations.add(TransformEntity.class.getCanonicalName());
         annotations.add(Transform.class.getCanonicalName());
-        annotations.add(TransformField.class.getCanonicalName());
         return annotations;
     }
 
@@ -77,29 +77,31 @@ public final class TransformProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        mMessager.printMessage(Diagnostic.Kind.WARNING, "Generating messages ");
         try {
-
-            // Scan classes
-            for (Element annotatedElement : roundEnv.getElementsAnnotatedWith(Transform.class)) {
+            // Scan classes annotated with @Transform
+            for (Element annotatedElement : roundEnv
+                    .getElementsAnnotatedWith(TransformEntity.class)) {
                 // Check if a class has been annotated with @Transform
                 if (annotatedElement.getKind() != ElementKind.CLASS) {
                     throw new ProcessingException(annotatedElement,
                             "Only classes can be annotated with @%s",
-                            Transform.class.getSimpleName());
+                            TransformEntity.class.getSimpleName());
                 }
 
                 TypeElement typeElement = (TypeElement) annotatedElement;
-                TransformAnnotatedClass annotatedClass = new TransformAnnotatedClass(typeElement);
+                TransformEntityAnnotatedClass annotatedClass = new TransformEntityAnnotatedClass(
+                        typeElement);
                 String canonicalName = annotatedClass.getCanonicalName();
-                TransformAnnotatedClasses annotatedClasses = new TransformAnnotatedClasses(
+                TransformEntityAnnotatedClasses
+                        annotatedClasses = new TransformEntityAnnotatedClasses(
                         canonicalName);
+                annotatedClasses.add(annotatedClass);
+                annotatedClass.scanForAnnotatedFields(mTypes, mElements);
                 mAnnotatedClasses.add(annotatedClasses);
             }
-
             // Generate code
-            for (TransformAnnotatedClasses annotatedClasses : mAnnotatedClasses) {
-                annotatedClasses.generateClassCode(mElements, mFiler);
+            for (TransformEntityAnnotatedClasses annotatedClasses : mAnnotatedClasses) {
+                annotatedClasses.generateClassCode(mMessager, mElements, mFiler);
             }
             mAnnotatedClasses.clear();
         } catch (ProcessingException e) {
