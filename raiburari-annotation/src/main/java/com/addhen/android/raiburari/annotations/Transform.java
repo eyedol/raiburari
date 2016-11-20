@@ -34,9 +34,9 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
 public @interface Transform {
 
     /**
-     * The field name
+     * The corresponding variable name of the class being transformed into.
      *
-     * @return The fields name
+     * @return The variable name
      */
     String name();
 }

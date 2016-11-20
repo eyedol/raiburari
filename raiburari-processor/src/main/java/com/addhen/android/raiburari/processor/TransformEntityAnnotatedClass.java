@@ -190,10 +190,9 @@ public class TransformEntityAnnotatedClass {
                         superClassPackage))) {
 
                     throw new ProcessingException(e,
-                            "The field %s in class %s can not be accessed from ObjectMapper because of "
+                            "The field %s in class %s can not be accessed from it transform class because of "
                                     + "visibility issue. Either move class %s into the same package "
-                                    + "as %s or make the field %s public or create and annotate a public setter "
-                                    + "method for this field with @%s instead of annotating the field itself",
+                                    + "as %s or make the field %s public",
                             field.getFieldName(), field.getQualifiedSurroundingClassName(),
                             mTypeElement.getQualifiedName().toString(),
                             field.getQualifiedSurroundingClassName(),

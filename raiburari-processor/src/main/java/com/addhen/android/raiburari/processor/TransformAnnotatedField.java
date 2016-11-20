@@ -61,7 +61,8 @@ public class TransformAnnotatedField {
 
         mFieldName = transform.name();
         if (mFieldName == null || mFieldName.length() == 0) {
-            throw new ProcessingException(field, "The transform name is unspecified for field %s",
+            throw new ProcessingException(field, "The name of the field being transformed into is "
+                    + "not specified in the in the annotated field %s",
                     field.getSimpleName().toString());
         }
         mVariableElement = field;
@@ -77,7 +78,8 @@ public class TransformAnnotatedField {
 
     public void generateFieldAssignmentCode(CodeBlock.Builder builder, String src,
             String dest) {
-        builder.addStatement("$L.$L = $L.$L", dest, mFieldName, src, mFieldName);
+        builder.addStatement("$L.$L = $L.$L", dest, mFieldName, src,
+                mVariableElement.getSimpleName().toString());
     }
 
     public String getQualifiedSurroundingClassName() {
