@@ -68,68 +68,73 @@ public class TransformEntityAnnotatedClasses {
             TransformEntity annotation = item.getElement().getAnnotation(TransformEntity.class);
             String transformerClassName = item.getElement().getSimpleName() + SUFFIX;
             String packageName = getPackageName(elements, item.getElement());
-            String variableName = superClassName.getSimpleName().toString().toLowerCase();
-            String paramVariableName = makeFirstCharLowerCase(
-                    item.getElement().getSimpleName().toString());
+            if (superClassName != null) {
+                String variableName = makeFirstCharLowerCase(
+                        superClassName.getSimpleName().toString().toLowerCase());
+                String paramVariableName = makeFirstCharLowerCase(
+                        item.getElement().getSimpleName().toString());
 
-            // Generate map for single object
-            MethodSpec.Builder method = MethodSpec.methodBuilder(METHOD_NAME)
-                    .addModifiers(Modifier.PUBLIC)
-                    .addParameter(TypeName.get(item.getElement().asType()), paramVariableName)
-                    .returns(TypeName.get(superClassName.asType()));
-            method.beginControlFlow("if ($L == null)", paramVariableName)
-                    .addStatement("throw new IllegalArgumentException($S)",
-                            String.format("%s is null!", paramVariableName))
-                    .endControlFlow();
-            method.addStatement("$T $L = new $T()", superClassName.asType(), variableName,
-                    superClassName.asType());
-            method.addCode(generateFieldAssignmentCode(item, paramVariableName, variableName));
-            method.addStatement("return $L", variableName);
+                // Generate map for single object
+                MethodSpec.Builder method = MethodSpec.methodBuilder(METHOD_NAME)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addParameter(TypeName.get(item.getElement().asType()), paramVariableName)
+                        .returns(TypeName.get(superClassName.asType()));
+                method.beginControlFlow("if ($L == null)", paramVariableName)
+                        .addStatement("throw new IllegalArgumentException($S)",
+                                String.format("%s is null!", paramVariableName))
+                        .endControlFlow();
+                method.addStatement("$T $L = new $T()", superClassName.asType(), variableName,
+                        superClassName.asType());
+                method.addCode(generateFieldAssignmentCode(item, paramVariableName, variableName));
+                method.addStatement("return $L", variableName);
 
-            MethodSpec mapMethod = method.build();
+                MethodSpec mapMethod = method.build();
 
-            // Generate collection method
-            ClassName collection = ClassName.get("java.util", "Collection");
-            ClassName arrayList = ClassName.get("java.util", "ArrayList");
-            TypeName collectionOfObject = ParameterizedTypeName
-                    .get(collection, TypeName.get(item.getElement().asType()));
+                // Generate collection method
+                ClassName collection = ClassName.get("java.util", "Collection");
+                ClassName arrayList = ClassName.get("java.util", "ArrayList");
+                TypeName collectionOfObject = ParameterizedTypeName
+                        .get(collection, TypeName.get(item.getElement().asType()));
 
-            ClassName list = ClassName.get("java.util", "List");
-            TypeName listOfObjects = ParameterizedTypeName
-                    .get(list, TypeName.get(superClassName.asType()));
+                ClassName list = ClassName.get("java.util", "List");
+                TypeName listOfObjects = ParameterizedTypeName
+                        .get(list, TypeName.get(superClassName.asType()));
 
-            String colVariableName = variableName + COLLECTION_VARIABLE_SUFFIX;
+                String colVariableName = makeFirstCharLowerCase(
+                        variableName + COLLECTION_VARIABLE_SUFFIX);
 
-            String listVariableName = variableName + "list";
+                String listVariableName = makeFirstCharLowerCase(variableName + "List");
 
-            MethodSpec.Builder methodCollection = MethodSpec.methodBuilder(METHOD_NAME)
-                    .addModifiers(Modifier.PUBLIC)
-                    .addParameter(collectionOfObject, colVariableName)
-                    .returns(listOfObjects)
-                    .addStatement("$T $L = new $T<>()", listOfObjects,
-                            listVariableName, arrayList)
-                    .beginControlFlow("for ($T $L : $L)", item.getElement().asType(),
-                            paramVariableName, colVariableName)
-                    .addStatement("$T $L = $N($L)", superClassName.asType(), variableName,
-                            mapMethod, paramVariableName)
-                    .beginControlFlow("if ($L != null)", variableName)
-                    .addStatement("$L.add($L)", listVariableName, variableName)
-                    .endControlFlow()
-                    .endControlFlow()
-                    .addStatement("return $L", listVariableName);
+                MethodSpec.Builder methodCollection = MethodSpec.methodBuilder(METHOD_NAME)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addParameter(collectionOfObject, colVariableName)
+                        .returns(listOfObjects)
+                        .addStatement("$T $L = new $T<>()", listOfObjects,
+                                listVariableName, arrayList)
+                        .beginControlFlow("for ($T $L : $L)", item.getElement().asType(),
+                                paramVariableName, colVariableName)
+                        .addStatement("$T $L = $N($L)", superClassName.asType(), variableName,
+                                mapMethod, paramVariableName)
+                        .beginControlFlow("if ($L != null)", variableName)
+                        .addStatement("$L.add($L)", listVariableName, variableName)
+                        .endControlFlow()
+                        .endControlFlow()
+                        .addStatement("return $L", listVariableName);
 
-            MethodSpec constructor = MethodSpec.constructorBuilder()
-                    .addModifiers(Modifier.PUBLIC).build();
+                MethodSpec constructor = MethodSpec.constructorBuilder()
+                        .addModifiers(Modifier.PUBLIC).build();
 
-            TypeSpec typeSpec = TypeSpec.classBuilder(transformerClassName)
-                    .addJavadoc("Transforms a {@link $T} into an {@link $T}\n",
-                            TypeName.get(item.getElement().asType()), ClassName.get(superClassName))
-                    .addMethod(constructor)
-                    .addMethod(mapMethod)
-                    .addMethod(methodCollection.build())
-                    .build();
+                TypeSpec typeSpec = TypeSpec.classBuilder(transformerClassName)
+                        .addJavadoc("Transforms a {@link $T} into an {@link $T}\n",
+                                TypeName.get(item.getElement().asType()),
+                                ClassName.get(superClassName))
+                        .addMethod(constructor)
+                        .addMethod(mapMethod)
+                        .addMethod(methodCollection.build())
+                        .build();
 
-            JavaFile.builder(packageName, typeSpec).build().writeTo(filer);
+                JavaFile.builder(packageName, typeSpec).build().writeTo(filer);
+            }
         }
     }
 

@@ -41,7 +41,7 @@ import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 
 @AutoService(Processor.class)
-public final class TransformEntityProcessor extends AbstractProcessor {
+public class TransformEntityProcessor extends AbstractProcessor {
 
     private Elements mElements;
 
