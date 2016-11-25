@@ -29,17 +29,23 @@ import static com.google.testing.compile.Compiler.javac;
  */
 public class TransformEntityProcessorTest {
 
-    public static final String MOCK_USER_CLASS_NAME = "MockUser";
-
     public static final String MOCK_USER_ENTITY_CLASS_NAME = "MockUserEntity";
+
+    public static final String MOCK_LOCATION_ENTITY_CLASS_NAME = "MockLocationEntity";
+
+    public static final String PACKAGE = "package mock;";
+
+    public static final String MOCK_ENTITIES_PACKAGE
+            = "com.addhen.android.raiburari.processor.mock.";
 
     @Test
     public void testProcessorCodeGenerator() {
-        StringBuilder builder = new StringBuilder("package mock;");
+        StringBuilder builder = new StringBuilder(PACKAGE);
         builder.append("import com.addhen.android.raiburari.annotations.Transform;");
         builder.append("import com.addhen.android.raiburari.annotations.TransformEntity;");
         builder.append(
-                "@TransformEntity(to = MockUserEntity.class) public class "
+                "@TransformEntity(to = " + MOCK_ENTITIES_PACKAGE
+                        + "MockUser.class) public class "
                         + MOCK_USER_ENTITY_CLASS_NAME
                         + " {");
         builder.append("public " + MOCK_USER_ENTITY_CLASS_NAME + "(){}");
@@ -57,5 +63,33 @@ public class TransformEntityProcessorTest {
                 .hasSourceEquivalentTo(
                         JavaFileObjects
                                 .forResource("MockUserEntityTransformer.java"));
+    }
+
+    @Test
+    public void testProcessorCodeGeneratorWithMapObject() {
+
+        StringBuilder builder = new StringBuilder("package mock;");
+        builder.append("import com.addhen.android.raiburari.annotations.Transform;");
+        builder.append("import com.addhen.android.raiburari.annotations.TransformEntity;");
+        builder.append(
+                "@TransformEntity(to =" + MOCK_ENTITIES_PACKAGE
+                        + "MockLocation.class) public class "
+                        + MOCK_LOCATION_ENTITY_CLASS_NAME
+                        + " {");
+        builder.append("public " + MOCK_LOCATION_ENTITY_CLASS_NAME + "(){}");
+        builder.append("@Transform(name = \"locationName\") public String locationName;");
+        builder.append("}");
+
+        Compilation compilation2 = javac()
+                .withProcessors(new TransformEntityProcessor())
+                .compile(JavaFileObjects
+                        .forSourceString(MOCK_LOCATION_ENTITY_CLASS_NAME,
+                                builder.toString()));
+        assertThat(compilation2).succeeded();
+        assertThat(compilation2)
+                .generatedSourceFile("mock.MockLocationEntityTransformer")
+                .hasSourceEquivalentTo(
+                        JavaFileObjects
+                                .forResource("MockLocationEntityTransformer.java"));
     }
 }
