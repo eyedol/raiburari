@@ -40,6 +40,10 @@ public class TransformEntityProcessorTest {
 
     @Test
     public void testProcessorCodeGenerator() {
+        generateUserEntity();
+    }
+
+    private void generateUserEntity() {
         StringBuilder builder = new StringBuilder(PACKAGE);
         builder.append("import com.addhen.android.raiburari.annotations.Transform;");
         builder.append("import com.addhen.android.raiburari.annotations.TransformEntity;");
@@ -63,33 +67,5 @@ public class TransformEntityProcessorTest {
                 .hasSourceEquivalentTo(
                         JavaFileObjects
                                 .forResource("MockUserEntityTransformer.java"));
-    }
-
-    @Test
-    public void testProcessorCodeGeneratorWithMapObject() {
-
-        StringBuilder builder = new StringBuilder("package mock;");
-        builder.append("import com.addhen.android.raiburari.annotations.Transform;");
-        builder.append("import com.addhen.android.raiburari.annotations.TransformEntity;");
-        builder.append(
-                "@TransformEntity(to =" + MOCK_ENTITIES_PACKAGE
-                        + "MockLocation.class) public class "
-                        + MOCK_LOCATION_ENTITY_CLASS_NAME
-                        + " {");
-        builder.append("public " + MOCK_LOCATION_ENTITY_CLASS_NAME + "(){}");
-        builder.append("@Transform(name = \"locationName\") public String locationName;");
-        builder.append("}");
-
-        Compilation compilation2 = javac()
-                .withProcessors(new TransformEntityProcessor())
-                .compile(JavaFileObjects
-                        .forSourceString(MOCK_LOCATION_ENTITY_CLASS_NAME,
-                                builder.toString()));
-        assertThat(compilation2).succeeded();
-        assertThat(compilation2)
-                .generatedSourceFile("mock.MockLocationEntityTransformer")
-                .hasSourceEquivalentTo(
-                        JavaFileObjects
-                                .forResource("MockLocationEntityTransformer.java"));
     }
 }

@@ -21,7 +21,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 /**
@@ -30,7 +29,7 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 @Retention(SOURCE)
 @Documented
-@Target({FIELD, METHOD})
+@Target({FIELD})
 public @interface Transform {
 
     /**
@@ -39,4 +38,14 @@ public @interface Transform {
      * @return The variable name
      */
     String name();
+
+    /**
+     * The Transformer class to be used to transform the object field to its corresponding
+     * class type.
+     *
+     * @return The class name of the transformer. Usually it ends with Transformer.
+     */
+    String transformer() default "";
+
+
 }

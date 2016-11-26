@@ -85,7 +85,8 @@ public class TransformEntityAnnotatedClasses {
                         .endControlFlow();
                 method.addStatement("$T $L = new $T()", superClassName.asType(), variableName,
                         superClassName.asType());
-                method.addCode(generateFieldAssignmentCode(item, paramVariableName, variableName));
+                method.addCode(generateFieldAssignmentCode(item, paramVariableName, variableName,
+                        packageName));
                 method.addStatement("return $L", variableName);
 
                 MethodSpec mapMethod = method.build();
@@ -139,7 +140,7 @@ public class TransformEntityAnnotatedClasses {
     }
 
     private CodeBlock generateFieldAssignmentCode(TransformEntityAnnotatedClass clazz, String src,
-            String dest) {
+            String dest, String packName) {
         CodeBlock.Builder blockBuilder = CodeBlock.builder();
         for (TransformAnnotatedField field : clazz.getTransformAnnotatedElements()) {
             field.generateFieldAssignmentCode(blockBuilder, src, dest);

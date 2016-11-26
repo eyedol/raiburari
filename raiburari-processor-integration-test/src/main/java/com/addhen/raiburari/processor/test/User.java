@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-package com.addhen.android.raiburari.processor.mock;
+package com.addhen.raiburari.processor.test;
 
 /**
  * @author Henry Addo
  */
-public class MockLocation {
+public class User {
 
-    public String locationName;
+    public String fullName;
 
-    public MockUser mockUser;
-
-    public MockLocation() {
+    public User() {
         // No-op Needed by annotation processor
     }
 }

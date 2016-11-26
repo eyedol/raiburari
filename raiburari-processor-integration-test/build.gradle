@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package com.addhen.android.raiburari.processor.mock;
+apply plugin: 'java'
 
-/**
- * @author Henry Addo
- */
-public class MockLocation {
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
 
-    public String locationName;
+dependencies {
+    compile project(':raiburari-annotation');
+    compile project(':raiburari-processor');
 
-    public MockUser mockUser;
+    def appTestDependencies = rootProject.ext.appTestDependencies
+    def appDependencies = rootProject.ext.appDependencies
 
-    public MockLocation() {
-        // No-op Needed by annotation processor
-    }
+    testCompile appTestDependencies.junit
+    testCompile appTestDependencies.googleTruth
 }

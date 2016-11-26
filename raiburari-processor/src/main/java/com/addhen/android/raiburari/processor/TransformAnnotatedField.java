@@ -30,7 +30,11 @@ public class TransformAnnotatedField {
 
     private VariableElement mVariableElement;
 
+    private TypeElement mTypeElement;
+
     private String mFieldName;
+
+    private String mCanonicalClassName = null;
 
     public TransformAnnotatedField(VariableElement field, Transform transform)
             throws ProcessingException {
@@ -65,6 +69,11 @@ public class TransformAnnotatedField {
                     + "not specified in the in the annotated field %s",
                     field.getSimpleName().toString());
         }
+
+        String transformer = transform.transformer();
+        if (transformer != null || transformer.length() > 0) {
+            mCanonicalClassName = transformer;
+        }
         mVariableElement = field;
     }
 
@@ -78,8 +87,17 @@ public class TransformAnnotatedField {
 
     public void generateFieldAssignmentCode(CodeBlock.Builder builder, String src,
             String dest) {
-        builder.addStatement("$L.$L = $L.$L", dest, mFieldName, src,
-                mVariableElement.getSimpleName().toString());
+        if (mCanonicalClassName != null && mCanonicalClassName.length() > 0) {
+            builder.addStatement("$L $L = new $L()", mCanonicalClassName,
+                    mFieldName + "Transformer", mCanonicalClassName);
+            builder.addStatement("$L.$L = $L.transform($L.$L)", dest, mFieldName,
+                    mFieldName + "Transformer", src, mVariableElement.getSimpleName().toString());
+
+        } else {
+            builder.addStatement("$L.$L = $L.$L", dest, mFieldName, src,
+                    mVariableElement.getSimpleName().toString());
+        }
+
     }
 
     public String getQualifiedSurroundingClassName() {

@@ -14,18 +14,25 @@
  * limitations under the License.
  */
 
-package com.addhen.android.raiburari.processor.mock;
+package com.addhen.raiburari.processor.test;
+
+import com.addhen.android.raiburari.annotations.Transform;
+import com.addhen.android.raiburari.annotations.TransformEntity;
 
 /**
  * @author Henry Addo
  */
-public class MockLocation {
+@TransformEntity(to = User.class)
+public class UserEntity {
 
-    public String locationName;
+    @Transform(name = "fullName")
+    public String fullName;
 
-    public MockUser mockUser;
-
-    public MockLocation() {
+    public UserEntity() {
         // No-op Needed by annotation processor
+    }
+
+    public UserEntity(String fullName) {
+        this.fullName = fullName;
     }
 }
