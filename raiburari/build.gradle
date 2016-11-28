@@ -69,13 +69,9 @@ android {
 }
 
 dependencies {
-    compile project(':raiburari-annotation');
-    compile project(':raiburari-processor');
     def appDependencies = rootProject.ext.appDependencies
-
     apt appDependencies.daggerCompiler
     apt appDependencies.butterKnifeComplier
-    apt project(':raiburari-processor');
     compile appDependencies.dagger
     compile appDependencies.design
     compile appDependencies.cardView

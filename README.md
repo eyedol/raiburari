@@ -1,7 +1,8 @@
 Raiburari [ ![Download](https://api.bintray.com/packages/eyedol/maven/Raiburari/images/download.svg) ](https://bintray.com/eyedol/maven/Raiburari/_latestVersion)
 =========
 
-This is a resuable library to make it easy to write Android apps.
+This is a resuable Android SDK for writing Android apps. The need came as a result of repeatedly constructing the same directory stucture and base classes when starting a new Android project.
+
 
 Setup
 =====
@@ -11,6 +12,7 @@ Gradle
 ------
 ```groovy
    dependencies {
+       compile 'com.addhen.android:raiburari:raib
        compile 'com.addhen.android:raiburari:<latest_version>'
    }
 ```

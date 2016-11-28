@@ -56,17 +56,44 @@ install {
     }
 }
 
-task sourcesJar(type: Jar) {
-    if (pkg == 'aar') {
-        from android.sourceSets.main.java.srcDirs
-    } else {
-        from sourceSets.main.java.srcDirs
+if (project.getPlugins().hasPlugin('com.android.application') ||
+        project.getPlugins().hasPlugin('com.android.library')) {
+    task androidJavadocs(type: Javadoc) {
+        failOnError false // Don't fail on error
+        source = android.sourceSets.main.java.source
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     }
-    classifier = 'sources'
+
+    task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
+        classifier = 'javadoc'
+        from androidJavadocs.destinationDir
+    }
+
+    task androidSourcesJar(type: Jar) {
+        classifier = 'sources'
+        from android.sourceSets.main.java.source
+    }
+} else {
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
 }
 
 artifacts {
-    archives sourcesJar
+    if (project.getPlugins().hasPlugin('com.android.application') ||
+            project.getPlugins().hasPlugin('com.android.library')) {
+        archives androidSourcesJar
+        archives androidJavadocsJar
+    } else {
+        archives sourcesJar
+        archives javadocJar
+    }
 }
 
 Properties properties = new Properties()
