@@ -2,7 +2,7 @@ Raiburari [ ![Download](
 ) ](https://bintray.com/eyedol/maven/Raiburari/_latestVersion)
 =========
 
-This is a resuable Android SDK for writing Android apps. The need came as a result of repeatedly constructing the same directory stucture and base classes when starting a new Android project.
+This is a reusable Android SDK for writing Android apps. The need came as a result of repeatedly constructing the same directory structure and base classes when starting a new Android project.
 
 Modules
 =======
@@ -18,13 +18,13 @@ Comes with two annotations. `@TransformEntity` - for class and `@Transform` for 
 
 raiburari-processor
 -------------------
-Processor for the annotations.
+A processor for the annotations.
 
 The SDK comes with a multi-layer Models or Entities. This necessitates the need to have an object mapper to map / transform from one layer's entity to another layer's model. Writing this transformer or object mapper class can be a bit boring. This annotation processor aims to automate the process by providing a set of annotations you can apply to a model class and fields so it generates the source for the transformer class for you.
 
 raiburari
 ---------
-Main module that contains all the base classes, custom views and resuable components.
+Main module that contains all the base classes, custom views, and reusable components.
 
 
 Setup
