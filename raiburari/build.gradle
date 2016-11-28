@@ -89,5 +89,11 @@ dependencies {
     provided appDependencies.javaxAnnotation
 }
 
+ext {
+    artifact = 'Raiburari'
+    blob = 'The project aims to provide a reusable Android library for building Android apps'
+    pkg = 'aar'
+}
+
 // Upload artifact to bintray repo
 apply from: '../config/bintray-upload.gradle'

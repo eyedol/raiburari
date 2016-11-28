@@ -26,11 +26,10 @@ install {
         // This generates POM.xml with proper parameters
         pom {
             project {
-                packaging 'aar'
+                packaging pkg
                 // Add your description here
-                name 'Raiburari'
-                description =
-                        'The project aims to provide a reusable Android library for building Android apps'
+                name artifact.toString()
+                description = blob
                 url siteUrl
                 // Set your license
                 licenses {
@@ -58,22 +57,15 @@ install {
 }
 
 task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
+    if (pkg == 'aar') {
+        from android.sourceSets.main.java.srcDirs
+    } else {
+        from sourceSets.main.java.srcDirs
+    }
     classifier = 'sources'
-}
-task javadoc(type: Javadoc) {
-    failOnError false // Don't fail on error
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
 }
 
 artifacts {
-    archives javadocJar
     archives sourcesJar
 }
 
@@ -89,7 +81,7 @@ bintray {
     pkg {
         repo = "maven"
         // it is the name that appears in bintray when logged
-        name = "Raiburari"
+        name = artifact
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         issueTrackerUrl = issueUrl
@@ -100,7 +92,6 @@ bintray {
         version {
             name = libVersion
             vcsTag = libVersion
-            desc = 'alpha'
             gpg {
                 sign = true //Determines whether to GPG sign the files. The default is false
                 passphrase = properties.getProperty("bintray.gpg.password")
