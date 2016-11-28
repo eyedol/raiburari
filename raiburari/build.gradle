@@ -90,4 +90,4 @@ dependencies {
 }
 
 // Upload artifact to bintray repo
-apply from: '../../config/bintray-upload.gradle'
+apply from: '../config/bintray-upload.gradle'

@@ -13,5 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-include ':library:raiburari', ':sample:app', ':raiburari-annotation', ':raiburari-processor',
+include ':raiburari', ':sample:app', ':raiburari-annotation', ':raiburari-processor',
         ':raiburari-processor-integration-test'

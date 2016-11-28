@@ -40,7 +40,7 @@ android {
 }
 
 dependencies {
-    compile project(':library:raiburari')
+    compile project(':raiburari')
     compile project(':raiburari-annotation');
     compile project(':raiburari-processor');
     apt appDependencies.butterKnifeComplier
