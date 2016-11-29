@@ -29,7 +29,6 @@ import com.addhen.android.raiburari.sample.app.presentation.model.UserModel;
 import com.addhen.android.raiburari.sample.app.presentation.model.mapper.UserModelMapper;
 import com.addhen.android.raiburari.sample.app.presentation.view.UserListView;
 
-import android.support.annotation.NonNull;
 import android.support.annotation.UiThread;
 
 import java.util.Collection;
@@ -62,9 +61,9 @@ public class UserListPresenter extends BasePresenter<UserListView> {
     }
 
     @Override
-    public void attachView(@NonNull UserListView view) {
-        super.attachView(view);
+    public void detachView() {
         this.getUserListUseCase.unsubscribe();
+        super.detachView();
     }
 
     /**
