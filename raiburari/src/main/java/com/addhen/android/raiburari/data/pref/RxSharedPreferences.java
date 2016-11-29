@@ -21,13 +21,16 @@ import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.subscriptions.Subscriptions;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.Disposables;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
+
 
 /**
  * RxJava based application {@link SharedPreferences}
@@ -43,35 +46,38 @@ public class RxSharedPreferences {
     @Inject
     public RxSharedPreferences(@NonNull final SharedPreferences sharedPreferences) {
         mSharedPreferences = sharedPreferences;
-        this.mChangedKeys = Observable.create(new Observable.OnSubscribe<String>() {
+        this.mChangedKeys = Observable.create(new ObservableOnSubscribe<String>() {
             @Override
-            public void call(final Subscriber<? super String> subscriber) {
-                final SharedPreferences.OnSharedPreferenceChangeListener listener
-                        = new SharedPreferences.OnSharedPreferenceChangeListener() {
-                    @Override
-                    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-                            String key) {
-                        subscriber.onNext(key);
-                    }
-                };
+            public void subscribe(final ObservableEmitter<String> e) throws Exception {
+                if (!e.isDisposed()) {
+                    final SharedPreferences.OnSharedPreferenceChangeListener listener
+                            = new SharedPreferences.OnSharedPreferenceChangeListener() {
+                        @Override
+                        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+                                String key) {
+                            e.onNext(key);
+                            e.onComplete();
+                        }
+                    };
 
-                Subscription subscription = Subscriptions.create(new Action0() {
-                    @Override
-                    public void call() {
-                        sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener);
-                    }
-                });
-                subscriber.add(subscription);
-
-                sharedPreferences.registerOnSharedPreferenceChangeListener(listener);
+                    Disposable d = Disposables.fromAction(new Action() {
+                        @Override
+                        public void run() throws Exception {
+                            sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener);
+                        }
+                    });
+                    e.setDisposable(d);
+                    sharedPreferences.registerOnSharedPreferenceChangeListener(listener);
+                }
             }
         }).share();
+
     }
 
-    private static Func1<String, Boolean> matchesKey(final String key) {
-        return new Func1<String, Boolean>() {
+    private static Predicate<String> matchesKey(final String key) {
+        return new Predicate<String>() {
             @Override
-            public Boolean call(String value) {
+            public boolean test(String value) throws Exception {
                 return key.equals(value);
             }
         };
@@ -84,18 +90,18 @@ public class RxSharedPreferences {
     public Observable<String> getString(String key, final String defaultValue) {
         return mChangedKeys.filter(matchesKey(key))
                 .startWith(key)
-                .map(new Func1<String, String>() {
+                .map(new Function<String, String>() {
                     @Override
-                    public String call(String changedKey) {
+                    public String apply(String changedKey) throws Exception {
                         return mSharedPreferences.getString(changedKey, defaultValue);
                     }
                 });
     }
 
-    public Action1<String> setString(final String key) {
-        return new Action1<String>() {
+    public Consumer<String> setString(final String key) {
+        return new Consumer<String>() {
             @Override
-            public void call(String value) {
+            public void accept(String value) throws Exception {
                 mSharedPreferences.edit().putString(key, value).apply();
             }
         };
@@ -108,18 +114,18 @@ public class RxSharedPreferences {
     public Observable<Boolean> getBoolean(String key, final Boolean defaultValue) {
         return mChangedKeys.filter(matchesKey(key))
                 .startWith(key)
-                .map(new Func1<String, Boolean>() {
+                .map(new Function<String, Boolean>() {
                     @Override
-                    public Boolean call(String changedKey) {
+                    public Boolean apply(String changedKey) {
                         return mSharedPreferences.getBoolean(changedKey, defaultValue);
                     }
                 });
     }
 
-    public Action1<Boolean> setBoolean(final String key) {
-        return new Action1<Boolean>() {
+    public Consumer<Boolean> setBoolean(final String key) {
+        return new Consumer<Boolean>() {
             @Override
-            public void call(Boolean value) {
+            public void accept(Boolean value) {
                 mSharedPreferences.edit().putBoolean(key, value).apply();
             }
         };
@@ -132,9 +138,9 @@ public class RxSharedPreferences {
     public Observable<Integer> getInt(String key, final Integer defaultValue) {
         return mChangedKeys.filter(matchesKey(key))
                 .startWith(key)
-                .map(new Func1<String, Integer>() {
+                .map(new Function<String, Integer>() {
                     @Override
-                    public Integer call(String changedKey) {
+                    public Integer apply(String changedKey) {
                         return mSharedPreferences.getInt(changedKey, defaultValue);
                     }
                 });

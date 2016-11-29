@@ -78,7 +78,7 @@ dependencies {
     compile appDependencies.recyclerView
     compile appDependencies.butterKnife
     compile appDependencies.rxAndroid
-    compile appDependencies.otto
+    compile appDependencies.rxJava
 
     // Data dependencies
     compile appDependencies.gson

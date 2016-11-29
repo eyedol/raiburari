@@ -32,10 +32,10 @@ ext {
     recyclerViewVersion = '25.0.0'
     daggerVersion = '2.7'
     butterKnifeVersion = '8.2.1'
-    rxAndroidVersion = '1.2.1'
+    rxAndroidVersion = '2.0.1'
+    rxJavaVersion = '2.0.1'
     javaxAnnotationVersion = '1.0'
     gsonVersion = '2.7'
-    ottoVersion = '1.3.8'
 
     //Testing
     jUnitVersion = '4.12'
@@ -51,9 +51,9 @@ ext {
             dagger             : "com.google.dagger:dagger:${daggerVersion}",
             butterKnife        : "com.jakewharton:butterknife:${butterKnifeVersion}",
             butterKnifeComplier: "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
-            rxAndroid          : "io.reactivex:rxandroid:${rxAndroidVersion}",
+            rxAndroid          : "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
+            rxJava             : "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
             javaxAnnotation    : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
-            otto               : "com.squareup:otto:${ottoVersion}",
             gson               : "com.google.code.gson:gson:${gsonVersion}",
     ]
 
