@@ -1,5 +1,4 @@
-Raiburari [ ![Download](
-) ](https://bintray.com/eyedol/maven/Raiburari/_latestVersion)
+Raiburari [ ![Download](https://api.bintray.com/packages/eyedol/maven/Raiburari/images/download.svg) ](https://bintray.com/eyedol/maven/Raiburari/_latestVersion)
 =========
 
 This is a reusable Android SDK for writing Android apps. The need came as a result of repeatedly constructing the same directory structure and base classes when starting a new Android project.
