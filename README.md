@@ -46,10 +46,33 @@ Maven
 ```groovy
 <dependency>
   <groupId>com.addhen.android</groupId>
+  <artifactId>raiburari-annotations</artifactId>
+  <version>LATEST</version>
+</dependency>
+
+<dependency>
+  <groupId>com.addhen.android</groupId>
+  <artifactId>raiburari-processor</artifactId>
+  <version>LATEST</version>
+</dependency>
+
+<dependency>
+  <groupId>com.addhen.android</groupId>
   <artifactId>raiburari</artifactId>
   <version>LATEST</version>
 </dependency>
 ```
+
+Credits
+--------
+This is heavily based on other people's work. Here includes:
+
+1. Fernando Cejas' [Android clean architecture][1] example.
+2. Uncle bob's [clean architecture blog][2] post. 
+3. Hannes Dorfmann's [annotation processing 101][3] blog post.
+4. Chris Banes' [Cheese Square][4] Android app.
+5. Jake Wharton's [ButterKinife][5].
+6. Kaushik Gopal's [RxJava Android][6] samples.
 
 
 License
@@ -68,3 +91,11 @@ License
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+    
+
+[1]: https://github.com/android10/Android-CleanArchitecture/
+[2]: http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html
+[3]: http://hannesdorfmann.com/annotation-processing/annotationprocessing101
+[4]: https://github.com/chrisbanes/cheesesquare
+[5]: https://github.com/JakeWharton/butterknife
+[6]: https://github.com/kaushikgopal/RxJava-Android-Samples
