@@ -27,9 +27,9 @@ ext {
     androidCompileSdkVersion = 25
 
     //Libraries
-    designVersion = '25.0.0'
-    cardViewVersion = '25.0.0'
-    recyclerViewVersion = '25.0.0'
+    designVersion = '25.0.1'
+    cardViewVersion = '25.0.1'
+    recyclerViewVersion = '25.0.1'
     daggerVersion = '2.7'
     butterKnifeVersion = '8.2.1'
     rxAndroidVersion = '2.0.1'
