@@ -24,10 +24,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observable;
-import rx.Subscriber;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 
-public final class GeocodeObservable implements Observable.OnSubscribe<List<Address>> {
+
+public final class GeocodeObservable implements ObservableOnSubscribe<List<Address>> {
 
     private final Context mContext;
 
@@ -47,20 +49,20 @@ public final class GeocodeObservable implements Observable.OnSubscribe<List<Addr
     }
 
     @Override
-    public void call(Subscriber<? super List<Address>> subscriber) {
+    public void subscribe(ObservableEmitter<List<Address>> subscriber) throws Exception {
         Geocoder geocoder = new Geocoder(mContext);
         List<Address> result = new ArrayList<>();
 
         try {
             result = geocoder.getFromLocationName(mLocationName, mMaxResults);
         } catch (IOException e) {
-            if (!subscriber.isUnsubscribed()) {
+            if (!subscriber.isDisposed()) {
                 subscriber.onError(e);
             }
         }
-        if (!subscriber.isUnsubscribed()) {
+        if (!subscriber.isDisposed()) {
             subscriber.onNext(result);
-            subscriber.onCompleted();
+            subscriber.onComplete();
         }
     }
 }

@@ -23,8 +23,9 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 
-import rx.Observable;
-import rx.Observer;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+
 
 public class LocationUpdatesObservable extends BaseLocationObservable<Location> {
 
@@ -40,14 +41,19 @@ public class LocationUpdatesObservable extends BaseLocationObservable<Location> 
     }
 
     @Override
-    protected void onLocationFixed(final Observer<? super Location> observer) {
+    public void subscribe(ObservableEmitter<Location> subscriber) {
+        baseSubscribe(subscriber);
+    }
+
+    @Override
+    protected void onLocationFixed(final ObservableEmitter<? super Location> observer) {
         setLocationListener(new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 if (location != null) {
                     observer.onNext(location);
                     stopLocating();
-                    observer.onCompleted();
+                    observer.onComplete();
                 } else {
                     observer.onError(new Exception(mContext.getString(R.string.no_location_found)));
                 }

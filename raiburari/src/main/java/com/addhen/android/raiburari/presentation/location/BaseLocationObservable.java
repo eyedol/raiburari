@@ -23,9 +23,8 @@ import android.location.LocationManager;
 import android.os.Looper;
 import android.util.Log;
 
-import rx.Observable;
-import rx.Observer;
-import rx.Subscriber;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 
 /**
  * Base class to
@@ -34,7 +33,7 @@ import rx.Subscriber;
  */
 // Implementing app should request for the needed permissions
 @SuppressWarnings("MissingPermission")
-public abstract class BaseLocationObservable<T> implements Observable.OnSubscribe<T> {
+public abstract class BaseLocationObservable<T> implements ObservableOnSubscribe<T> {
 
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 30; // 30 meters
 
@@ -51,14 +50,13 @@ public abstract class BaseLocationObservable<T> implements Observable.OnSubscrib
         mContext = context;
     }
 
-    protected abstract void onLocationFixed(Observer<? super T> observer);
+    protected abstract void onLocationFixed(ObservableEmitter<? super T> observer);
 
     public void setLocationListener(LocationListener locationListener) {
         mLocationListener = locationListener;
     }
 
-    @Override
-    public void call(Subscriber<? super T> subscriber) {
+    public void baseSubscribe(ObservableEmitter<? super T> subscriber) {
         mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
         onLocationFixed(subscriber);
     }
@@ -71,7 +69,7 @@ public abstract class BaseLocationObservable<T> implements Observable.OnSubscrib
         return mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
-    protected Location getLastKnowLocation(Observer<? super T> observer) {
+    protected Location getLastKnowLocation(ObservableEmitter<? super T> observer) {
         Location location = null;
         try {
             if (isNetworkEnabled()) {
@@ -91,7 +89,7 @@ public abstract class BaseLocationObservable<T> implements Observable.OnSubscrib
         return location;
     }
 
-    protected void getLocationUpdates(Observer<? super T> observer) {
+    protected void getLocationUpdates(ObservableEmitter<? super T> observer) {
         if (mLocationListener == null) {
             throw new IllegalArgumentException("LocationListener cannot be null");
         }

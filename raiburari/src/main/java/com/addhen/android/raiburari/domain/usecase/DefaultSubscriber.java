@@ -16,13 +16,15 @@
 
 package com.addhen.android.raiburari.domain.usecase;
 
+import io.reactivex.subscribers.DisposableSubscriber;
+
 /**
  * Default subscriber base class to be used whenever you want default error handling.
  */
-public class DefaultSubscriber<T> extends rx.Subscriber<T> {
+public class DefaultSubscriber<T> extends DisposableSubscriber<T> {
 
     @Override
-    public void onCompleted() {
+    public void onComplete() {
         // no-op by default.
     }
 

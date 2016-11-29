@@ -20,7 +20,7 @@ import com.addhen.android.raiburari.domain.repository.Repository;
 import com.addhen.android.raiburari.sample.app.domain.entity.User;
 
 /**
- * @author Ushahidi Team <team@ushahidi.com>
+ * @author Henry Addo
  */
 public interface UserRepository extends Repository<User> {
 

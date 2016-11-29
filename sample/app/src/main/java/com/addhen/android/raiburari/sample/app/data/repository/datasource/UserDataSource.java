@@ -20,7 +20,8 @@ import com.addhen.android.raiburari.sample.app.data.entity.UserEntity;
 
 import java.util.List;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 /**
  * @author Henry Addo

@@ -18,7 +18,8 @@ package com.addhen.android.raiburari.domain.repository;
 
 import java.util.List;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 /**
  * Base Interface that represents Repository for fetching {@link E}

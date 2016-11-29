@@ -27,33 +27,34 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import rx.Observable;
-import rx.functions.Func1;
+import io.reactivex.Observable;
+import io.reactivex.functions.Function;
+
 
 /**
  * {@link UserRepository} for retrieving user data.
  */
 public class UserDataRepository implements UserRepository {
 
-    private final UserDataStoreFactory userDataStoreFactory;
+    private final UserDataStoreFactory mUserDataStoreFactory;
 
-    private final UserEntityDataMapper userEntityDataMapper;
+    private final UserEntityDataMapper mUserEntityDataMapper;
 
-    final UserDataSource userDataStore;
+    final UserDataSource mUserDataSource;
 
-    private final Func1<List<UserEntity>, List<User>> userListEntityMapper =
-            new Func1<List<UserEntity>, List<User>>() {
+    private final Function<List<UserEntity>, List<User>> userListEntityMapper =
+            new Function<List<UserEntity>, List<User>>() {
                 @Override
-                public List<User> call(List<UserEntity> userEntities) {
-                    return UserDataRepository.this.userEntityDataMapper.map(userEntities);
+                public List<User> apply(List<UserEntity> userEntities) {
+                    return UserDataRepository.this.mUserEntityDataMapper.map(userEntities);
                 }
             };
 
-    private final Func1<UserEntity, User>
-            userDetailsEntityMapper = new Func1<UserEntity, User>() {
+    private final Function<UserEntity, User>
+            userDetailsEntityMapper = new Function<UserEntity, User>() {
         @Override
-        public User call(UserEntity userEntity) {
-            return UserDataRepository.this.userEntityDataMapper.map(userEntity);
+        public User apply(UserEntity userEntity) {
+            return UserDataRepository.this.mUserEntityDataMapper.map(userEntity);
         }
     };
 
@@ -66,14 +67,14 @@ public class UserDataRepository implements UserRepository {
     @Inject
     public UserDataRepository(UserDataStoreFactory dataStoreFactory,
             UserEntityDataMapper userEntityDataMapper) {
-        this.userDataStoreFactory = dataStoreFactory;
-        this.userEntityDataMapper = userEntityDataMapper;
-        userDataStore = userDataStoreFactory.createDummyDataSource();
+        this.mUserDataStoreFactory = dataStoreFactory;
+        this.mUserEntityDataMapper = userEntityDataMapper;
+        mUserDataSource = mUserDataStoreFactory.createDummyDataSource();
     }
 
     @Override
     public Observable<List<User>> getEntities() {
-        return userDataStore.getUserEntityList().map(userListEntityMapper);
+        return mUserDataSource.getUserEntityList().map(userListEntityMapper);
     }
 
     @Override
@@ -93,7 +94,7 @@ public class UserDataRepository implements UserRepository {
 
     @Override
     public Observable<User> getEntity(Long userId) {
-        return userDataStore.getUserEntityDetails(userId).map(userDetailsEntityMapper);
+        return mUserDataSource.getUserEntityDetails(userId).map(userDetailsEntityMapper);
     }
 
 }

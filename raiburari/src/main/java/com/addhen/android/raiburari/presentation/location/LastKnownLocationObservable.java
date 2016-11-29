@@ -21,8 +21,10 @@ import com.addhen.android.raiburari.R;
 import android.content.Context;
 import android.location.Location;
 
-import rx.Observable;
-import rx.Observer;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.Observer;
+
 
 /**
  * Fetches the users known last location
@@ -41,13 +43,18 @@ public class LastKnownLocationObservable extends BaseLocationObservable<Location
     }
 
     @Override
-    protected void onLocationFixed(Observer<? super Location> observer) {
+    protected void onLocationFixed(ObservableEmitter<? super Location> observer) {
         Location location = getLastKnowLocation(observer);
         if (location != null) {
             observer.onNext(location);
-            observer.onCompleted();
+            observer.onComplete();
         } else {
             observer.onError(new Exception(mContext.getString(R.string.no_location_found)));
         }
+    }
+
+    @Override
+    public void subscribe(ObservableEmitter<Location> e) throws Exception {
+        baseSubscribe(e);
     }
 }

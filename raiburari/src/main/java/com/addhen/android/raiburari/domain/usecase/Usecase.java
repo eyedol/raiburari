@@ -19,11 +19,13 @@ package com.addhen.android.raiburari.domain.usecase;
 import com.addhen.android.raiburari.domain.executor.PostExecutionThread;
 import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.Subscriptions;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subscribers.DisposableSubscriber;
 
 /**
  * Base class to be extended by all Usecases
@@ -32,20 +34,20 @@ import rx.subscriptions.Subscriptions;
  */
 public abstract class Usecase {
 
-    private final ThreadExecutor threadExecutor;
+    private final ThreadExecutor mThreadExecutor;
 
-    private final PostExecutionThread postExecutionThread;
+    private final PostExecutionThread mPostExecutionThread;
 
-    private Subscription subscription = Subscriptions.empty();
+    private CompositeDisposable mDisposable = new CompositeDisposable();
 
     protected Usecase(ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread) {
-        this.threadExecutor = threadExecutor;
-        this.postExecutionThread = postExecutionThread;
+        this.mThreadExecutor = threadExecutor;
+        this.mPostExecutionThread = postExecutionThread;
     }
 
     /**
-     * Builds an {@link Observable} which will be used when executing the current {@link
+     * Builds an {@link Flowable} which will be used when executing the current {@link
      * Usecase}.
      */
     protected abstract Observable buildUseCaseObservable();
@@ -53,22 +55,25 @@ public abstract class Usecase {
     /**
      * Executes the current use case.
      *
-     * @param usecaseSubscriber Usecase observable {@link #buildUseCaseObservable()}.
+     * @param usecaseDisposableObserver Usecase observable {@link #buildUseCaseObservable()}.
      */
     @SuppressWarnings("unchecked")
-    public void execute(Subscriber usecaseSubscriber) {
-        this.subscription = this.buildUseCaseObservable()
-                .subscribeOn(Schedulers.from(threadExecutor))
-                .observeOn(postExecutionThread.getScheduler())
-                .subscribe(usecaseSubscriber);
+    public void execute(DisposableSubscriber usecaseDisposableObserver) {
+        this.buildUseCaseObservable()
+                .toFlowable(BackpressureStrategy.LATEST)
+                .subscribeOn(Schedulers.from(mThreadExecutor))
+                .observeOn(mPostExecutionThread.getScheduler())
+                .subscribe(usecaseDisposableObserver);
+        mDisposable.add(usecaseDisposableObserver);
     }
 
     /**
-     * Unsubscribes from current {@link Subscription}.
+     * Unsubscribes from current {@link Disposable}.
      */
     public void unsubscribe() {
-        if (!subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
+        if (!mDisposable.isDisposed()) {
+            mDisposable.dispose();
         }
+        mDisposable.clear();
     }
 }

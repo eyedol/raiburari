@@ -21,8 +21,10 @@ import com.addhen.android.raiburari.sample.app.data.entity.UserEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observable;
-import rx.Subscriber;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
@@ -31,9 +33,9 @@ public class DummyDataSource implements UserDataSource {
 
     @Override
     public Observable<List<UserEntity>> getUserEntityList() {
-        return Observable.create(new Observable.OnSubscribe<List<UserEntity>>() {
+        return Observable.create(new ObservableOnSubscribe<List<UserEntity>>() {
             @Override
-            public void call(Subscriber<? super List<UserEntity>> subscriber) {
+            public void subscribe(ObservableEmitter<List<UserEntity>> subscriber) {
                 UserEntity userEntity = new UserEntity();
                 userEntity._id = 1l;
                 userEntity.description = "Hey there";
@@ -86,19 +88,14 @@ public class DummyDataSource implements UserDataSource {
                 listUser.add(userEntity);
                 listUser.add(userEntity2);
                 listUser.add(userEntity3);
-                /*listUser.add(userEntity4);
-                listUser.add(userEntity5);
-                listUser.add(userEntity6);
-                listUser.add(userEntity7);
-                listUser.add(userEntity8);*/
                 subscriber.onNext(listUser);
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
         });
     }
 
     @Override
     public Observable<UserEntity> getUserEntityDetails(Long userId) {
-        return null;
+        return Observable.just(null);
     }
 }

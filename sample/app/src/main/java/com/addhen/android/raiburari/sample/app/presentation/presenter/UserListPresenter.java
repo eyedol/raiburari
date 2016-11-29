@@ -123,7 +123,7 @@ public class UserListPresenter extends DefaultSubscriber<List<User>> implements 
     }
 
     @Override
-    public void onCompleted() {
+    public void onComplete() {
         this.hideViewLoading();
     }
 
