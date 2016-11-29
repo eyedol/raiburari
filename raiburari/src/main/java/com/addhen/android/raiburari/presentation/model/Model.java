@@ -23,8 +23,6 @@ package com.addhen.android.raiburari.presentation.model;
  */
 public class Model {
 
-    public Long _id;
-
     protected Model() {
         // No-op
     }

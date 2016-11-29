@@ -37,49 +37,49 @@ public class DummyDataSource implements UserDataSource {
             @Override
             public void subscribe(ObservableEmitter<List<UserEntity>> subscriber) {
                 UserEntity userEntity = new UserEntity();
-                userEntity._id = 1l;
+                userEntity.id = 1l;
                 userEntity.description = "Hey there";
                 userEntity.fullName = "Henry Addo";
                 userEntity.email = "addhenemail";
 
                 UserEntity userEntity2 = new UserEntity();
-                userEntity2._id = 2l;
+                userEntity2.id = 2l;
                 userEntity2.email = "emailaddress";
                 userEntity2.description = "Hey there";
                 userEntity2.fullName = "Ebony Mathis";
 
                 UserEntity userEntity3 = new UserEntity();
-                userEntity3._id = 3l;
+                userEntity3.id = 3l;
                 userEntity3.email = "emailaddress";
                 userEntity3.description = "Hey there";
                 userEntity3.fullName = "FindReels";
 
                 UserEntity userEntity4 = new UserEntity();
-                userEntity4._id = 4l;
+                userEntity4.id = 4l;
                 userEntity4.email = "emailaddress";
                 userEntity4.description = "Hey there 4";
                 userEntity4.fullName = "FindReels";
 
                 UserEntity userEntity5 = new UserEntity();
-                userEntity5._id = 5l;
+                userEntity5.id = 5l;
                 userEntity5.email = "emailaddress";
                 userEntity5.description = "Hey there 4";
                 userEntity5.fullName = "FindReels";
 
                 UserEntity userEntity6 = new UserEntity();
-                userEntity6._id = 6l;
+                userEntity6.id = 6l;
                 userEntity6.email = "emailaddress";
                 userEntity6.description = "Hey there 4";
                 userEntity6.fullName = "FindReels";
 
                 UserEntity userEntity7 = new UserEntity();
-                userEntity7._id = 7l;
+                userEntity7.id = 7l;
                 userEntity7.email = "emailaddress";
                 userEntity7.description = "Hey there 4";
                 userEntity7.fullName = "FindReels";
 
                 UserEntity userEntity8 = new UserEntity();
-                userEntity8._id = 8l;
+                userEntity8.id = 8l;
                 userEntity8.email = "emailaddress";
                 userEntity8.description = "Hey there 4";
                 userEntity8.fullName = "FindReels";

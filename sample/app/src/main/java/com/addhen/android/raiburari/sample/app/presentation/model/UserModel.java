@@ -23,6 +23,8 @@ import com.addhen.android.raiburari.presentation.model.Model;
  */
 public class UserModel extends Model {
 
+    public long id;
+
     public String fullName;
 
     public String email;

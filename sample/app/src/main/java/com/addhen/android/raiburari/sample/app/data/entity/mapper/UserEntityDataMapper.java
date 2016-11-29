@@ -47,7 +47,7 @@ public class UserEntityDataMapper {
             user.description = userEntity.description;
             user.email = userEntity.email;
             user.fullName = userEntity.fullName;
-            user._id = userEntity._id;
+            user.id = userEntity.id;
         }
 
         return user;

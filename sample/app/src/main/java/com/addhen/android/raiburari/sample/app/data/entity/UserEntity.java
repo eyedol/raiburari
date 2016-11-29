@@ -27,6 +27,9 @@ import com.addhen.android.raiburari.sample.app.domain.entity.User;
 @TransformEntity(to = User.class)
 public class UserEntity extends DataEntity {
 
+    @Transform(name = "id")
+    public long id;
+
     @Transform(name = "fullName")
     public String fullName;
 

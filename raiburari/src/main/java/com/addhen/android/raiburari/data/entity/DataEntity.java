@@ -22,8 +22,6 @@ package com.addhen.android.raiburari.data.entity;
  * @author Henry Addo
  */
 public class DataEntity {
-    
-    public Long _id;
 
     public DataEntity() {
         // No-op
