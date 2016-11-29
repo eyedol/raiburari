@@ -14,30 +14,21 @@
  * limitations under the License.
  */
 
-package com.addhen.android.raiburari.presentation.presenter;
+package com.addhen.android.raiburari.sample.app.presentation.view;
 
-import com.addhen.android.raiburari.presentation.view.UiView;
+import com.addhen.android.raiburari.sample.app.presentation.model.UserModel;
 
-import android.support.annotation.UiThread;
+import java.util.Collection;
 
 /**
- * Presenter interface that all App Presenters must implemented
- *
  * @author Henry Addo
  */
-public interface Presenter<V extends UiView> {
+public interface UserListView extends LoadDataView {
 
     /**
-     * Set or attach the view to this presenter
+     * Render a user list in the UI.
+     *
+     * @param userModelCollection The collection of {@link UserModel} that will be shown.
      */
-    @UiThread
-    void attachView(V view);
-
-    /**
-     * Will be called if the view has been destroyed. Typically this method will be invoked from
-     * <code>Activity.detachView()</code> or <code>Fragment.onDestroyView()</code>
-     */
-    @UiThread
-    void detachView();
-
+    void showUserList(Collection<UserModel> userModelCollection);
 }

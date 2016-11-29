@@ -24,7 +24,7 @@ import com.addhen.android.raiburari.data.task.TaskExecutor;
 import com.addhen.android.raiburari.domain.executor.PostExecutionThread;
 import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 import com.addhen.android.raiburari.presentation.BaseApplication;
-import com.addhen.android.raiburari.presentation.ui.UiThread;
+import com.addhen.android.raiburari.presentation.view.ui.UiThread;
 
 import android.content.Context;
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Henry Addo
+ * Copyright (c) 2016 Henry Addo
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,30 +14,38 @@
  * limitations under the License.
  */
 
-package com.addhen.android.raiburari.presentation.presenter;
+package com.addhen.android.raiburari.sample.app.presentation.view;
 
 import com.addhen.android.raiburari.presentation.view.UiView;
 
 import android.support.annotation.UiThread;
 
 /**
- * Presenter interface that all App Presenters must implemented
- *
  * @author Henry Addo
  */
-public interface Presenter<V extends UiView> {
+public interface LoadDataView extends UiView {
 
     /**
-     * Set or attach the view to this presenter
+     * Shows a view with a progress bar indicating a loading process.
      */
     @UiThread
-    void attachView(V view);
+    void showLoading();
 
     /**
-     * Will be called if the view has been destroyed. Typically this method will be invoked from
-     * <code>Activity.detachView()</code> or <code>Fragment.onDestroyView()</code>
+     * Hides a loading view.
      */
     @UiThread
-    void detachView();
+    void hideLoading();
 
+    /**
+     * Shows a retry view in case of an error when retrieving data.
+     */
+    @UiThread
+    void showRetry();
+
+    /**
+     * Hide a retry view shown if there was an error when retrieving data.
+     */
+    @UiThread
+    void hideRetry();
 }

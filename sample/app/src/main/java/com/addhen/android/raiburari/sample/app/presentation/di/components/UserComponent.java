@@ -23,8 +23,8 @@ import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
 import com.addhen.android.raiburari.sample.app.domain.repository.UserRepository;
 import com.addhen.android.raiburari.sample.app.presentation.di.modules.UserModule;
 import com.addhen.android.raiburari.sample.app.presentation.presenter.UserListPresenter;
-import com.addhen.android.raiburari.sample.app.presentation.ui.activity.MainActivity;
-import com.addhen.android.raiburari.sample.app.presentation.ui.fragment.MainFragment;
+import com.addhen.android.raiburari.sample.app.presentation.view.ui.activity.MainActivity;
+import com.addhen.android.raiburari.sample.app.presentation.view.ui.fragment.MainFragment;
 
 import dagger.Component;
 

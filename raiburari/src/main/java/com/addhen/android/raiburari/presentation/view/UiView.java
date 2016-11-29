@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Henry Addo
+ * Copyright (c) 2016 Henry Addo
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,30 +14,35 @@
  * limitations under the License.
  */
 
-package com.addhen.android.raiburari.presentation.presenter;
+package com.addhen.android.raiburari.presentation.view;
 
-import com.addhen.android.raiburari.presentation.view.UiView;
+/**
+ * @author Henry Addo
+ */
 
+import android.content.Context;
 import android.support.annotation.UiThread;
 
 /**
- * Presenter interface that all App Presenters must implemented
+ * Implement this interface to show error messages to the activity at implements it.
+ * It almost facilitates presenting users with data from
+ * {@link com.addhen.android.raiburari.presentation.presenter.Presenter} to Activities.
  *
  * @author Henry Addo
  */
-public interface Presenter<V extends UiView> {
+public interface UiView {
 
     /**
-     * Set or attach the view to this presenter
+     * Shows an error message
+     *
+     * @param message A string resource representing an error.
      */
     @UiThread
-    void attachView(V view);
+    void showError(String message);
 
     /**
-     * Will be called if the view has been destroyed. Typically this method will be invoked from
-     * <code>Activity.detachView()</code> or <code>Fragment.onDestroyView()</code>
+     * Gets a {@link android.content.Context}.
      */
     @UiThread
-    void detachView();
-
+    Context getAppContext();
 }

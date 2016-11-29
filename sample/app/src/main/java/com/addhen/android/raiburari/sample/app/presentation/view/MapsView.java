@@ -14,30 +14,14 @@
  * limitations under the License.
  */
 
-package com.addhen.android.raiburari.presentation.presenter;
+package com.addhen.android.raiburari.sample.app.presentation.view;
 
-import com.addhen.android.raiburari.presentation.view.UiView;
-
-import android.support.annotation.UiThread;
+import java.util.ArrayList;
 
 /**
- * Presenter interface that all App Presenters must implemented
- *
  * @author Henry Addo
  */
-public interface Presenter<V extends UiView> {
+public interface MapsView extends LoadDataView {
 
-    /**
-     * Set or attach the view to this presenter
-     */
-    @UiThread
-    void attachView(V view);
-
-    /**
-     * Will be called if the view has been destroyed. Typically this method will be invoked from
-     * <code>Activity.detachView()</code> or <code>Fragment.onDestroyView()</code>
-     */
-    @UiThread
-    void detachView();
-
+    void renderGeoJson(ArrayList<Object> uiObjects);
 }

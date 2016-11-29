@@ -19,7 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <com.addhen.android.raiburari.presentation.ui.widget.VerticalSwipeRefreshLayout
+    <com.addhen.android.raiburari.presentation.view.ui.widget.VerticalSwipeRefreshLayout
             android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
-    </com.addhen.android.raiburari.presentation.ui.widget.VerticalSwipeRefreshLayout>
+    </com.addhen.android.raiburari.presentation.view.ui.widget.VerticalSwipeRefreshLayout>
 
     <android.support.design.widget.FloatingActionButton
             android:id="@+id/bloated_recycleview_fab"
