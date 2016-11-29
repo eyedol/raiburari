@@ -81,7 +81,6 @@ dependencies {
     compile appDependencies.rxJava
 
     // Data dependencies
-    compile appDependencies.gson
     provided appDependencies.javaxAnnotation
 }
 

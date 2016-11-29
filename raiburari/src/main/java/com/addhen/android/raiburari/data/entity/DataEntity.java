@@ -16,16 +16,13 @@
 
 package com.addhen.android.raiburari.data.entity;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
  * Base entity class that all entities must subclass
  *
  * @author Henry Addo
  */
 public class DataEntity {
-
-    @SerializedName("id")
+    
     public Long _id;
 
     public DataEntity() {

@@ -35,7 +35,6 @@ ext {
     rxAndroidVersion = '2.0.1'
     rxJavaVersion = '2.0.1'
     javaxAnnotationVersion = '1.0'
-    gsonVersion = '2.7'
 
     //Testing
     jUnitVersion = '4.12'
@@ -54,7 +53,6 @@ ext {
             rxAndroid          : "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
             rxJava             : "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
             javaxAnnotation    : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
-            gson               : "com.google.code.gson:gson:${gsonVersion}",
     ]
 
     appTestDependencies = [
