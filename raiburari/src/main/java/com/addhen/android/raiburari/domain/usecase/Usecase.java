@@ -20,10 +20,8 @@ import com.addhen.android.raiburari.domain.executor.PostExecutionThread;
 import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 
 import io.reactivex.BackpressureStrategy;
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
 
@@ -38,7 +36,7 @@ public abstract class Usecase {
 
     private final PostExecutionThread mPostExecutionThread;
 
-    private CompositeDisposable mDisposable = new CompositeDisposable();
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     protected Usecase(ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread) {
@@ -47,7 +45,7 @@ public abstract class Usecase {
     }
 
     /**
-     * Builds an {@link Flowable} which will be used when executing the current {@link
+     * Builds an {@link Observable} which will be used when executing the current {@link
      * Usecase}.
      */
     protected abstract Observable buildUseCaseObservable();
@@ -68,7 +66,7 @@ public abstract class Usecase {
     }
 
     /**
-     * Unsubscribes from current {@link Disposable}.
+     * Unsubscribes from current {@link CompositeDisposable}.
      */
     public void unsubscribe() {
         if (!mDisposable.isDisposed()) {

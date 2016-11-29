@@ -23,7 +23,6 @@ import android.location.Location;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
-import io.reactivex.Observer;
 
 
 /**
@@ -54,7 +53,7 @@ public class LastKnownLocationObservable extends BaseLocationObservable<Location
     }
 
     @Override
-    public void subscribe(ObservableEmitter<Location> e) throws Exception {
+    public void subscribe(ObservableEmitter<Location> e) {
         baseSubscribe(e);
     }
 }

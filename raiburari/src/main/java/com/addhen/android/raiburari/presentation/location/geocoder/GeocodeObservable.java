@@ -49,7 +49,7 @@ public final class GeocodeObservable implements ObservableOnSubscribe<List<Addre
     }
 
     @Override
-    public void subscribe(ObservableEmitter<List<Address>> subscriber) throws Exception {
+    public void subscribe(ObservableEmitter<List<Address>> subscriber) {
         Geocoder geocoder = new Geocoder(mContext);
         List<Address> result = new ArrayList<>();
 

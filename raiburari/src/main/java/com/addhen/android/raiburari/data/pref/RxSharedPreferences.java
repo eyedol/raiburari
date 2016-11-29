@@ -37,6 +37,7 @@ import io.reactivex.functions.Predicate;
  *
  * @author Henry Addo
  */
+@SuppressWarnings("PMD.JUnit4TestShouldUseTestAnnotation")
 public class RxSharedPreferences {
 
     private final SharedPreferences mSharedPreferences;
@@ -48,7 +49,7 @@ public class RxSharedPreferences {
         mSharedPreferences = sharedPreferences;
         this.mChangedKeys = Observable.create(new ObservableOnSubscribe<String>() {
             @Override
-            public void subscribe(final ObservableEmitter<String> e) throws Exception {
+            public void subscribe(final ObservableEmitter<String> e) {
                 if (!e.isDisposed()) {
                     final SharedPreferences.OnSharedPreferenceChangeListener listener
                             = new SharedPreferences.OnSharedPreferenceChangeListener() {
@@ -62,7 +63,7 @@ public class RxSharedPreferences {
 
                     Disposable d = Disposables.fromAction(new Action() {
                         @Override
-                        public void run() throws Exception {
+                        public void run() {
                             sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener);
                         }
                     });
@@ -77,7 +78,7 @@ public class RxSharedPreferences {
     private static Predicate<String> matchesKey(final String key) {
         return new Predicate<String>() {
             @Override
-            public boolean test(String value) throws Exception {
+            public boolean test(String value) {
                 return key.equals(value);
             }
         };
@@ -92,7 +93,7 @@ public class RxSharedPreferences {
                 .startWith(key)
                 .map(new Function<String, String>() {
                     @Override
-                    public String apply(String changedKey) throws Exception {
+                    public String apply(String changedKey) {
                         return mSharedPreferences.getString(changedKey, defaultValue);
                     }
                 });
@@ -101,7 +102,7 @@ public class RxSharedPreferences {
     public Consumer<String> setString(final String key) {
         return new Consumer<String>() {
             @Override
-            public void accept(String value) throws Exception {
+            public void accept(String value) {
                 mSharedPreferences.edit().putString(key, value).apply();
             }
         };
