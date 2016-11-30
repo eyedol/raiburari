@@ -48,6 +48,8 @@ public class TransformEntityAnnotatedClass {
 
     private String mCanonicalClassName;
 
+    private boolean mIsInjectable;
+
     private Map<String, TransformAnnotatedField> transformAnnotatedElementsMap = new HashMap<>();
 
     public TransformEntityAnnotatedClass(TypeElement typeElement)
@@ -103,6 +105,9 @@ public class TransformEntityAnnotatedClass {
             TypeElement classTypeElement = (TypeElement) classTypeMirror.asElement();
             mCanonicalClassName = classTypeElement.getQualifiedName().toString();
         }
+
+        // Get inject value
+        mIsInjectable = annotation.isInjectable();
     }
 
     @Override
@@ -228,6 +233,15 @@ public class TransformEntityAnnotatedClass {
      */
     public String getCanonicalName() {
         return mCanonicalClassName;
+    }
+
+    /**
+     * Gets the injectable state of this annotated class
+     *
+     * @return whether to be injected by dagger. True for inject intentions.
+     */
+    public boolean isInjectable() {
+        return mIsInjectable;
     }
 
     /**

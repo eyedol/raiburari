@@ -31,6 +31,7 @@ import java.util.Set;
 
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.Messager;
+import javax.inject.Inject;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
@@ -49,11 +50,14 @@ public class TransformEntityAnnotatedClasses {
 
     private String mQualifiedClassName;
 
+    private boolean mIsInjectable;
+
     private Set<TransformEntityAnnotatedClass> mItems = new LinkedHashSet<>();
 
 
-    public TransformEntityAnnotatedClasses(String qualifiedClassName) {
+    public TransformEntityAnnotatedClasses(String qualifiedClassName, boolean isInjectable) {
         mQualifiedClassName = qualifiedClassName;
+        mIsInjectable = isInjectable;
     }
 
     public void add(TransformEntityAnnotatedClass transformAnnotatedClass) {
@@ -122,19 +126,21 @@ public class TransformEntityAnnotatedClasses {
                         .endControlFlow()
                         .addStatement("return $L", listVariableName);
 
-                MethodSpec constructor = MethodSpec.constructorBuilder()
-                        .addModifiers(Modifier.PUBLIC).build();
+                MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder();
+                if (mIsInjectable) {
+                    constructorBuilder.addAnnotation(Inject.class);
+                }
+                MethodSpec constructor = constructorBuilder.addModifiers(Modifier.PUBLIC).build();
 
-                TypeSpec typeSpec = TypeSpec.classBuilder(transformerClassName)
-                        .addJavadoc("Transforms a {@link $T} into an {@link $T}\n",
-                                TypeName.get(item.getElement().asType()),
-                                ClassName.get(superClassName))
-                        .addMethod(constructor)
-                        .addMethod(mapMethod)
-                        .addMethod(methodCollection.build())
-                        .build();
+                TypeSpec.Builder builder = TypeSpec.classBuilder(transformerClassName);
 
-                JavaFile.builder(packageName, typeSpec).build().writeTo(filer);
+                builder.addJavadoc("Transforms a {@link $T} into an {@link $T}\n",
+                        TypeName.get(item.getElement().asType()), ClassName.get(superClassName))
+                        .addMethod(constructor);
+                builder.addMethod(mapMethod)
+                        .addMethod(methodCollection.build());
+
+                JavaFile.builder(packageName, builder.build()).build().writeTo(filer);
             }
         }
     }

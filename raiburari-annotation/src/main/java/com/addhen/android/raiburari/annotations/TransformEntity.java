@@ -37,5 +37,5 @@ public @interface TransformEntity {
      * Whether to annotate the transformer class with an @Inject
      * for Dagger to be able to inject this class
      */
-    boolean inject() default false;
+    boolean isInjectable() default false;
 }

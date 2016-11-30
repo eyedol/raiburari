@@ -40,32 +40,38 @@ public class TransformEntityProcessorTest {
 
     @Test
     public void testProcessorCodeGenerator() {
-        generateUserEntity();
+        generateUserEntity(MOCK_USER_ENTITY_CLASS_NAME,
+                "@TransformEntity(to = " + MOCK_ENTITIES_PACKAGE + "MockUser.class)",
+                "MockUserEntityTransformer");
     }
 
-    private void generateUserEntity() {
+    @Test
+    public void testGenerateTransformerClassWithInjectSupport() {
+        generateUserEntity("InjectableUserEntity",
+                "@TransformEntity(to = " + MOCK_ENTITIES_PACKAGE
+                        + "MockUser.class, isInjectable = true)",
+                "InjectableUserEntityTransformer");
+    }
+
+    private void generateUserEntity(String className, String annotation, String generatedSource) {
         StringBuilder builder = new StringBuilder(PACKAGE);
         builder.append("import com.addhen.android.raiburari.annotations.Transform;");
         builder.append("import com.addhen.android.raiburari.annotations.TransformEntity;");
-        builder.append(
-                "@TransformEntity(to = " + MOCK_ENTITIES_PACKAGE
-                        + "MockUser.class) public class "
-                        + MOCK_USER_ENTITY_CLASS_NAME
-                        + " {");
-        builder.append("public " + MOCK_USER_ENTITY_CLASS_NAME + "(){}");
+        builder.append(annotation + " public class " + className + " {");
+        builder.append("public " + className + "(){}");
         builder.append("@Transform(name = \"fullName\") public String fullName;");
         builder.append("}");
 
         Compilation compilation2 = javac()
                 .withProcessors(new TransformEntityProcessor())
                 .compile(JavaFileObjects
-                        .forSourceString(MOCK_USER_ENTITY_CLASS_NAME,
+                        .forSourceString(className,
                                 builder.toString()));
         assertThat(compilation2).succeeded();
         assertThat(compilation2)
-                .generatedSourceFile("mock.MockUserEntityTransformer")
+                .generatedSourceFile("mock." + generatedSource)
                 .hasSourceEquivalentTo(
                         JavaFileObjects
-                                .forResource("MockUserEntityTransformer.java"));
+                                .forResource(generatedSource + ".java"));
     }
 }

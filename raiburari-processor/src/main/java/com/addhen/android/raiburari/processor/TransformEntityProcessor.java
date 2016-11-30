@@ -91,10 +91,11 @@ public class TransformEntityProcessor extends AbstractProcessor {
                 TypeElement typeElement = (TypeElement) annotatedElement;
                 TransformEntityAnnotatedClass annotatedClass = new TransformEntityAnnotatedClass(
                         typeElement);
-                String canonicalName = annotatedClass.getCanonicalName();
+                final String canonicalName = annotatedClass.getCanonicalName();
+                final boolean isInject = annotatedClass.isInjectable();
                 TransformEntityAnnotatedClasses
                         annotatedClasses = new TransformEntityAnnotatedClasses(
-                        canonicalName);
+                        canonicalName, isInject);
                 annotatedClasses.add(annotatedClass);
                 annotatedClass.scanForAnnotatedFields(mTypes, mElements);
                 mAnnotatedClasses.add(annotatedClasses);

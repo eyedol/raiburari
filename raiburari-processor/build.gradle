@@ -40,6 +40,7 @@ dependencies {
     compile project(':raiburari-annotation')
     compile 'com.google.auto.service:auto-service:1.0-rc2'
     compile 'com.squareup:javapoet:1.8.0'
+    compile 'javax.inject:javax.inject:1'
 
     testCompile appTestDependencies.junit
     testCompile appTestDependencies.googleTruth
