@@ -48,8 +48,6 @@ public class TransformEntityAnnotatedClass {
 
     private String mCanonicalClassName;
 
-    private String mSimpleClassName;
-
     private Map<String, TransformAnnotatedField> transformAnnotatedElementsMap = new HashMap<>();
 
     public TransformEntityAnnotatedClass(TypeElement typeElement)
@@ -100,12 +98,10 @@ public class TransformEntityAnnotatedClass {
         try {
             Class<?> clazz = annotation.to();
             mCanonicalClassName = clazz.getCanonicalName();
-            mSimpleClassName = clazz.getSimpleName();
         } catch (MirroredTypeException e) {
             DeclaredType classTypeMirror = (DeclaredType) e.getTypeMirror();
             TypeElement classTypeElement = (TypeElement) classTypeMirror.asElement();
             mCanonicalClassName = classTypeElement.getQualifiedName().toString();
-            mSimpleClassName = classTypeElement.getSimpleName().toString();
         }
     }
 
@@ -232,15 +228,6 @@ public class TransformEntityAnnotatedClass {
      */
     public String getCanonicalName() {
         return mCanonicalClassName;
-    }
-
-    /**
-     * Gets the simple class name
-     *
-     * @return simple class name
-     */
-    public String getSimpleClassName() {
-        return mSimpleClassName;
     }
 
     /**
