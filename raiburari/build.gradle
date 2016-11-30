@@ -16,7 +16,6 @@
 
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
-apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.noveogroup.android.check'
@@ -70,8 +69,8 @@ android {
 
 dependencies {
     def appDependencies = rootProject.ext.appDependencies
-    apt appDependencies.daggerCompiler
-    apt appDependencies.butterKnifeComplier
+    annotationProcessor appDependencies.daggerCompiler
+    annotationProcessor appDependencies.butterKnifeComplier
     compile appDependencies.dagger
     compile appDependencies.design
     compile appDependencies.cardView
