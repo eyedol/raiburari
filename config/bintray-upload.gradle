@@ -116,9 +116,13 @@ bintray {
         labels = ['android', 'java', 'clean-architecture']
         publicDownloadNumbers = true
         publish = true
+        desc = blob
+        githubRepo = 'eyedol/Raiburari' //Optional Github repository
+        githubReleaseNotesFile = 'CHANGELOG.md'
         version {
             name = libVersion
             vcsTag = libVersion
+            released = new Date()
             gpg {
                 sign = true //Determines whether to GPG sign the files. The default is false
                 passphrase = properties.getProperty("bintray.gpg.password")
