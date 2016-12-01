@@ -23,7 +23,8 @@ import com.addhen.android.raiburari.sample.app.domain.repository.UserRepository;
 
 import javax.inject.Inject;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 /**
  * @author Henry Addo

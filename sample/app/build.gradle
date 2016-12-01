@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 23
@@ -40,8 +39,11 @@ android {
 }
 
 dependencies {
-    compile project(':library:raiburari')
-    apt appDependencies.butterKnifeComplier
-    apt appDependencies.daggerCompiler
+    compile project(':raiburari-annotation');
+    compile project(':raiburari-processor');
+    compile project(':raiburari')
+    annotationProcessor appDependencies.butterKnifeComplier
+    annotationProcessor appDependencies.daggerCompiler
+    annotationProcessor project(':raiburari-processor')
     provided appDependencies.javaxAnnotation
 }

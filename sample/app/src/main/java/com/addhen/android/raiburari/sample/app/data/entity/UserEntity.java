@@ -16,16 +16,30 @@
 
 package com.addhen.android.raiburari.sample.app.data.entity;
 
+import com.addhen.android.raiburari.annotations.Transform;
+import com.addhen.android.raiburari.annotations.TransformEntity;
 import com.addhen.android.raiburari.data.entity.DataEntity;
+import com.addhen.android.raiburari.sample.app.domain.entity.User;
 
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
+@TransformEntity(to = User.class)
 public class UserEntity extends DataEntity {
 
+    @Transform(name = "id")
+    public long id;
+
+    @Transform(name = "fullName")
     public String fullName;
 
+    @Transform(name = "email")
     public String email;
 
+    @Transform(name = "description")
     public String description;
+
+    public UserEntity() {
+        // No-op
+    }
 }

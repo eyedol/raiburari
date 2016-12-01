@@ -21,21 +21,26 @@ allprojects {
 
 ext {
     //Android
-    androidBuildToolsVersion = "24.0.2"
+    androidBuildToolsVersion = "25.0.1"
     androidMinSdkVersion = 9
     androidTargetSdkVersion = 25
     androidCompileSdkVersion = 25
 
     //Libraries
-    designVersion = '25.0.0'
-    cardViewVersion = '25.0.0'
-    recyclerViewVersion = '25.0.0'
-    daggerVersion = '2.7'
-    butterKnifeVersion = '8.2.1'
-    rxAndroidVersion = '1.2.1'
+    designVersion = '25.0.1'
+    cardViewVersion = '25.0.1'
+    recyclerViewVersion = '25.0.1'
+    daggerVersion = '2.8'
+    butterKnifeVersion = '8.4.0'
+    rxAndroidVersion = '2.0.1'
+    rxJavaVersion = '2.0.1'
     javaxAnnotationVersion = '1.0'
-    gsonVersion = '2.7'
-    ottoVersion = '1.3.8'
+
+    //Testing
+    jUnitVersion = '4.12'
+    mockitoVersion = '1.10.19'
+    compileTestingVersion = '0.10'
+    googleTruthVersion = '0.30'
 
     appDependencies = [
             design             : "com.android.support:design:${designVersion}",
@@ -45,9 +50,15 @@ ext {
             dagger             : "com.google.dagger:dagger:${daggerVersion}",
             butterKnife        : "com.jakewharton:butterknife:${butterKnifeVersion}",
             butterKnifeComplier: "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
-            rxAndroid          : "io.reactivex:rxandroid:${rxAndroidVersion}",
+            rxAndroid          : "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
+            rxJava             : "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
             javaxAnnotation    : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
-            otto               : "com.squareup:otto:${ottoVersion}",
-            gson               : "com.google.code.gson:gson:${gsonVersion}",
+    ]
+
+    appTestDependencies = [
+            mockito       : "org.mockito:mockito-core:${mockitoVersion}",
+            compileTesting: "com.google.testing.compile:compile-testing:${compileTestingVersion}",
+            junit         : "junit:junit:${jUnitVersion}",
+            googleTruth   : "com.google.truth:truth:${googleTruthVersion}",
     ]
 }

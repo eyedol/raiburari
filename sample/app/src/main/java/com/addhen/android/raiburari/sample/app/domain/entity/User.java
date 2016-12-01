@@ -23,6 +23,8 @@ import com.addhen.android.raiburari.domain.entity.Entity;
  */
 public class User extends Entity {
 
+    public long id;
+
     public String fullName;
 
     public String email;

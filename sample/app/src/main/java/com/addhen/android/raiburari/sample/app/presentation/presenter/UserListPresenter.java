@@ -21,14 +21,15 @@ import com.addhen.android.raiburari.domain.exception.ErrorHandler;
 import com.addhen.android.raiburari.domain.usecase.DefaultSubscriber;
 import com.addhen.android.raiburari.domain.usecase.Usecase;
 import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
+import com.addhen.android.raiburari.presentation.presenter.BasePresenter;
 import com.addhen.android.raiburari.presentation.presenter.Presenter;
 import com.addhen.android.raiburari.sample.app.domain.entity.User;
 import com.addhen.android.raiburari.sample.app.presentation.exception.ErrorMessageFactory;
 import com.addhen.android.raiburari.sample.app.presentation.model.UserModel;
 import com.addhen.android.raiburari.sample.app.presentation.model.mapper.UserModelMapper;
-import com.addhen.android.raiburari.sample.app.presentation.ui.view.UserListView;
+import com.addhen.android.raiburari.sample.app.presentation.view.UserListView;
 
-import android.support.annotation.NonNull;
+import android.support.annotation.UiThread;
 
 import java.util.Collection;
 import java.util.List;
@@ -41,9 +42,7 @@ import javax.inject.Named;
  * layer.
  */
 @ActivityScope
-public class UserListPresenter extends DefaultSubscriber<List<User>> implements Presenter {
-
-    private UserListView viewListView;
+public class UserListPresenter extends BasePresenter<UserListView> {
 
     private final Usecase getUserListUseCase;
 
@@ -56,22 +55,15 @@ public class UserListPresenter extends DefaultSubscriber<List<User>> implements 
         this.userModelDataMapper = userModelDataMapper;
     }
 
-    public void setView(@NonNull UserListView view) {
-        this.viewListView = view;
-    }
-
-    @Override
+    @UiThread
     public void resume() {
         initialize();
     }
 
     @Override
-    public void pause() {
-    }
-
-    @Override
-    public void destroy() {
+    public void detachView() {
         this.getUserListUseCase.unsubscribe();
+        super.detachView();
     }
 
     /**
@@ -91,52 +83,56 @@ public class UserListPresenter extends DefaultSubscriber<List<User>> implements 
     }
 
     private void showViewLoading() {
-        this.viewListView.showLoading();
+        UserListPresenter.this.getView().showLoading();
     }
 
     private void hideViewLoading() {
-        this.viewListView.hideLoading();
+        UserListPresenter.this.getView().hideLoading();
     }
 
     private void showViewRetry() {
-        this.viewListView.showRetry();
+        UserListPresenter.this.getView().showRetry();
     }
 
     private void hideViewRetry() {
-        this.viewListView.hideRetry();
+        UserListPresenter.this.getView().hideRetry();
     }
 
     private void showErrorMessage(ErrorHandler errorBundle) {
-        String errorMessage = ErrorMessageFactory.create(this.viewListView.getAppContext(),
-                errorBundle.getException());
-        this.viewListView.showError(errorMessage);
+        String errorMessage = ErrorMessageFactory
+                .create(UserListPresenter.this.getView().getAppContext(),
+                        errorBundle.getException());
+        UserListPresenter.this.getView().showError(errorMessage);
     }
 
     private void showUsersCollectionInView(List<User> usersCollection) {
         final Collection<UserModel> userModelsCollection =
                 this.userModelDataMapper.map(usersCollection);
-        this.viewListView.showUserList(userModelsCollection);
+        UserListPresenter.this.getView().showUserList(userModelsCollection);
     }
 
     private void getUserList() {
-        this.getUserListUseCase.execute(this);
+        this.getUserListUseCase.execute(new ListUserSubscriber());
     }
 
-    @Override
-    public void onCompleted() {
-        this.hideViewLoading();
-    }
+    private class ListUserSubscriber extends DefaultSubscriber<List<User>> {
 
-    @Override
-    public void onError(Throwable e) {
-        this.hideViewLoading();
-        this.showErrorMessage(new DefaultErrorHandler((Exception) e));
-        this.showViewRetry();
-    }
+        @Override
+        public void onComplete() {
+            UserListPresenter.this.getView().hideLoading();
+        }
 
-    @Override
-    public void onNext(List<User> users) {
-        this.showUsersCollectionInView(users);
+        @Override
+        public void onError(Throwable e) {
+            UserListPresenter.this.hideViewLoading();
+            UserListPresenter.this.showErrorMessage(new DefaultErrorHandler((Exception) e));
+            UserListPresenter.this.showViewRetry();
+        }
+
+        @Override
+        public void onNext(List<User> users) {
+            UserListPresenter.this.showUsersCollectionInView(users);
+        }
     }
 }
 

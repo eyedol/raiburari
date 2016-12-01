@@ -47,7 +47,7 @@ public class UserModelMapper {
             throw new IllegalArgumentException("Cannot transform a null value");
         }
         UserModel userModel = new UserModel();
-        userModel._id = user._id;
+        userModel.id = user.id;
         userModel.description = user.description;
         userModel.fullName = user.fullName;
         userModel.email = user.email;

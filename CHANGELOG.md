@@ -1,7 +1,20 @@
 Change Log
 ==========
 
+## v3.0.0
+_2016-12-01_
+
+* Implement an annotation processor for generating model transformer classes.
+* Define a base presenter class for implement presenters.
+* Introduce two methods for initializing / removing presenter's view. 
+* Remove GSON support as a dependency.
+* Remove model base class' id fields. No fields in base class.
+* Upgrade to RxJava2. Refactor code to work with RxJava2.
+* Upgrade support library to `v25.0.1`
+
 ## v2.20.0
+_2016-10-26_
+
 * Upgrade support library to 'v25.0.0`
 
 ## v2.19.0
