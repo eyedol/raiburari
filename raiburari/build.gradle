@@ -24,8 +24,6 @@ def globalConfiguration = rootProject.extensions.getByName("ext")
 
 def libVersion = globalConfiguration.getAt("androidVersionName")
 
-// This is the library artifact version
-version = libVersion
 
 android {
 
