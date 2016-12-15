@@ -28,3 +28,11 @@
 -keepclasseswithmembernames class * {
     @butterknife.* <methods>;
 }
+
+# Java poet
+-dontwarn com.squareup.javapoet.**
+-dontwarn com.google.common.**
+-dontwarn com.google.auto.**
+-dontwarn javax.annotation.**
+-dontwarn javax.lang.**
+-dontwarn javax.tools.**
