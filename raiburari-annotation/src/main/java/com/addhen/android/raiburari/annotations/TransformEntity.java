@@ -16,12 +16,14 @@
 
 package com.addhen.android.raiburari.annotations;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
+@Documented
 // no class level
 @Target(TYPE)
 // not needed at runtime
