@@ -102,8 +102,8 @@ artifacts {
 
 // https://github.com/bintray/gradle-bintray-plugin
 bintray {
-  user = property('bintrayUser')
-  key = property('bintrayKey')
+  user = System.getenv('bintrayUser')
+  key = System.getenv('bintrayKey')
 
   configurations = ['archives']
   pkg {
@@ -126,14 +126,14 @@ bintray {
       released = new Date()
       gpg {
         sign = true //Determines whether to GPG sign the files. The default is false
-        passphrase = property('gpgPassword')
+        passphrase = System.getenv('gpgPassword')
         //Optional. The passphrase for GPG signing'
       }
       mavenCentralSync {
         sync = true
         //Optional (true by default). Determines whether to sync the version to Maven Central.
-        user = property('ossUser') //OSS user token
-        password = property('ossPassword') //OSS user password
+        user = System.getenv('ossUser') //OSS user token
+        password = System.getenv('ossPassword') //OSS user password
         close = '1'
         //Optional property. By default the staging repository is closed and artifacts are released to Maven Central. You can optionally turn this behaviour off (by puting 0 as value) and release the version manually.
       }
@@ -146,14 +146,14 @@ artifactory {
   publish {
     repository {
       // The Artifactory repository key to publish to
-      repoKey = artifactVersion.endsWith('SNAPSHOT') ? 'oss-snapshot-local' : 'oss-release-local'
-      username = property('bintrayUser') // The publisher user name
-      password = property('bintrayKey') // The publisher password
+      repoKey = libVersion.endsWith('SNAPSHOT') ? 'oss-snapshot-local' : 'oss-release-local'
+      username = System.getenv('bintrayUser') // The publisher user name
+      password = System.getenv('bintrayKey') // The publisher password
       maven = true
     }
     defaults {
       publishArtifacts = true
-      publications('aar')
+      publications(pkg)
       publishPom = true //Publish generated POM files to Artifactory (true by default)
       publishIvy = false //Publish generated Ivy descriptor files to Artifactory (true by default)
     }

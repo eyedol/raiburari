@@ -18,6 +18,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.jfrog.artifactory'
+apply plugin: 'maven-publish'
 apply plugin: 'com.noveogroup.android.check'
 
 def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -90,3 +92,15 @@ ext {
 
 // Upload artifact to bintray repo
 apply from: '../config/bintray-upload.gradle'
+
+publishing {
+  publications {
+    aar(MavenPublication) {
+      groupId group
+      version = libVersion
+      artifactId artifact
+      artifact(androidJavadocsJar)
+      artifact(androidSourcesJar)
+    }
+  }
+}
