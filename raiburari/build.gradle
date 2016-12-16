@@ -27,64 +27,65 @@ def libVersion = globalConfiguration.getAt("androidVersionName")
 
 android {
 
-    compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
-    buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
+  compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
+  buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
 
-    defaultConfig {
-        minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
-        targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
-        versionCode globalConfiguration.getAt("androidVersionCode")
-        versionName = libVersion
-    }
-    packagingOptions {
-        exclude 'LICENSE.txt'
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/ASL2.0'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/LICENSE'
-    }
+  defaultConfig {
+    minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
+    targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
+    versionCode globalConfiguration.getAt("androidVersionCode")
+    versionName = libVersion
+  }
+  packagingOptions {
+    exclude 'LICENSE.txt'
+    exclude 'META-INF/DEPENDENCIES'
+    exclude 'META-INF/ASL2.0'
+    exclude 'META-INF/NOTICE'
+    exclude 'META-INF/LICENSE'
+  }
 
-    lintOptions {
-        abortOnError true
-        disable 'InvalidPackage'  // Some libraries have issues with this
-        disable 'OldTargetApi'
-        disable 'IconMissingDensityFolder' // Ignore for now
-        disable 'UnusedResources' // Ignore for now.
-        warningsAsErrors true
-        if (System.env.CI == 'true') {
-            abortOnError true
-            htmlReport false
-            xmlReport false
-            textReport true
-            textOutput 'stdout'
-        }
+  lintOptions {
+    // Enable true when this https://code.google.com/p/android/issues/detail?id=230218 is fixed
+    abortOnError false
+    disable 'InvalidPackage' // Some libraries have issues with this
+    disable 'OldTargetApi'
+    disable 'IconMissingDensityFolder' // Ignore for now
+    disable 'UnusedResources' // Ignore for now.
+    warningsAsErrors true
+    if (System.env.CI == 'true') {
+      abortOnError true
+      htmlReport false
+      xmlReport false
+      textReport true
+      textOutput 'stdout'
     }
+  }
 
-    check {
-        abortOnError true
-    }
+  check {
+    abortOnError true
+  }
 }
 
 dependencies {
-    def appDependencies = rootProject.ext.appDependencies
-    annotationProcessor appDependencies.daggerCompiler
-    annotationProcessor appDependencies.butterKnifeComplier
-    compile appDependencies.dagger
-    compile appDependencies.design
-    compile appDependencies.cardView
-    compile appDependencies.recyclerView
-    compile appDependencies.butterKnife
-    compile appDependencies.rxAndroid
-    compile appDependencies.rxJava
+  def appDependencies = rootProject.ext.appDependencies
+  annotationProcessor appDependencies.daggerCompiler
+  annotationProcessor appDependencies.butterKnifeComplier
+  compile appDependencies.dagger
+  compile appDependencies.design
+  compile appDependencies.cardView
+  compile appDependencies.recyclerView
+  compile appDependencies.butterKnife
+  compile appDependencies.rxAndroid
+  compile appDependencies.rxJava
 
-    // Data dependencies
-    provided appDependencies.javaxAnnotation
+  // Data dependencies
+  provided appDependencies.javaxAnnotation
 }
 
 ext {
-    artifact = 'Raiburari'
-    blob = 'The project aims to provide a reusable Android library for building Android apps'
-    pkg = 'aar'
+  artifact = 'Raiburari'
+  blob = 'The project aims to provide a reusable Android library for building Android apps'
+  pkg = 'aar'
 }
 
 // Upload artifact to bintray repo

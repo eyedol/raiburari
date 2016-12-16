@@ -16,10 +16,6 @@
 
 package com.addhen.android.raiburari.presentation.view.ui.activity;
 
-import com.addhen.android.raiburari.presentation.BaseApplication;
-import com.addhen.android.raiburari.presentation.di.component.ApplicationComponent;
-import com.addhen.android.raiburari.presentation.di.module.ActivityModule;
-
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
@@ -32,9 +28,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import com.addhen.android.raiburari.presentation.BaseApplication;
+import com.addhen.android.raiburari.presentation.di.component.ApplicationComponent;
+import com.addhen.android.raiburari.presentation.di.module.ActivityModule;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -49,237 +47,226 @@ import static android.view.View.VISIBLE;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
-    /**
-     * Layout resource id
-     */
-    protected final int mLayout;
+  /**
+   * Layout resource id
+   */
+  protected final int mLayout;
 
-    /**
-     * Menu resource id
-     */
-    protected final int mMenu;
+  /**
+   * Menu resource id
+   */
+  protected final int mMenu;
 
-    protected Unbinder mUnbinder;
+  protected Unbinder mUnbinder;
 
-    private ActionBar mActionBarToolbar;
+  private ActionBar mActionBarToolbar;
 
+  public BaseActivity(int layout, int menu) {
+    mLayout = layout;
+    mMenu = menu;
+  }
 
-    public BaseActivity(int layout, int menu) {
-        mLayout = layout;
-        mMenu = menu;
+  @Override public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    getApplicationComponent().inject(this);
+    if (mLayout != 0) {
+      setContentView(mLayout);
+      injectViews();
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getApplicationComponent().inject(this);
-        if (mLayout != 0) {
-            setContentView(mLayout);
-            injectViews();
+    mActionBarToolbar = getSupportActionBar();
+    if (mActionBarToolbar != null) {
+      mActionBarToolbar.setDisplayHomeAsUpEnabled(true);
+      mActionBarToolbar.setHomeButtonEnabled(true);
+    }
+  }
+
+  public void onDestroy() {
+    super.onDestroy();
+    mUnbinder.unbind();
+  }
+
+  protected void setActionBarTitle(String title) {
+    if (mActionBarToolbar != null) {
+      mActionBarToolbar.setTitle(title);
+    }
+  }
+
+  /**
+   * Shows a {@link Toast} message.
+   *
+   * @param resId A message resource
+   */
+  protected void showToast(@StringRes int resId) {
+    showToast(getString(resId));
+  }
+
+  /**
+   * Shows a {@link android.widget.Toast} message with a Long life span of the Toast shown.
+   *
+   * @param message the message to be shown by the toast.
+   */
+  protected void showToast(String message) {
+    Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+  }
+
+  /**
+   * Shows a simple {@link Snackbar}
+   *
+   * @param view The view to anchor the Snackbar to
+   * @param message The message to be showed
+   */
+  protected void showSnackbar(View view, String message) {
+    Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
+  }
+
+  /**
+   * Shows a simple {@link Snackbar}
+   *
+   * @param view The view to anchor the Snackbar to
+   * @param resId The message to be showed
+   */
+  protected void showSnackbar(View view, @StringRes int resId) {
+    showSnackbar(view, getString(resId));
+  }
+
+  @Override public boolean onCreateOptionsMenu(Menu menu) {
+    if (mMenu != 0) {
+      getMenuInflater().inflate(mMenu, menu);
+    }
+    return true;
+  }
+
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        finish();
+        break;
+      default:
+        break;
+    }
+    return super.onOptionsItemSelected(item);
+  }
+
+  protected View fadeIn(final View view, final boolean animate) {
+    if (view != null) {
+      if (animate) {
+        view.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
+      } else {
+        view.clearAnimation();
+      }
+    }
+    return view;
+  }
+
+  protected View fadeOut(final View view, final boolean animate) {
+    if (view != null) {
+      if (animate) {
+        view.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+      } else {
+        view.clearAnimation();
+      }
+    }
+    return view;
+  }
+
+  protected <V extends View> V setViewGone(final V view) {
+    return setViewGone(view, true);
+  }
+
+  protected <V extends View> V setViewGone(final V view, final boolean gone) {
+    if (view != null) {
+      if (gone) {
+        if (GONE != view.getVisibility()) {
+
+          fadeOut(view, true);
+
+          view.setVisibility(GONE);
         }
+      } else {
+        if (VISIBLE != view.getVisibility()) {
+          view.setVisibility(VISIBLE);
 
-        mActionBarToolbar = getSupportActionBar();
-        if (mActionBarToolbar != null) {
-            mActionBarToolbar.setDisplayHomeAsUpEnabled(true);
-            mActionBarToolbar.setHomeButtonEnabled(true);
+          fadeIn(view, true);
         }
+      }
     }
+    return view;
+  }
 
-    public void onDestroy() {
-        super.onDestroy();
-        mUnbinder.unbind();
-    }
+  /**
+   * Initializes {@link ButterKnife} so you can use it to replace every field annotated with
+   * ButterKnife annotations like @InjectView with the proper value.
+   */
+  private void injectViews() {
+    mUnbinder = ButterKnife.bind(this);
+  }
 
-    protected void setActionBarTitle(String title) {
-        if (mActionBarToolbar != null) {
-            mActionBarToolbar.setTitle(title);
-        }
-    }
+  /**
+   * Adds a {@link Fragment} to this activity's layout.
+   *
+   * @param containerViewId The container view where to add the fragment.
+   * @param fragment The fragment to be added.
+   * @param tag The tag for the fragment
+   */
+  protected void addFragment(int containerViewId, Fragment fragment, String tag) {
+    FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
+    fragmentTransaction.add(containerViewId, fragment, tag);
+    fragmentTransaction.commit();
+  }
 
-    /**
-     * Shows a {@link Toast} message.
-     *
-     * @param resId A message resource
-     */
-    protected void showToast(@StringRes int resId) {
-        showToast(getString(resId));
-    }
+  /**
+   * Adds a {@link Fragment} to this activity's layout.
+   *
+   * @param containerViewId The container view where to add the fragment.
+   * @param fragment The fragment to be added.
+   */
+  protected void addFragment(int containerViewId, Fragment fragment) {
+    FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
+    fragmentTransaction.add(containerViewId, fragment);
+    fragmentTransaction.commit();
+  }
 
-    /**
-     * Shows a {@link android.widget.Toast} message with a Long life span of the Toast shown.
-     *
-     * @param message the message to be shown by the toast.
-     */
-    protected void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    }
+  /**
+   * Replaces an existing {@link Fragment} in the activity.
+   *
+   * @param containerViewId The container view where to add the fragment.
+   * @param fragment The fragment to be added.
+   * @param tag The tag for the fragment
+   */
+  protected void replaceFragment(int containerViewId, Fragment fragment, String tag) {
+    FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
+    fragmentTransaction.replace(containerViewId, fragment, tag);
+    fragmentTransaction.commit();
+  }
 
-    /**
-     * Shows a simple {@link Snackbar}
-     *
-     * @param view    The view to anchor the Snackbar to
-     * @param message The message to be showed
-     */
-    protected void showSnackbar(View view, String message) {
-        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
-    }
+  /**
+   * Replaces an existing {@link Fragment} in the activity.
+   *
+   * @param containerViewId the container view where to add the fragment.
+   * @param fragment the fragment to be added.
+   */
+  protected void replaceFragment(int containerViewId, Fragment fragment) {
+    FragmentTransaction fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
+    fragmentTransaction.replace(containerViewId, fragment);
+    fragmentTransaction.commit();
+  }
 
-    /**
-     * Shows a simple {@link Snackbar}
-     *
-     * @param view  The view to anchor the Snackbar to
-     * @param resId The message to be showed
-     */
-    protected void showSnackbar(View view, @StringRes int resId) {
-        showSnackbar(view, getString(resId));
-    }
+  /**
+   * Gets the Main Application component for dependency injection.
+   *
+   * @return {@link com.addhen.android.raiburari.presentation.di.component.ApplicationComponent}
+   */
+  public ApplicationComponent getApplicationComponent() {
+    return ((BaseApplication) getApplication()).getApplicationComponent();
+  }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (mMenu != 0) {
-            getMenuInflater().inflate(mMenu, menu);
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-            default:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    protected View fadeIn(final View view, final boolean animate) {
-        if (view != null) {
-            if (animate) {
-                view.startAnimation(AnimationUtils.loadAnimation(this,
-                        android.R.anim.fade_in));
-            } else {
-                view.clearAnimation();
-            }
-        }
-        return view;
-    }
-
-    protected View fadeOut(final View view, final boolean animate) {
-        if (view != null) {
-            if (animate) {
-                view.startAnimation(AnimationUtils.loadAnimation(this,
-                        android.R.anim.fade_out));
-            } else {
-                view.clearAnimation();
-            }
-        }
-        return view;
-    }
-
-    protected <V extends View> V setViewGone(final V view) {
-        return setViewGone(view, true);
-    }
-
-    protected <V extends View> V setViewGone(final V view, final boolean gone) {
-        if (view != null) {
-            if (gone) {
-                if (GONE != view.getVisibility()) {
-
-                    fadeOut(view, true);
-
-                    view.setVisibility(GONE);
-                }
-            } else {
-                if (VISIBLE != view.getVisibility()) {
-                    view.setVisibility(VISIBLE);
-
-                    fadeIn(view, true);
-
-                }
-            }
-        }
-        return view;
-    }
-
-    /**
-     * Initializes {@link ButterKnife} so you can use it to replace every field annotated with
-     * ButterKnife annotations like @InjectView with the proper value.
-     */
-    private void injectViews() {
-        mUnbinder = ButterKnife.bind(this);
-    }
-
-    /**
-     * Adds a {@link Fragment} to this activity's layout.
-     *
-     * @param containerViewId The container view where to add the fragment.
-     * @param fragment        The fragment to be added.
-     * @param tag             The tag for the fragment
-     */
-    protected void addFragment(int containerViewId, Fragment fragment, String tag) {
-        FragmentTransaction fragmentTransaction = this.getSupportFragmentManager()
-                .beginTransaction();
-        fragmentTransaction.add(containerViewId, fragment, tag);
-        fragmentTransaction.commit();
-    }
-
-    /**
-     * Adds a {@link Fragment} to this activity's layout.
-     *
-     * @param containerViewId The container view where to add the fragment.
-     * @param fragment        The fragment to be added.
-     */
-    protected void addFragment(int containerViewId, Fragment fragment) {
-        FragmentTransaction fragmentTransaction = this.getSupportFragmentManager()
-                .beginTransaction();
-        fragmentTransaction.add(containerViewId, fragment);
-        fragmentTransaction.commit();
-    }
-
-    /**
-     * Replaces an existing {@link Fragment} in the activity.
-     *
-     * @param containerViewId The container view where to add the fragment.
-     * @param fragment        The fragment to be added.
-     * @param tag             The tag for the fragment
-     */
-    protected void replaceFragment(int containerViewId, Fragment fragment, String tag) {
-        FragmentTransaction fragmentTransaction = this.getSupportFragmentManager()
-                .beginTransaction();
-        fragmentTransaction.replace(containerViewId, fragment, tag);
-        fragmentTransaction.commit();
-    }
-
-    /**
-     * Replaces an existing {@link Fragment} in the activity.
-     *
-     * @param containerViewId the container view where to add the fragment.
-     * @param fragment        the fragment to be added.
-     */
-    protected void replaceFragment(int containerViewId, Fragment fragment) {
-        FragmentTransaction fragmentTransaction = this.getSupportFragmentManager()
-                .beginTransaction();
-        fragmentTransaction.replace(containerViewId, fragment);
-        fragmentTransaction.commit();
-    }
-
-    /**
-     * Gets the Main Application component for dependency injection.
-     *
-     * @return {@link com.addhen.android.raiburari.presentation.di.component.ApplicationComponent}
-     */
-    public ApplicationComponent getApplicationComponent() {
-        return ((BaseApplication) getApplication()).getApplicationComponent();
-    }
-
-    /**
-     * Gets an Activity module for dependency injection.
-     *
-     * @return {@link com.addhen.android.raiburari.presentation.di.module.ActivityModule}
-     */
-    protected ActivityModule getActivityModule() {
-        return new ActivityModule(this);
-    }
+  /**
+   * Gets an Activity module for dependency injection.
+   *
+   * @return {@link com.addhen.android.raiburari.presentation.di.module.ActivityModule}
+   */
+  protected ActivityModule getActivityModule() {
+    return new ActivityModule(this);
+  }
 }

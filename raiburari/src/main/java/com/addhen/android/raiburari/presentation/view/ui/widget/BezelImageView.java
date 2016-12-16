@@ -16,8 +16,6 @@
 
 package com.addhen.android.raiburari.presentation.view.ui.widget;
 
-import com.addhen.android.raiburari.R;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -31,9 +29,10 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.widget.ImageView;
-
+import com.addhen.android.raiburari.R;
 
 /**
  * An {@link ImageView} that draws its contents inside a mask and draws a border
@@ -42,182 +41,176 @@ import android.widget.ImageView;
  * <p/>
  * Taken from Google IO 2014 sample app.
  */
-public class BezelImageView extends ImageView {
+public class BezelImageView extends AppCompatImageView {
 
-    private Paint mBlackPaint;
+  private Paint mBlackPaint;
 
-    private Paint mMaskedPaint;
+  private Paint mMaskedPaint;
 
-    private Rect mBounds;
+  private Rect mBounds;
 
-    private RectF mBoundsF;
+  private RectF mBoundsF;
 
-    private Drawable mBorderDrawable;
+  private Drawable mBorderDrawable;
 
-    private Drawable mMaskDrawable;
+  private Drawable mMaskDrawable;
 
-    private ColorMatrixColorFilter mDesaturateColorFilter;
+  private ColorMatrixColorFilter mDesaturateColorFilter;
 
-    private boolean mDesaturateOnPress;
+  private boolean mDesaturateOnPress;
 
-    private boolean mCacheValid;
+  private boolean mCacheValid;
 
-    private Bitmap mCacheBitmap;
+  private Bitmap mCacheBitmap;
 
-    private int mCachedWidth;
+  private int mCachedWidth;
 
-    private int mCachedHeight;
+  private int mCachedHeight;
 
-    public BezelImageView(Context context) {
-        this(context, null);
+  public BezelImageView(Context context) {
+    this(context, null);
+  }
+
+  public BezelImageView(Context context, AttributeSet attrs) {
+    this(context, attrs, 0);
+  }
+
+  public BezelImageView(Context context, AttributeSet attrs, int defStyle) {
+    super(context, attrs, defStyle);
+
+    // Attribute initialization
+    final TypedArray a =
+        context.obtainStyledAttributes(attrs, R.styleable.BezelImageView, defStyle, 0);
+
+    mMaskDrawable = a.getDrawable(R.styleable.BezelImageView_maskDrawable);
+    if (mMaskDrawable != null) {
+      mMaskDrawable.setCallback(this);
     }
 
-    public BezelImageView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+    mBorderDrawable = a.getDrawable(R.styleable.BezelImageView_borderDrawable);
+    if (mBorderDrawable != null) {
+      mBorderDrawable.setCallback(this);
     }
 
-    public BezelImageView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
+    mDesaturateOnPress = a.getBoolean(R.styleable.BezelImageView_desaturateOnPress, false);
+    a.recycle();
 
-        // Attribute initialization
-        final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.BezelImageView,
-                defStyle, 0);
+    // Other initialization
+    mBlackPaint = new Paint();
+    mBlackPaint.setColor(0xff000000);
 
-        mMaskDrawable = a.getDrawable(R.styleable.BezelImageView_maskDrawable);
-        if (mMaskDrawable != null) {
-            mMaskDrawable.setCallback(this);
-        }
+    mMaskedPaint = new Paint();
+    mMaskedPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
 
-        mBorderDrawable = a.getDrawable(R.styleable.BezelImageView_borderDrawable);
-        if (mBorderDrawable != null) {
-            mBorderDrawable.setCallback(this);
-        }
+    // Always want a cache allocated.
+    mCacheBitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
 
-        mDesaturateOnPress = a.getBoolean(R.styleable.BezelImageView_desaturateOnPress, false);
-        a.recycle();
+    if (mDesaturateOnPress) {
+      // Create a desaturate color filter for pressed state.
+      ColorMatrix cm = new ColorMatrix();
+      cm.setSaturation(0);
+      mDesaturateColorFilter = new ColorMatrixColorFilter(cm);
+    }
+  }
 
-        // Other initialization
-        mBlackPaint = new Paint();
-        mBlackPaint.setColor(0xff000000);
+  @Override protected boolean setFrame(int l, int t, int r, int b) {
+    final boolean changed = super.setFrame(l, t, r, b);
+    mBounds = new Rect(0, 0, r - l, b - t);
+    mBoundsF = new RectF(mBounds);
 
-        mMaskedPaint = new Paint();
-        mMaskedPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-
-        // Always want a cache allocated.
-        mCacheBitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
-
-        if (mDesaturateOnPress) {
-            // Create a desaturate color filter for pressed state.
-            ColorMatrix cm = new ColorMatrix();
-            cm.setSaturation(0);
-            mDesaturateColorFilter = new ColorMatrixColorFilter(cm);
-        }
+    if (mBorderDrawable != null) {
+      mBorderDrawable.setBounds(mBounds);
+    }
+    if (mMaskDrawable != null) {
+      mMaskDrawable.setBounds(mBounds);
     }
 
-    @Override
-    protected boolean setFrame(int l, int t, int r, int b) {
-        final boolean changed = super.setFrame(l, t, r, b);
-        mBounds = new Rect(0, 0, r - l, b - t);
-        mBoundsF = new RectF(mBounds);
-
-        if (mBorderDrawable != null) {
-            mBorderDrawable.setBounds(mBounds);
-        }
-        if (mMaskDrawable != null) {
-            mMaskDrawable.setBounds(mBounds);
-        }
-
-        if (changed) {
-            mCacheValid = false;
-        }
-
-        return changed;
+    if (changed) {
+      mCacheValid = false;
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        if (mBounds == null) {
-            return;
-        }
+    return changed;
+  }
 
-        int width = mBounds.width();
-        int height = mBounds.height();
-
-        if (width == 0 || height == 0) {
-            return;
-        }
-
-        if (!mCacheValid || width != mCachedWidth || height != mCachedHeight) {
-            // Need to redraw the cache
-            if (width == mCachedWidth && height == mCachedHeight) {
-                // Have a correct-sized bitmap cache already allocated. Just erase it.
-                mCacheBitmap.eraseColor(0);
-            } else {
-                // Allocate a new bitmap with the correct dimensions.
-                mCacheBitmap.recycle();
-                //noinspection AndroidLintDrawAllocation
-                mCacheBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-                mCachedWidth = width;
-                mCachedHeight = height;
-            }
-
-            Canvas cacheCanvas = new Canvas(mCacheBitmap);
-            if (mMaskDrawable != null) {
-                int sc = cacheCanvas.save();
-                mMaskDrawable.draw(cacheCanvas);
-                mMaskedPaint.setColorFilter((mDesaturateOnPress && isPressed())
-                        ? mDesaturateColorFilter : null);
-                cacheCanvas.saveLayer(mBoundsF, mMaskedPaint,
-                        Canvas.HAS_ALPHA_LAYER_SAVE_FLAG | Canvas.FULL_COLOR_LAYER_SAVE_FLAG);
-                super.onDraw(cacheCanvas);
-                cacheCanvas.restoreToCount(sc);
-            } else if (mDesaturateOnPress && isPressed()) {
-                int sc = cacheCanvas.save();
-                cacheCanvas.drawRect(0, 0, mCachedWidth, mCachedHeight, mBlackPaint);
-                mMaskedPaint.setColorFilter(mDesaturateColorFilter);
-                cacheCanvas.saveLayer(mBoundsF, mMaskedPaint,
-                        Canvas.HAS_ALPHA_LAYER_SAVE_FLAG | Canvas.FULL_COLOR_LAYER_SAVE_FLAG);
-                super.onDraw(cacheCanvas);
-                cacheCanvas.restoreToCount(sc);
-            } else {
-                super.onDraw(cacheCanvas);
-            }
-
-            if (mBorderDrawable != null) {
-                mBorderDrawable.draw(cacheCanvas);
-            }
-        }
-
-        // Draw from cache
-        canvas.drawBitmap(mCacheBitmap, mBounds.left, mBounds.top, null);
+  @Override protected void onDraw(Canvas canvas) {
+    if (mBounds == null) {
+      return;
     }
 
-    @Override
-    protected void drawableStateChanged() {
-        super.drawableStateChanged();
-        if (mBorderDrawable != null && mBorderDrawable.isStateful()) {
-            mBorderDrawable.setState(getDrawableState());
-        }
-        if (mMaskDrawable != null && mMaskDrawable.isStateful()) {
-            mMaskDrawable.setState(getDrawableState());
-        }
-        if (isDuplicateParentStateEnabled()) {
-            ViewCompat.postInvalidateOnAnimation(this);
-        }
+    int width = mBounds.width();
+    int height = mBounds.height();
+
+    if (width == 0 || height == 0) {
+      return;
     }
 
-    @Override
-    public void invalidateDrawable(Drawable who) {
-        if (who.equals(mBorderDrawable) || who.equals(mMaskDrawable)) {
-            invalidate();
-        } else {
-            super.invalidateDrawable(who);
-        }
+    if (!mCacheValid || width != mCachedWidth || height != mCachedHeight) {
+      // Need to redraw the cache
+      if (width == mCachedWidth && height == mCachedHeight) {
+        // Have a correct-sized bitmap cache already allocated. Just erase it.
+        mCacheBitmap.eraseColor(0);
+      } else {
+        // Allocate a new bitmap with the correct dimensions.
+        mCacheBitmap.recycle();
+        //noinspection AndroidLintDrawAllocation
+        mCacheBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        mCachedWidth = width;
+        mCachedHeight = height;
+      }
+
+      Canvas cacheCanvas = new Canvas(mCacheBitmap);
+      if (mMaskDrawable != null) {
+        int sc = cacheCanvas.save();
+        mMaskDrawable.draw(cacheCanvas);
+        mMaskedPaint.setColorFilter(
+            (mDesaturateOnPress && isPressed()) ? mDesaturateColorFilter : null);
+        cacheCanvas.saveLayer(mBoundsF, mMaskedPaint,
+            Canvas.HAS_ALPHA_LAYER_SAVE_FLAG | Canvas.FULL_COLOR_LAYER_SAVE_FLAG);
+        super.onDraw(cacheCanvas);
+        cacheCanvas.restoreToCount(sc);
+      } else if (mDesaturateOnPress && isPressed()) {
+        int sc = cacheCanvas.save();
+        cacheCanvas.drawRect(0, 0, mCachedWidth, mCachedHeight, mBlackPaint);
+        mMaskedPaint.setColorFilter(mDesaturateColorFilter);
+        cacheCanvas.saveLayer(mBoundsF, mMaskedPaint,
+            Canvas.HAS_ALPHA_LAYER_SAVE_FLAG | Canvas.FULL_COLOR_LAYER_SAVE_FLAG);
+        super.onDraw(cacheCanvas);
+        cacheCanvas.restoreToCount(sc);
+      } else {
+        super.onDraw(cacheCanvas);
+      }
+
+      if (mBorderDrawable != null) {
+        mBorderDrawable.draw(cacheCanvas);
+      }
     }
 
-    @Override
-    protected boolean verifyDrawable(Drawable who) {
-        return who.equals(mBorderDrawable) || who.equals(mMaskDrawable)
-                || super.verifyDrawable(who);
+    // Draw from cache
+    canvas.drawBitmap(mCacheBitmap, mBounds.left, mBounds.top, null);
+  }
+
+  @Override protected void drawableStateChanged() {
+    super.drawableStateChanged();
+    if (mBorderDrawable != null && mBorderDrawable.isStateful()) {
+      mBorderDrawable.setState(getDrawableState());
     }
+    if (mMaskDrawable != null && mMaskDrawable.isStateful()) {
+      mMaskDrawable.setState(getDrawableState());
+    }
+    if (isDuplicateParentStateEnabled()) {
+      ViewCompat.postInvalidateOnAnimation(this);
+    }
+  }
+
+  @Override public void invalidateDrawable(Drawable who) {
+    if (who.equals(mBorderDrawable) || who.equals(mMaskDrawable)) {
+      invalidate();
+    } else {
+      super.invalidateDrawable(who);
+    }
+  }
+
+  @Override protected boolean verifyDrawable(Drawable who) {
+    return who.equals(mBorderDrawable) || who.equals(mMaskDrawable) || super.verifyDrawable(who);
+  }
 }
