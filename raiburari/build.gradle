@@ -55,6 +55,7 @@ android {
     disable 'UnusedResources' // Ignore for now.
     warningsAsErrors true
     if (System.env.CI == 'true') {
+      // Enable true when this https://code.google.com/p/android/issues/detail?id=230218 is fixed
       abortOnError true
       htmlReport false
       xmlReport false
