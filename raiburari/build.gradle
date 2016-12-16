@@ -56,7 +56,7 @@ android {
     warningsAsErrors true
     if (System.env.CI == 'true') {
       // Enable true when this https://code.google.com/p/android/issues/detail?id=230218 is fixed
-      abortOnError true
+      abortOnError false
       htmlReport false
       xmlReport false
       textReport true
@@ -93,15 +93,3 @@ ext {
 
 // Upload artifact to bintray repo
 apply from: '../config/bintray-upload.gradle'
-
-publishing {
-  publications {
-    aar(MavenPublication) {
-      groupId group
-      version = libVersion
-      artifactId artifact
-      artifact(androidJavadocsJar)
-      artifact(androidSourcesJar)
-    }
-  }
-}

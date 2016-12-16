@@ -61,15 +61,3 @@ ext {
 // Upload artifact to bintray repo
 apply from: '../config/bintray-upload.gradle'
 
-publishing {
-  publications {
-    jar(MavenPublication) {
-      groupId group
-      version = rootProject.extensions.getByName("ext").getAt("androidVersionName")
-      artifactId artifact
-      artifact(sourcesJar)
-      artifact(javadocJar)
-    }
-  }
-}
-

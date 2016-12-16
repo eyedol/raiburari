@@ -141,6 +141,24 @@ bintray {
   }
 }
 
+publishing {
+  publications {
+    sources(MavenPublication) {
+      groupId group
+      version = rootProject.extensions.getByName("ext").getAt("androidVersionName")
+      artifactId artifact
+      if (project.getPlugins().hasPlugin('com.android.application') || project.getPlugins().
+          hasPlugin('com.android.library')) {
+        artifact(androidJavadocsJar)
+        artifact(androidSourcesJar)
+      } else {
+        artifact(sourcesJar)
+        artifact(javadocJar)
+      }
+    }
+  }
+}
+
 artifactory {
   contextUrl = 'https://oss.jfrog.info/artifactory'
   publish {
@@ -153,7 +171,7 @@ artifactory {
     }
     defaults {
       publishArtifacts = true
-      publications(pkg)
+      publications('sources')
       publishPom = true //Publish generated POM files to Artifactory (true by default)
       publishIvy = false //Publish generated Ivy descriptor files to Artifactory (true by default)
     }
