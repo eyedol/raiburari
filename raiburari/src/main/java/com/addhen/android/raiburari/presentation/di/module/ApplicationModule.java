@@ -20,47 +20,36 @@ package com.addhen.android.raiburari.presentation.di.module;
  * @author Henry Addo
  */
 
+import android.content.Context;
 import com.addhen.android.raiburari.data.task.TaskExecutor;
 import com.addhen.android.raiburari.domain.executor.PostExecutionThread;
 import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 import com.addhen.android.raiburari.presentation.BaseApplication;
 import com.addhen.android.raiburari.presentation.view.ui.UiThread;
-
-import android.content.Context;
-
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
+import javax.inject.Singleton;
 
 /**
  * Dagger module that provides objects which will live during the application lifecycle.
  */
-@Module
-public class ApplicationModule {
+@Module public class ApplicationModule {
 
-    private final BaseApplication application;
+  private final BaseApplication application;
 
-    public ApplicationModule(BaseApplication application) {
-        this.application = application;
-    }
+  public ApplicationModule(BaseApplication application) {
+    this.application = application;
+  }
 
-    @Provides
-    @Singleton
-    Context provideApplicationContext() {
-        return this.application;
-    }
+  @Provides @Singleton Context provideApplicationContext() {
+    return this.application;
+  }
 
-    @Provides
-    @Singleton
-    ThreadExecutor provideThreadExecutor(TaskExecutor taskExecutor) {
-        return taskExecutor;
-    }
+  @Provides @Singleton ThreadExecutor provideThreadExecutor(TaskExecutor taskExecutor) {
+    return taskExecutor;
+  }
 
-    @Provides
-    @Singleton
-    PostExecutionThread providePostExecutionThread(UiThread uiThread) {
-        return uiThread;
-    }
-
+  @Provides @Singleton PostExecutionThread providePostExecutionThread(UiThread uiThread) {
+    return uiThread;
+  }
 }

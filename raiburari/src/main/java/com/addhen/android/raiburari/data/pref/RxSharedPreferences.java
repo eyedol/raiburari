@@ -18,9 +18,6 @@ package com.addhen.android.raiburari.data.pref;
 
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
-
-import javax.inject.Inject;
-
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -30,120 +27,102 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
-
+import javax.inject.Inject;
 
 /**
  * RxJava based application {@link SharedPreferences}
  *
  * @author Henry Addo
  */
-@SuppressWarnings("PMD.JUnit4TestShouldUseTestAnnotation")
-public class RxSharedPreferences {
+@SuppressWarnings("PMD.JUnit4TestShouldUseTestAnnotation") public class RxSharedPreferences {
 
-    private final SharedPreferences mSharedPreferences;
+  private final SharedPreferences mSharedPreferences;
 
-    private final Observable<String> mChangedKeys;
+  private final Observable<String> mChangedKeys;
 
-    @Inject
-    public RxSharedPreferences(@NonNull final SharedPreferences sharedPreferences) {
-        mSharedPreferences = sharedPreferences;
-        this.mChangedKeys = Observable.create(new ObservableOnSubscribe<String>() {
-            @Override
-            public void subscribe(final ObservableEmitter<String> e) {
-                if (!e.isDisposed()) {
-                    final SharedPreferences.OnSharedPreferenceChangeListener listener
-                            = new SharedPreferences.OnSharedPreferenceChangeListener() {
-                        @Override
-                        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-                                String key) {
-                            e.onNext(key);
-                            e.onComplete();
-                        }
-                    };
-
-                    Disposable d = Disposables.fromAction(new Action() {
-                        @Override
-                        public void run() {
-                            sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener);
-                        }
-                    });
-                    e.setDisposable(d);
-                    sharedPreferences.registerOnSharedPreferenceChangeListener(listener);
+  @Inject public RxSharedPreferences(@NonNull final SharedPreferences sharedPreferences) {
+    mSharedPreferences = sharedPreferences;
+    this.mChangedKeys = Observable.create(new ObservableOnSubscribe<String>() {
+      @Override public void subscribe(final ObservableEmitter<String> e) {
+        if (!e.isDisposed()) {
+          final SharedPreferences.OnSharedPreferenceChangeListener listener =
+              new SharedPreferences.OnSharedPreferenceChangeListener() {
+                @Override public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+                    String key) {
+                  e.onNext(key);
+                  e.onComplete();
                 }
+              };
+
+          Disposable d = Disposables.fromAction(new Action() {
+            @Override public void run() {
+              sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener);
             }
-        }).share();
+          });
+          e.setDisposable(d);
+          sharedPreferences.registerOnSharedPreferenceChangeListener(listener);
+        }
+      }
+    }).share();
+  }
 
-    }
+  private static Predicate<String> matchesKey(final String key) {
+    return new Predicate<String>() {
+      @Override public boolean test(String value) {
+        return key.equals(value);
+      }
+    };
+  }
 
-    private static Predicate<String> matchesKey(final String key) {
-        return new Predicate<String>() {
-            @Override
-            public boolean test(String value) {
-                return key.equals(value);
-            }
-        };
-    }
+  public Observable<String> getString(String key) {
+    return getString(key, null);
+  }
 
-    public Observable<String> getString(String key) {
-        return getString(key, null);
-    }
+  public Observable<String> getString(String key, final String defaultValue) {
+    return mChangedKeys.filter(matchesKey(key)).startWith(key).map(new Function<String, String>() {
+      @Override public String apply(String changedKey) {
+        return mSharedPreferences.getString(changedKey, defaultValue);
+      }
+    });
+  }
 
-    public Observable<String> getString(String key, final String defaultValue) {
-        return mChangedKeys.filter(matchesKey(key))
-                .startWith(key)
-                .map(new Function<String, String>() {
-                    @Override
-                    public String apply(String changedKey) {
-                        return mSharedPreferences.getString(changedKey, defaultValue);
-                    }
-                });
-    }
+  public Consumer<String> setString(final String key) {
+    return new Consumer<String>() {
+      @Override public void accept(String value) {
+        mSharedPreferences.edit().putString(key, value).apply();
+      }
+    };
+  }
 
-    public Consumer<String> setString(final String key) {
-        return new Consumer<String>() {
-            @Override
-            public void accept(String value) {
-                mSharedPreferences.edit().putString(key, value).apply();
-            }
-        };
-    }
+  public Observable<Boolean> getBoolean(String key) {
+    return getBoolean(key, null);
+  }
 
-    public Observable<Boolean> getBoolean(String key) {
-        return getBoolean(key, null);
-    }
+  public Observable<Boolean> getBoolean(String key, final Boolean defaultValue) {
+    return mChangedKeys.filter(matchesKey(key)).startWith(key).map(new Function<String, Boolean>() {
+      @Override public Boolean apply(String changedKey) {
+        return mSharedPreferences.getBoolean(changedKey, defaultValue);
+      }
+    });
+  }
 
-    public Observable<Boolean> getBoolean(String key, final Boolean defaultValue) {
-        return mChangedKeys.filter(matchesKey(key))
-                .startWith(key)
-                .map(new Function<String, Boolean>() {
-                    @Override
-                    public Boolean apply(String changedKey) {
-                        return mSharedPreferences.getBoolean(changedKey, defaultValue);
-                    }
-                });
-    }
+  public Consumer<Boolean> setBoolean(final String key) {
+    return new Consumer<Boolean>() {
+      @Override public void accept(Boolean value) {
+        mSharedPreferences.edit().putBoolean(key, value).apply();
+      }
+    };
+  }
 
-    public Consumer<Boolean> setBoolean(final String key) {
-        return new Consumer<Boolean>() {
-            @Override
-            public void accept(Boolean value) {
-                mSharedPreferences.edit().putBoolean(key, value).apply();
-            }
-        };
-    }
+  public Observable<Integer> getInt(String key) {
+    return getInt(key, null);
+  }
 
-    public Observable<Integer> getInt(String key) {
-        return getInt(key, null);
-    }
-
-    public Observable<Integer> getInt(String key, final Integer defaultValue) {
-        return mChangedKeys.filter(matchesKey(key))
-                .startWith(key)
-                .map(new Function<String, Integer>() {
-                    @Override
-                    public Integer apply(String changedKey) {
-                        return mSharedPreferences.getInt(changedKey, defaultValue);
-                    }
-                });
-    }
+  public Observable<Integer> getInt(String key, final Integer defaultValue) {
+    return mChangedKeys.filter(matchesKey(key)).startWith(key).map(new Function<String, Integer>() {
+      @Override public Integer apply(String changedKey) {
+        return mSharedPreferences.getInt(changedKey, defaultValue);
+      }
+    });
+  }
 }

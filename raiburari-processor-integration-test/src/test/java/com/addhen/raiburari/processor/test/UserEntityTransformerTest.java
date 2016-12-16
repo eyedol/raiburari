@@ -16,11 +16,10 @@
 
 package com.addhen.raiburari.processor.test;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import java.util.Arrays;
 import java.util.List;
+import org.junit.Before;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -30,34 +29,30 @@ import static org.junit.Assert.assertNotNull;
  */
 public class UserEntityTransformerTest {
 
-    private UserEntityTransformer mUserEntityTransformer;
+  private UserEntityTransformer mUserEntityTransformer;
 
-    private UserEntity mUserEntity;
+  private UserEntity mUserEntity;
 
-    @Before
-    public void setUp() {
-        mUserEntityTransformer = new UserEntityTransformer();
-        assertNotNull(mUserEntityTransformer);
-        mUserEntity = new UserEntity("Foo Bar");
-    }
+  @Before public void setUp() {
+    mUserEntityTransformer = new UserEntityTransformer();
+    assertNotNull(mUserEntityTransformer);
+    mUserEntity = new UserEntity("Foo Bar");
+  }
 
-    @Test
-    public void testShouldTransformSingleEntity() {
-        User user = mUserEntityTransformer.transform(mUserEntity);
-        assertFields(user);
-    }
+  @Test public void testShouldTransformSingleEntity() {
+    User user = mUserEntityTransformer.transform(mUserEntity);
+    assertFields(user);
+  }
 
-    @Test
-    public void testShouldTransformCollectionEntity() {
-        List<User> users = mUserEntityTransformer
-                .transform(Arrays.asList(mUserEntity, mUserEntity));
-        assertNotNull(users);
-        assertEquals(2, users.size());
-        assertFields(users.get(0));
-    }
+  @Test public void testShouldTransformCollectionEntity() {
+    List<User> users = mUserEntityTransformer.transform(Arrays.asList(mUserEntity, mUserEntity));
+    assertNotNull(users);
+    assertEquals(2, users.size());
+    assertFields(users.get(0));
+  }
 
-    private void assertFields(User user) {
-        assertNotNull(user);
-        assertEquals("Foo Bar", user.fullName);
-    }
+  private void assertFields(User user) {
+    assertNotNull(user);
+    assertEquals("Foo Bar", user.fullName);
+  }
 }

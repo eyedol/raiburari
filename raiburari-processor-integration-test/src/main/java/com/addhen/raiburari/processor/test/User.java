@@ -21,9 +21,9 @@ package com.addhen.raiburari.processor.test;
  */
 public class User {
 
-    public String fullName;
+  public String fullName;
 
-    public User() {
-        // No-op Needed by annotation processor
-    }
+  public User() {
+    // No-op Needed by annotation processor
+  }
 }

@@ -16,16 +16,16 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/rl_retry"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"
-        >
+    android:id="@+id/rl_retry"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone"
+    >
 
-    <Button
-            android:id="@+id/bt_retry"
-            style="@style/AppTheme.Button"
-            android:text="retry"
-            />
+  <Button
+      android:id="@+id/bt_retry"
+      android:text="retry"
+      style="@style/AppTheme.Button"
+      />
 
 </RelativeLayout>

@@ -15,7 +15,7 @@
   -->
 
 <resources>
-    <string name="app_name">Base</string>
-    <string name="enter_item_name_position">Enter the item name position</string>
-    <string name="no_location_found">No location found</string>
+  <string name="app_name">Base</string>
+  <string name="enter_item_name_position">Enter the item name position</string>
+  <string name="no_location_found">No location found</string>
 </resources>

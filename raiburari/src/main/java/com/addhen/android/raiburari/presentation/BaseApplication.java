@@ -16,11 +16,10 @@
 
 package com.addhen.android.raiburari.presentation;
 
+import android.app.Application;
 import com.addhen.android.raiburari.presentation.di.component.ApplicationComponent;
 import com.addhen.android.raiburari.presentation.di.component.DaggerApplicationComponent;
 import com.addhen.android.raiburari.presentation.di.module.ApplicationModule;
-
-import android.app.Application;
 
 /**
  * Base {@link Application} class that must be subclassed by the inherited app to setup the App for
@@ -29,33 +28,30 @@ import android.app.Application;
  * @author Henry Addo
  */
 // This should registered by the implementing class
-@SuppressWarnings("Registered")
-public class BaseApplication extends Application {
+@SuppressWarnings("Registered") public class BaseApplication extends Application {
 
-    private ApplicationComponent mApplicationComponent;
+  private ApplicationComponent mApplicationComponent;
 
-    protected BaseApplication() {
-        // No-op
-    }
+  protected BaseApplication() {
+    // No-op
+  }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        this.initializeInjector();
-    }
+  @Override public void onCreate() {
+    super.onCreate();
+    this.initializeInjector();
+  }
 
-    private void initializeInjector() {
-        mApplicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this))
-                .build();
-    }
+  private void initializeInjector() {
+    mApplicationComponent =
+        DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(this)).build();
+  }
 
-    /**
-     * Get the {@link ApplicationComponent}
-     *
-     * @return The {@link ApplicationComponent}
-     */
-    public ApplicationComponent getApplicationComponent() {
-        return mApplicationComponent;
-    }
+  /**
+   * Get the {@link ApplicationComponent}
+   *
+   * @return The {@link ApplicationComponent}
+   */
+  public ApplicationComponent getApplicationComponent() {
+    return mApplicationComponent;
+  }
 }

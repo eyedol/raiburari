@@ -25,22 +25,20 @@ import com.addhen.android.raiburari.sample.app.presentation.di.modules.UserModul
 import com.addhen.android.raiburari.sample.app.presentation.presenter.UserListPresenter;
 import com.addhen.android.raiburari.sample.app.presentation.view.ui.activity.MainActivity;
 import com.addhen.android.raiburari.sample.app.presentation.view.ui.fragment.MainFragment;
-
 import dagger.Component;
 
 /**
  * @author Henry Addo
  */
-@ActivityScope
-@Component(dependencies = ApplicationComponent.class, modules = {ActivityModule.class,
-        UserModule.class})
-public interface UserComponent extends ActivityComponent {
+@ActivityScope @Component(dependencies = ApplicationComponent.class, modules = {
+    ActivityModule.class, UserModule.class
+}) public interface UserComponent extends ActivityComponent {
 
-    void inject(MainActivity mainActivity);
+  void inject(MainActivity mainActivity);
 
-    void inject(MainFragment mainFragment);
+  void inject(MainFragment mainFragment);
 
-    UserListPresenter userListPresenter();
+  UserListPresenter userListPresenter();
 
-    UserRepository userRepository();
+  UserRepository userRepository();
 }

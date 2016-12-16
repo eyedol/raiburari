@@ -23,8 +23,7 @@ import com.addhen.android.raiburari.presentation.BaseApplication;
  */
 public class AppApplication extends BaseApplication {
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-    }
+  @Override public void onCreate() {
+    super.onCreate();
+  }
 }

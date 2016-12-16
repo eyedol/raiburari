@@ -16,8 +16,6 @@
 
 package com.addhen.android.raiburari.presentation.view.ui.widget;
 
-import com.addhen.android.raiburari.R;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
@@ -25,57 +23,56 @@ import android.graphics.Typeface;
 import android.support.v4.util.LruCache;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
-
+import com.addhen.android.raiburari.R;
 
 /**
  * @author Henry Addo
  */
 public class FontSupportedTextView extends AppCompatTextView {
 
-    public FontSupportedTextView(Context context) {
-        this(context, null);
+  public FontSupportedTextView(Context context) {
+    this(context, null);
+  }
+
+  public FontSupportedTextView(Context context, AttributeSet attrs) {
+    this(context, attrs, 0);
+  }
+
+  public FontSupportedTextView(Context context, AttributeSet attrs, int defStyle) {
+    super(context, attrs, defStyle);
+    if (!isInEditMode()) {
+      TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RaiFontSupportedTextView);
+      if (a.hasValue(R.styleable.RaiFontSupportedTextView_fontFile)) {
+        setFont(context, a.getString(R.styleable.RaiFontSupportedTextView_fontFile));
+      }
+      a.recycle();
+    }
+  }
+
+  public void setFont(Context context, final String customFont) {
+    final TypefaceManager typefaceManager = new TypefaceManager();
+    final Typeface typeface = typefaceManager.getTypeface(context, customFont);
+    if (typeface != null) {
+      setPaintFlags(getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG);
+      setTypeface(typeface);
+    }
+  }
+
+  private static class TypefaceManager {
+
+    private final LruCache<String, Typeface> mCache;
+
+    TypefaceManager() {
+      mCache = new LruCache<>(3);
     }
 
-    public FontSupportedTextView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+    public Typeface getTypeface(final Context context, final String filename) {
+      Typeface typeface = mCache.get(filename);
+      if (typeface == null) {
+        typeface = Typeface.createFromAsset(context.getAssets(), "fonts/" + filename);
+        mCache.put(filename, typeface);
+      }
+      return typeface;
     }
-
-    public FontSupportedTextView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        if (!isInEditMode()) {
-            TypedArray a = context
-                    .obtainStyledAttributes(attrs, R.styleable.RaiFontSupportedTextView);
-            if (a.hasValue(R.styleable.RaiFontSupportedTextView_fontFile)) {
-                setFont(context, a.getString(R.styleable.RaiFontSupportedTextView_fontFile));
-            }
-            a.recycle();
-        }
-    }
-
-    public void setFont(Context context, final String customFont) {
-        final TypefaceManager typefaceManager = new TypefaceManager();
-        final Typeface typeface = typefaceManager.getTypeface(context, customFont);
-        if (typeface != null) {
-            setPaintFlags(getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG);
-            setTypeface(typeface);
-        }
-    }
-
-    private static class TypefaceManager {
-
-        private final LruCache<String, Typeface> mCache;
-
-        public TypefaceManager() {
-            mCache = new LruCache<>(3);
-        }
-
-        public Typeface getTypeface(final Context context, final String filename) {
-            Typeface typeface = mCache.get(filename);
-            if (typeface == null) {
-                typeface = Typeface.createFromAsset(context.getAssets(), "fonts/" + filename);
-                mCache.put(filename, typeface);
-            }
-            return typeface;
-        }
-    }
+  }
 }

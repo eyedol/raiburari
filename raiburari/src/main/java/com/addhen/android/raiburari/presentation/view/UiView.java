@@ -32,17 +32,15 @@ import android.support.annotation.UiThread;
  */
 public interface UiView {
 
-    /**
-     * Shows an error message
-     *
-     * @param message A string resource representing an error.
-     */
-    @UiThread
-    void showError(String message);
+  /**
+   * Shows an error message
+   *
+   * @param message A string resource representing an error.
+   */
+  @UiThread void showError(String message);
 
-    /**
-     * Gets a {@link android.content.Context}.
-     */
-    @UiThread
-    Context getAppContext();
+  /**
+   * Gets a {@link android.content.Context}.
+   */
+  @UiThread Context getAppContext();
 }

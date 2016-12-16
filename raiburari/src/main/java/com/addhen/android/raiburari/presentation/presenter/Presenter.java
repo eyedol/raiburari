@@ -16,9 +16,8 @@
 
 package com.addhen.android.raiburari.presentation.presenter;
 
-import com.addhen.android.raiburari.presentation.view.UiView;
-
 import android.support.annotation.UiThread;
+import com.addhen.android.raiburari.presentation.view.UiView;
 
 /**
  * Presenter interface that all App Presenters must implemented
@@ -27,17 +26,14 @@ import android.support.annotation.UiThread;
  */
 public interface Presenter<V extends UiView> {
 
-    /**
-     * Set or attach the view to this presenter
-     */
-    @UiThread
-    void attachView(V view);
+  /**
+   * Set or attach the view to this presenter
+   */
+  @UiThread void attachView(V view);
 
-    /**
-     * Will be called if the view has been destroyed. Typically this method will be invoked from
-     * <code>Activity.detachView()</code> or <code>Fragment.onDestroyView()</code>
-     */
-    @UiThread
-    void detachView();
-
+  /**
+   * Will be called if the view has been destroyed. Typically this method will be invoked from
+   * <code>Activity.detachView()</code> or <code>Fragment.onDestroyView()</code>
+   */
+  @UiThread void detachView();
 }

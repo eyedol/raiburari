@@ -16,5 +16,5 @@
   -->
 
 <resources>
-    <dimen name="navdrawer_profile_pic_top_padding">38dp</dimen>
+  <dimen name="navdrawer_profile_pic_top_padding">38dp</dimen>
 </resources>

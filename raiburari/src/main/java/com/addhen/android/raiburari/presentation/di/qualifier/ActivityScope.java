@@ -17,7 +17,6 @@
 package com.addhen.android.raiburari.presentation.di.qualifier;
 
 import java.lang.annotation.Retention;
-
 import javax.inject.Scope;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
@@ -27,8 +26,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *
  * @author Henry Addo
  */
-@Scope
-@Retention(RUNTIME)
-public @interface ActivityScope {
+@Scope @Retention(RUNTIME) public @interface ActivityScope {
 
 }

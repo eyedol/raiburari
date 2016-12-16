@@ -17,36 +17,34 @@
 package com.addhen.android.raiburari.presentation.view.ui.widget;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
-import android.widget.TextView;
-
 import java.util.Locale;
 
 /**
  * Custom view to capitalize the first letter of a sentence. Sadly Android doest support this out
  * of the box.
  */
-public class CapitalizedTextView extends TextView {
+public class CapitalizedTextView extends AppCompatTextView {
 
-    public CapitalizedTextView(Context context) {
-        this(context, null, 0);
-    }
+  public CapitalizedTextView(Context context) {
+    this(context, null, 0);
+  }
 
-    public CapitalizedTextView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
+  public CapitalizedTextView(Context context, AttributeSet attrs) {
+    this(context, attrs, 0);
+  }
 
-    public CapitalizedTextView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-    }
+  public CapitalizedTextView(Context context, AttributeSet attrs, int defStyle) {
+    super(context, attrs, defStyle);
+  }
 
-    @Override
-    public void setText(CharSequence txt, BufferType type) {
-        CharSequence text = txt;
-        if (text.length() > 0) {
-            text = String.valueOf(text.charAt(0)).toUpperCase(Locale.getDefault()) + text
-                    .subSequence(1, text.length());
-        }
-        super.setText(text, type);
+  @Override public void setText(CharSequence txt, BufferType type) {
+    CharSequence text = txt;
+    if (text.length() > 0) {
+      text = String.valueOf(text.charAt(0)).toUpperCase(Locale.getDefault()) + text.subSequence(1,
+          text.length());
     }
+    super.setText(text, type);
+  }
 }

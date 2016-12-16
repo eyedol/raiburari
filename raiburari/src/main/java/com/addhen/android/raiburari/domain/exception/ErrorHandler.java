@@ -23,7 +23,7 @@ package com.addhen.android.raiburari.domain.exception;
  */
 public interface ErrorHandler {
 
-    Exception getException();
+  Exception getException();
 
-    String getErrorMessage();
+  String getErrorMessage();
 }

@@ -25,19 +25,17 @@ import com.addhen.android.raiburari.domain.exception.ErrorHandler;
  */
 public class RepsitoryErrorHandler implements ErrorHandler {
 
-    private final Exception mException;
+  private final Exception mException;
 
-    public RepsitoryErrorHandler(Exception exception) {
-        mException = exception;
-    }
+  public RepsitoryErrorHandler(Exception exception) {
+    mException = exception;
+  }
 
-    @Override
-    public Exception getException() {
-        return mException;
-    }
+  @Override public Exception getException() {
+    return mException;
+  }
 
-    @Override
-    public String getErrorMessage() {
-        return mException.getMessage();
-    }
+  @Override public String getErrorMessage() {
+    return mException.getMessage();
+  }
 }

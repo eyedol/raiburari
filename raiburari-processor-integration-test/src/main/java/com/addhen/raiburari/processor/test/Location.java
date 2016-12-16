@@ -21,11 +21,11 @@ package com.addhen.raiburari.processor.test;
  */
 public class Location {
 
-    public String locationName;
+  public String locationName;
 
-    public User user;
+  public User user;
 
-    public Location() {
-        // No-op Needed by annotation processor
-    }
+  public Location() {
+    // No-op Needed by annotation processor
+  }
 }

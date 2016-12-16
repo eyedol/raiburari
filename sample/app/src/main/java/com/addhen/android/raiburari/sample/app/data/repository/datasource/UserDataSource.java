@@ -17,26 +17,23 @@
 package com.addhen.android.raiburari.sample.app.data.repository.datasource;
 
 import com.addhen.android.raiburari.sample.app.data.entity.UserEntity;
-
-import java.util.List;
-
 import io.reactivex.Observable;
-
+import java.util.List;
 
 /**
  * @author Henry Addo
  */
 public interface UserDataSource {
 
-    /**
-     * Get an {@link Observable} which will emit a List of {@link UserEntity}.
-     */
-    Observable<List<UserEntity>> getUserEntityList();
+  /**
+   * Get an {@link Observable} which will emit a List of {@link UserEntity}.
+   */
+  Observable<List<UserEntity>> getUserEntityList();
 
-    /**
-     * Get an {@link Observable} which will emit a {@link UserEntity} by its id.
-     *
-     * @param userId The id to retrieve user data.
-     */
-    Observable<UserEntity> getUserEntityDetails(Long userId);
+  /**
+   * Get an {@link Observable} which will emit a {@link UserEntity} by its id.
+   *
+   * @param userId The id to retrieve user data.
+   */
+  Observable<UserEntity> getUserEntityDetails(Long userId);
 }

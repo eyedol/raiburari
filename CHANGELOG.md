@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+## v3.0.1
+_2016-12-16_
+
+* Upgrade support library to `v25.1.0`.
+* Remove custom implementation of `DividerItemDecoration`. There's one that comes with the support library.
+* Adapt project to new coding style.
+
 ## v3.0.0
 _2016-12-01_
 

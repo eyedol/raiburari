@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 include ':raiburari', ':sample:app', ':raiburari-annotation', ':raiburari-processor',
-        ':raiburari-processor-integration-test'
+    ':raiburari-processor-integration-test'

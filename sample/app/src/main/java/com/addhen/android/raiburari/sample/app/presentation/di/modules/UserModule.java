@@ -21,35 +21,27 @@ import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
 import com.addhen.android.raiburari.sample.app.data.repository.UserDataRepository;
 import com.addhen.android.raiburari.sample.app.domain.repository.UserRepository;
 import com.addhen.android.raiburari.sample.app.domain.usecase.GetUserListUsecase;
-
-import javax.inject.Named;
-
 import dagger.Module;
 import dagger.Provides;
+import javax.inject.Named;
 
 /**
  * Dagger module that provides user related classes
  *
  * @author Henry Addo
  */
-@Module
-public class UserModule {
+@Module public class UserModule {
 
-    public UserModule() {
-    }
+  public UserModule() {
+  }
 
-    @Provides
-    @ActivityScope
-    @Named("userList")
-    Usecase provideGetUserListUseCase(
-            GetUserListUsecase getUserListUseCase) {
-        return getUserListUseCase;
-    }
+  @Provides @ActivityScope @Named("userList") Usecase provideGetUserListUseCase(
+      GetUserListUsecase getUserListUseCase) {
+    return getUserListUseCase;
+  }
 
-
-    @Provides
-    @ActivityScope
-    UserRepository provideUserRepository(UserDataRepository userDataRepository) {
-        return userDataRepository;
-    }
+  @Provides @ActivityScope UserRepository provideUserRepository(
+      UserDataRepository userDataRepository) {
+    return userDataRepository;
+  }
 }

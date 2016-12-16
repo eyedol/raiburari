@@ -22,17 +22,15 @@ import com.addhen.android.raiburari.annotations.TransformEntity;
 /**
  * @author Henry Addo
  */
-@TransformEntity(to = User.class)
-public class UserEntity {
+@TransformEntity(to = User.class) public class UserEntity {
 
-    @Transform(name = "fullName")
-    public String fullName;
+  @Transform(name = "fullName") public String fullName;
 
-    public UserEntity() {
-        // No-op Needed by annotation processor
-    }
+  public UserEntity() {
+    // No-op Needed by annotation processor
+  }
 
-    public UserEntity(String fullName) {
-        this.fullName = fullName;
-    }
+  public UserEntity(String fullName) {
+    this.fullName = fullName;
+  }
 }

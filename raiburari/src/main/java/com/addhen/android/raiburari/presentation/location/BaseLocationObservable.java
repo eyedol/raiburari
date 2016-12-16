@@ -22,7 +22,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Looper;
 import android.util.Log;
-
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 
@@ -32,96 +31,87 @@ import io.reactivex.ObservableOnSubscribe;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 // Implementing app should request for the needed permissions
-@SuppressWarnings("MissingPermission")
-public abstract class BaseLocationObservable<T> implements ObservableOnSubscribe<T> {
+@SuppressWarnings("MissingPermission") public abstract class BaseLocationObservable<T>
+    implements ObservableOnSubscribe<T> {
 
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 30; // 30 meters
+  private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 30; // 30 meters
 
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 2; // 2 minutes
+  private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 2; // 2 minutes
+  private final Context mContext;
+  protected LocationManager mLocationManager;
+  private LocationListener mLocationListener;
 
-    protected LocationManager mLocationManager;
+  protected BaseLocationObservable(Context context) {
+    mContext = context;
+  }
 
-    private final Context mContext;
+  protected abstract void onLocationFixed(ObservableEmitter<? super T> observer);
 
-    private LocationListener mLocationListener;
+  public void setLocationListener(LocationListener locationListener) {
+    mLocationListener = locationListener;
+  }
 
+  public void baseSubscribe(ObservableEmitter<? super T> subscriber) {
+    mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+    onLocationFixed(subscriber);
+  }
 
-    protected BaseLocationObservable(Context context) {
-        mContext = context;
+  protected boolean isGPSEnabled() {
+    return mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+  }
+
+  protected boolean isNetworkEnabled() {
+    return mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+  }
+
+  protected Location getLastKnowLocation(ObservableEmitter<? super T> observer) {
+    Location location = null;
+    try {
+      if (isNetworkEnabled()) {
+        location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        Log.i("NETWORK_PROVIDER %s", "Enabled");
+      }
+
+      if (isGPSEnabled() && location == null) {
+        location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        Log.i("GPS_PROVIDER %s", "Enabled");
+      }
+    } catch (Exception e) {
+      observer.onError(e);
     }
+    return location;
+  }
 
-    protected abstract void onLocationFixed(ObservableEmitter<? super T> observer);
-
-    public void setLocationListener(LocationListener locationListener) {
-        mLocationListener = locationListener;
+  protected void getLocationUpdates(ObservableEmitter<? super T> observer) {
+    if (mLocationListener == null) {
+      throw new IllegalArgumentException("LocationListener cannot be null");
     }
-
-    public void baseSubscribe(ObservableEmitter<? super T> subscriber) {
-        mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
-        onLocationFixed(subscriber);
+    try {
+      if (isNetworkEnabled()) {
+        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+            MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, mLocationListener,
+            Looper.getMainLooper());
+        Log.i("NETWORK_PROVIDER %s", "Enabled");
+        return;
+      }
+      if (isGPSEnabled()) {
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES,
+            MIN_DISTANCE_CHANGE_FOR_UPDATES, mLocationListener, Looper.getMainLooper());
+        Log.i("GPS_PROVIDER %s", "Enabled");
+      }
+    } catch (Exception e) {
+      observer.onError(e);
     }
+  }
 
-    protected boolean isGPSEnabled() {
-        return mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+  public void stopLocating() {
+    if (mLocationManager != null) {
+      try {
+        mLocationManager.removeUpdates(mLocationListener);
+      } catch (Exception ex) {
+        Log.e(getClass().getSimpleName(), "stopLocating", ex);
+      }
+      mLocationManager = null;
     }
-
-    protected boolean isNetworkEnabled() {
-        return mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-    }
-
-    protected Location getLastKnowLocation(ObservableEmitter<? super T> observer) {
-        Location location = null;
-        try {
-            if (isNetworkEnabled()) {
-                location = mLocationManager
-                        .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                Log.i("NETWORK_PROVIDER %s", "Enabled");
-            }
-
-            if (isGPSEnabled() && location == null) {
-                location = mLocationManager
-                        .getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                Log.i("GPS_PROVIDER %s", "Enabled");
-            }
-        } catch (Exception e) {
-            observer.onError(e);
-        }
-        return location;
-    }
-
-    protected void getLocationUpdates(ObservableEmitter<? super T> observer) {
-        if (mLocationListener == null) {
-            throw new IllegalArgumentException("LocationListener cannot be null");
-        }
-        try {
-            if (isNetworkEnabled()) {
-                mLocationManager.requestLocationUpdates(
-                        LocationManager.NETWORK_PROVIDER,
-                        MIN_TIME_BW_UPDATES,
-                        MIN_DISTANCE_CHANGE_FOR_UPDATES, mLocationListener, Looper.getMainLooper());
-                Log.i("NETWORK_PROVIDER %s", "Enabled");
-                return;
-            }
-            if (isGPSEnabled()) {
-                mLocationManager.requestLocationUpdates(
-                        LocationManager.GPS_PROVIDER,
-                        MIN_TIME_BW_UPDATES,
-                        MIN_DISTANCE_CHANGE_FOR_UPDATES, mLocationListener, Looper.getMainLooper());
-                Log.i("GPS_PROVIDER %s", "Enabled");
-            }
-        } catch (Exception e) {
-            observer.onError(e);
-        }
-    }
-
-    public void stopLocating() {
-        if (mLocationManager != null) {
-            try {
-                mLocationManager.removeUpdates(mLocationListener);
-            } catch (Exception ex) {
-                Log.e(getClass().getSimpleName(), "stopLocating", ex);
-            }
-            mLocationManager = null;
-        }
-    }
+  }
 }

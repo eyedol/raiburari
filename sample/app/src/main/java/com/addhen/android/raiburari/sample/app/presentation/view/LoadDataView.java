@@ -16,36 +16,31 @@
 
 package com.addhen.android.raiburari.sample.app.presentation.view;
 
-import com.addhen.android.raiburari.presentation.view.UiView;
-
 import android.support.annotation.UiThread;
+import com.addhen.android.raiburari.presentation.view.UiView;
 
 /**
  * @author Henry Addo
  */
 public interface LoadDataView extends UiView {
 
-    /**
-     * Shows a view with a progress bar indicating a loading process.
-     */
-    @UiThread
-    void showLoading();
+  /**
+   * Shows a view with a progress bar indicating a loading process.
+   */
+  @UiThread void showLoading();
 
-    /**
-     * Hides a loading view.
-     */
-    @UiThread
-    void hideLoading();
+  /**
+   * Hides a loading view.
+   */
+  @UiThread void hideLoading();
 
-    /**
-     * Shows a retry view in case of an error when retrieving data.
-     */
-    @UiThread
-    void showRetry();
+  /**
+   * Shows a retry view in case of an error when retrieving data.
+   */
+  @UiThread void showRetry();
 
-    /**
-     * Hide a retry view shown if there was an error when retrieving data.
-     */
-    @UiThread
-    void hideRetry();
+  /**
+   * Hide a retry view shown if there was an error when retrieving data.
+   */
+  @UiThread void hideRetry();
 }

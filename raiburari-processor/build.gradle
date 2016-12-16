@@ -24,35 +24,36 @@ targetCompatibility = JavaVersion.VERSION_1_7
 
 
 checkstyle {
-    configFile rootProject.file('config/checkstyle.xml')
-    showViolations true
-    //Remove this when tests are less verbose, i.e. using JavaPoet
-    sourceSets = [sourceSets.main]
+  configFile rootProject.file('config/checkstyle.xml')
+  showViolations true
+  toolVersion = '7.3'
+  //Remove this when tests are less verbose, i.e. using JavaPoet
+  sourceSets = [sourceSets.main]
 }
 
 compileJava {
-    options.encoding = 'UTF-8'
-    options.compilerArgs << "-XprintRounds"
+  options.encoding = 'UTF-8'
+  options.compilerArgs << "-XprintRounds"
 }
 
 dependencies {
-    def appTestDependencies = rootProject.ext.appTestDependencies
-    compile project(':raiburari-annotation')
-    compile 'com.google.auto.service:auto-service:1.0-rc2'
-    compile 'com.squareup:javapoet:1.8.0'
-    compile 'javax.inject:javax.inject:1'
+  def appTestDependencies = rootProject.ext.appTestDependencies
+  compile project(':raiburari-annotation')
+  compile 'com.google.auto.service:auto-service:1.0-rc2'
+  compile 'com.squareup:javapoet:1.8.0'
+  compile 'javax.inject:javax.inject:1'
 
-    testCompile appTestDependencies.junit
-    testCompile appTestDependencies.googleTruth
-    testCompile appTestDependencies.mockito
-    testCompile appTestDependencies.compileTesting
-    testCompile files(org.gradle.internal.jvm.Jvm.current().getToolsJar())
+  testCompile appTestDependencies.junit
+  testCompile appTestDependencies.googleTruth
+  testCompile appTestDependencies.mockito
+  testCompile appTestDependencies.compileTesting
+  testCompile files(org.gradle.internal.jvm.Jvm.current().getToolsJar())
 }
 
 ext {
-    artifact = 'raiburari-processor'
-    blob = 'Raiburari annotation processor'
-    pkg = 'jar'
+  artifact = 'raiburari-processor'
+  blob = 'Raiburari annotation processor'
+  pkg = 'jar'
 }
 
 // Upload artifact to bintray repo

@@ -22,21 +22,18 @@ import com.addhen.android.raiburari.annotations.TransformEntity;
 /**
  * @author Henry Addo
  */
-@TransformEntity(to = Location.class)
-public class LocationEntity {
+@TransformEntity(to = Location.class) public class LocationEntity {
 
-    @Transform(name = "locationName")
-    public String locationName;
+  @Transform(name = "locationName") public String locationName;
 
-    @Transform(name = "user", transformer = "UserEntityTransformer")
-    public UserEntity userEntity;
+  @Transform(name = "user", transformer = "UserEntityTransformer") public UserEntity userEntity;
 
-    public LocationEntity() {
-        // No-op Needed by annotation processor
-    }
+  public LocationEntity() {
+    // No-op Needed by annotation processor
+  }
 
-    public LocationEntity(String locationName, UserEntity userEntity) {
-        this.locationName = locationName;
-        this.userEntity = userEntity;
-    }
+  public LocationEntity(String locationName, UserEntity userEntity) {
+    this.locationName = locationName;
+    this.userEntity = userEntity;
+  }
 }

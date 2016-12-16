@@ -16,30 +16,26 @@
 
 package com.addhen.android.raiburari.presentation.di.component;
 
+import android.content.Context;
 import com.addhen.android.raiburari.domain.executor.PostExecutionThread;
 import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 import com.addhen.android.raiburari.presentation.di.module.ApplicationModule;
 import com.addhen.android.raiburari.presentation.view.ui.activity.BaseActivity;
-
-import android.content.Context;
-
-import javax.inject.Singleton;
-
 import dagger.Component;
+import javax.inject.Singleton;
 
 /**
  * A component whose lifetime is the life of the application.
  */
 @Singleton // Constraints this component to one-per-application or unscoped bindings.
-@Component(modules = ApplicationModule.class)
-public interface ApplicationComponent {
+@Component(modules = ApplicationModule.class) public interface ApplicationComponent {
 
-    void inject(BaseActivity baseActivity);
+  void inject(BaseActivity baseActivity);
 
-    //Exposed to sub-graphs.
-    Context context();
+  //Exposed to sub-graphs.
+  Context context();
 
-    ThreadExecutor threadExecutor();
+  ThreadExecutor threadExecutor();
 
-    PostExecutionThread postExecutionThread();
+  PostExecutionThread postExecutionThread();
 }

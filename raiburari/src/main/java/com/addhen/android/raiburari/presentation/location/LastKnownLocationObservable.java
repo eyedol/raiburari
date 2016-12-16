@@ -16,44 +16,39 @@
 
 package com.addhen.android.raiburari.presentation.location;
 
-import com.addhen.android.raiburari.R;
-
 import android.content.Context;
 import android.location.Location;
-
+import com.addhen.android.raiburari.R;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
-
 
 /**
  * Fetches the users known last location
  */
 public class LastKnownLocationObservable extends BaseLocationObservable<Location> {
 
-    private final Context mContext;
+  private final Context mContext;
 
-    protected LastKnownLocationObservable(Context context) {
-        super(context);
-        mContext = context;
-    }
+  protected LastKnownLocationObservable(Context context) {
+    super(context);
+    mContext = context;
+  }
 
-    public static Observable<Location> createObservable(Context ctx) {
-        return Observable.create(new LastKnownLocationObservable(ctx));
-    }
+  public static Observable<Location> createObservable(Context ctx) {
+    return Observable.create(new LastKnownLocationObservable(ctx));
+  }
 
-    @Override
-    protected void onLocationFixed(ObservableEmitter<? super Location> observer) {
-        Location location = getLastKnowLocation(observer);
-        if (location != null) {
-            observer.onNext(location);
-            observer.onComplete();
-        } else {
-            observer.onError(new Exception(mContext.getString(R.string.no_location_found)));
-        }
+  @Override protected void onLocationFixed(ObservableEmitter<? super Location> observer) {
+    Location location = getLastKnowLocation(observer);
+    if (location != null) {
+      observer.onNext(location);
+      observer.onComplete();
+    } else {
+      observer.onError(new Exception(mContext.getString(R.string.no_location_found)));
     }
+  }
 
-    @Override
-    public void subscribe(ObservableEmitter<Location> e) {
-        baseSubscribe(e);
-    }
+  @Override public void subscribe(ObservableEmitter<Location> e) {
+    baseSubscribe(e);
+  }
 }

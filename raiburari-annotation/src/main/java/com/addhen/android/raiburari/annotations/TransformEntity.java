@@ -16,26 +16,27 @@
 
 package com.addhen.android.raiburari.annotations;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
+@Documented
 // no class level
 @Target(TYPE)
 // not needed at runtime
-@Retention(SOURCE)
-public @interface TransformEntity {
+@Retention(SOURCE) public @interface TransformEntity {
 
-    /**
-     * The name of the class to transform to
-     */
-    Class to();
+  /**
+   * The name of the class to transform to
+   */
+  Class to();
 
-    /**
-     * Whether to annotate the transformer class with an @Inject
-     * for Dagger to be able to inject this class
-     */
-    boolean isInjectable() default false;
+  /**
+   * Whether to annotate the transformer class with an @Inject
+   * for Dagger to be able to inject this class
+   */
+  boolean isInjectable() default false;
 }

@@ -17,11 +17,9 @@
 package mock;
 
 import com.addhen.android.raiburari.processor.mock.MockUser;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import javax.inject.Inject;
 
 /**
@@ -29,27 +27,26 @@ import javax.inject.Inject;
  */
 class InjectableUserEntityTransformer {
 
-    @Inject
-    public InjectableUserEntityTransformer() {
-    }
+  @Inject public InjectableUserEntityTransformer() {
+  }
 
-    public MockUser transform(InjectableUserEntity injectableUserEntity) {
-        if (injectableUserEntity == null) {
-            throw new IllegalArgumentException("injectableUserEntity is null!");
-        }
-        MockUser mockuser = new MockUser();
-        mockuser.fullName = injectableUserEntity.fullName;
-        return mockuser;
+  public MockUser transform(InjectableUserEntity injectableUserEntity) {
+    if (injectableUserEntity == null) {
+      throw new IllegalArgumentException("injectableUserEntity is null!");
     }
+    MockUser mockuser = new MockUser();
+    mockuser.fullName = injectableUserEntity.fullName;
+    return mockuser;
+  }
 
-    public List<MockUser> transform(Collection<InjectableUserEntity> mockuserCollection) {
-        List<MockUser> mockuserList = new ArrayList<>();
-        for (InjectableUserEntity injectableUserEntity : mockuserCollection) {
-            MockUser mockuser = transform(injectableUserEntity);
-            if (mockuser != null) {
-                mockuserList.add(mockuser);
-            }
-        }
-        return mockuserList;
+  public List<MockUser> transform(Collection<InjectableUserEntity> mockuserCollection) {
+    List<MockUser> mockuserList = new ArrayList<>();
+    for (InjectableUserEntity injectableUserEntity : mockuserCollection) {
+      MockUser mockuser = transform(injectableUserEntity);
+      if (mockuser != null) {
+        mockuserList.add(mockuser);
+      }
     }
+    return mockuserList;
+  }
 }

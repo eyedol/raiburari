@@ -22,79 +22,63 @@ import com.addhen.android.raiburari.sample.app.data.repository.datasource.UserDa
 import com.addhen.android.raiburari.sample.app.data.repository.datasource.UserDataStoreFactory;
 import com.addhen.android.raiburari.sample.app.domain.entity.User;
 import com.addhen.android.raiburari.sample.app.domain.repository.UserRepository;
-
-import java.util.List;
-
-import javax.inject.Inject;
-
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
-
+import java.util.List;
+import javax.inject.Inject;
 
 /**
  * {@link UserRepository} for retrieving user data.
  */
 public class UserDataRepository implements UserRepository {
 
-    private final UserDataStoreFactory mUserDataStoreFactory;
-
-    private final UserEntityDataMapper mUserEntityDataMapper;
-
-    final UserDataSource mUserDataSource;
-
-    private final Function<List<UserEntity>, List<User>> userListEntityMapper =
-            new Function<List<UserEntity>, List<User>>() {
-                @Override
-                public List<User> apply(List<UserEntity> userEntities) {
-                    return UserDataRepository.this.mUserEntityDataMapper.map(userEntities);
-                }
-            };
-
-    private final Function<UserEntity, User>
-            userDetailsEntityMapper = new Function<UserEntity, User>() {
-        @Override
-        public User apply(UserEntity userEntity) {
-            return UserDataRepository.this.mUserEntityDataMapper.map(userEntity);
+  final UserDataSource mUserDataSource;
+  private final UserDataStoreFactory mUserDataStoreFactory;
+  private final UserEntityDataMapper mUserEntityDataMapper;
+  private final Function<List<UserEntity>, List<User>> userListEntityMapper =
+      new Function<List<UserEntity>, List<User>>() {
+        @Override public List<User> apply(List<UserEntity> userEntities) {
+          return UserDataRepository.this.mUserEntityDataMapper.map(userEntities);
         }
-    };
+      };
 
-    /**
-     * Constructs a {@link UserRepository}.
-     *
-     * @param dataStoreFactory     A factory to construct different data source implementations.
-     * @param userEntityDataMapper {@link UserEntityDataMapper}.
-     */
-    @Inject
-    public UserDataRepository(UserDataStoreFactory dataStoreFactory,
-            UserEntityDataMapper userEntityDataMapper) {
-        this.mUserDataStoreFactory = dataStoreFactory;
-        this.mUserEntityDataMapper = userEntityDataMapper;
-        mUserDataSource = mUserDataStoreFactory.createDummyDataSource();
-    }
+  private final Function<UserEntity, User> userDetailsEntityMapper =
+      new Function<UserEntity, User>() {
+        @Override public User apply(UserEntity userEntity) {
+          return UserDataRepository.this.mUserEntityDataMapper.map(userEntity);
+        }
+      };
 
-    @Override
-    public Observable<List<User>> getEntities() {
-        return mUserDataSource.getUserEntityList().map(userListEntityMapper);
-    }
+  /**
+   * Constructs a {@link UserRepository}.
+   *
+   * @param dataStoreFactory A factory to construct different data source implementations.
+   * @param userEntityDataMapper {@link UserEntityDataMapper}.
+   */
+  @Inject public UserDataRepository(UserDataStoreFactory dataStoreFactory,
+      UserEntityDataMapper userEntityDataMapper) {
+    this.mUserDataStoreFactory = dataStoreFactory;
+    this.mUserEntityDataMapper = userEntityDataMapper;
+    mUserDataSource = mUserDataStoreFactory.createDummyDataSource();
+  }
 
-    @Override
-    public Observable<Long> addEntity(User entity) {
-        return null;
-    }
+  @Override public Observable<List<User>> getEntities() {
+    return mUserDataSource.getUserEntityList().map(userListEntityMapper);
+  }
 
-    @Override
-    public Observable<Long> updateEntity(User entity) {
-        return null;
-    }
+  @Override public Observable<Long> addEntity(User entity) {
+    return null;
+  }
 
-    @Override
-    public Observable<Long> deleteEntity(Long id) {
-        return null;
-    }
+  @Override public Observable<Long> updateEntity(User entity) {
+    return null;
+  }
 
-    @Override
-    public Observable<User> getEntity(Long userId) {
-        return mUserDataSource.getUserEntityDetails(userId).map(userDetailsEntityMapper);
-    }
+  @Override public Observable<Long> deleteEntity(Long id) {
+    return null;
+  }
 
+  @Override public Observable<User> getEntity(Long userId) {
+    return mUserDataSource.getUserEntityDetails(userId).map(userDetailsEntityMapper);
+  }
 }

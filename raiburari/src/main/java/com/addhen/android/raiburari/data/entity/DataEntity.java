@@ -23,7 +23,7 @@ package com.addhen.android.raiburari.data.entity;
  */
 public class DataEntity {
 
-    public DataEntity() {
-        // No-op
-    }
+  public DataEntity() {
+    // No-op
+  }
 }

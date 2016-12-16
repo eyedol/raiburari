@@ -21,9 +21,9 @@ package com.addhen.android.raiburari.processor.mock;
  */
 public class MockUser {
 
-    public String fullName;
+  public String fullName;
 
-    public MockUser() {
-        // No-op Needed by annotation processor
-    }
+  public MockUser() {
+    // No-op Needed by annotation processor
+  }
 }
