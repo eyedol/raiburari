@@ -29,6 +29,9 @@ buildscript {
     }
     classpath 'com.puppycrawl.tools:checkstyle:7.3'
     classpath 'com.jakewharton:butterknife-gradle-plugin:8.2.1'
+    //Check for the latest version here: http://plugins.gradle.org/plugin/com.jfrog.artifactory
+    // Needds to publish SNAPSHOTs to JFrog
+    classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.1.1'
   }
 }
 
@@ -40,7 +43,7 @@ task wrapper(type: Wrapper) {
 allprojects {
   ext {
     androidVersionCode = 227
-    androidVersionName = '3.0.1'
+    androidVersionName = '3.0.2-SNAPSHOT'
     testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
   }
 
