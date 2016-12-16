@@ -1,1 +1,1 @@
-./gradlew clean bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false -PossUser=$OSS_USER -PossPASS
+./gradlew clean bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_KEY -PdryRun=false -PossUser=$BINTRAY_USER -PgpgPassword=$OSS_GP_PASS -PossPASS=$OSS_PASS
