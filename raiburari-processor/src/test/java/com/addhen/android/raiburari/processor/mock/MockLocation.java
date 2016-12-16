@@ -21,11 +21,11 @@ package com.addhen.android.raiburari.processor.mock;
  */
 public class MockLocation {
 
-    public String locationName;
+  public String locationName;
 
-    public MockUser mockUser;
+  public MockUser mockUser;
 
-    public MockLocation() {
-        // No-op Needed by annotation processor
-    }
+  public MockLocation() {
+    // No-op Needed by annotation processor
+  }
 }

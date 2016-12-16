@@ -27,25 +27,23 @@ import static org.junit.Assert.assertNotNull;
  */
 public class LocationEntityTransformerTest {
 
-    LocationEntityTransformer mLocationEntityTransformer;
+  LocationEntityTransformer mLocationEntityTransformer;
 
-    @Before
-    public void setUp() {
-        mLocationEntityTransformer = new LocationEntityTransformer();
-    }
+  @Before public void setUp() {
+    mLocationEntityTransformer = new LocationEntityTransformer();
+  }
 
-    @Test
-    public void testShouldTestObjectFieldTransformation() {
-        assertNotNull(mLocationEntityTransformer);
-        assertFields();
-    }
+  @Test public void testShouldTestObjectFieldTransformation() {
+    assertNotNull(mLocationEntityTransformer);
+    assertFields();
+  }
 
-    private void assertFields() {
-        LocationEntity locationEntity = new LocationEntity("Location", new UserEntity("Foo Bar"));
-        Location location = mLocationEntityTransformer.transform(locationEntity);
-        assertNotNull(location);
-        assertEquals("Location", location.locationName);
-        assertNotNull(location.user);
-        assertEquals("Foo Bar", location.user.fullName);
-    }
+  private void assertFields() {
+    LocationEntity locationEntity = new LocationEntity("Location", new UserEntity("Foo Bar"));
+    Location location = mLocationEntityTransformer.transform(locationEntity);
+    assertNotNull(location);
+    assertEquals("Location", location.locationName);
+    assertNotNull(location.user);
+    assertEquals("Foo Bar", location.user.fullName);
+  }
 }

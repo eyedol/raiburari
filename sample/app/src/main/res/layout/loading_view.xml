@@ -16,14 +16,16 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/layout_progress"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone">
+    android:id="@+id/layout_progress"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone"
+    >
 
-    <ProgressBar
-            android:id="@+id/user_progressbar"
-            style="@style/AppTheme.ProgressBar"
-            android:layout_centerInParent="true"/>
+  <ProgressBar
+      android:id="@+id/user_progressbar"
+      android:layout_centerInParent="true"
+      style="@style/AppTheme.ProgressBar"
+      />
 
 </RelativeLayout>

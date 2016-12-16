@@ -16,6 +16,15 @@
 
 package com.addhen.android.raiburari.sample.app.presentation.view.ui.fragment;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import butterknife.BindView;
 import com.addhen.android.raiburari.presentation.view.ui.fragment.BaseRecyclerViewFragment;
 import com.addhen.android.raiburari.presentation.view.ui.listener.RecyclerViewItemTouchListenerAdapter;
 import com.addhen.android.raiburari.presentation.view.ui.widget.BloatedRecyclerView;
@@ -25,161 +34,123 @@ import com.addhen.android.raiburari.sample.app.presentation.model.UserModel;
 import com.addhen.android.raiburari.sample.app.presentation.presenter.UserListPresenter;
 import com.addhen.android.raiburari.sample.app.presentation.view.UserListView;
 import com.addhen.android.raiburari.sample.app.presentation.view.ui.adapter.UserAdapter;
-
-import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import javax.inject.Inject;
-
-import butterknife.BindView;
 
 /**
  * @author Henry Addo
  */
 public class MainFragment extends BaseRecyclerViewFragment<UserModel, UserAdapter>
-        implements UserListView,
-        RecyclerViewItemTouchListenerAdapter.RecyclerViewOnItemClickListener {
+    implements UserListView, RecyclerViewItemTouchListenerAdapter.RecyclerViewOnItemClickListener {
 
-    @Inject
-    UserListPresenter userListPresenter;
+  private static MainFragment mMainFragment;
+  @Inject UserListPresenter userListPresenter;
+  @BindView(R.id.user_progressbar) ProgressBar mProgressBar;
 
-    @BindView(R.id.user_progressbar)
-    ProgressBar mProgressBar;
+  /**
+   * BaseFragment
+   */
+  public MainFragment() {
+    super(UserAdapter.class, R.layout.list_users, R.menu.menu_main);
+    setRetainInstance(true);
+  }
 
-    private static MainFragment mMainFragment;
+  public static MainFragment newInstance() {
+    return new MainFragment();
+  }
 
-    /**
-     * BaseFragment
-     */
-    public MainFragment() {
-        super(UserAdapter.class, R.layout.list_users, R.menu.menu_main);
-        setRetainInstance(true);
+  @Override public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    getComponent(UserComponent.class).inject(this);
+  }
+
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    View view = super.onCreateView(inflater, container, savedInstanceState);
+    initialize();
+    return view;
+  }
+
+  @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    userListPresenter.attachView(this);
+    if (savedInstanceState == null) {
+      userListPresenter.initialize();
     }
+  }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getComponent(UserComponent.class).inject(this);
+  @Override public void onResume() {
+    super.onResume();
+  }
+
+  @Override public void onPause() {
+    super.onPause();
+  }
+
+  @Override public void onDestroy() {
+    super.onDestroy();
+    this.userListPresenter.detachView();
+  }
+
+  private void initialize() {
+    RecyclerViewItemTouchListenerAdapter itemTouchListenerAdapter =
+        new RecyclerViewItemTouchListenerAdapter(mBloatedRecyclerView.recyclerView, this);
+    mBloatedRecyclerView.addItemDividerDecoration(getActivity());
+    mBloatedRecyclerView.recyclerView.addOnItemTouchListener(itemTouchListenerAdapter);
+    mBloatedRecyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+      @Override public void onRefresh() {
+        mBloatedRecyclerView.setRefreshing(true);
+        // Hide progress bar when pull refresh is in action
+        mBloatedRecyclerView.recyclerView.smoothScrollToPosition(0);
+      }
+    });
+    mBloatedRecyclerView.enableInfiniteScroll();
+    mBloatedRecyclerView.setOnLoadMoreListener(new BloatedRecyclerView.OnLoadMoreListener() {
+      @Override public void loadMore(int itemsCount, int maxLastVisiblePosition) {
+
+      }
+    });
+  }
+
+  @Override public void showUserList(Collection<UserModel> userModelCollection) {
+    if (userModelCollection != null) {
+      List userList = new ArrayList(userModelCollection);
+      mRecyclerViewAdapter.setItems(userList);
+      mBloatedRecyclerView.setAdapter(mRecyclerViewAdapter);
     }
+  }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        View view = super.onCreateView(inflater, container, savedInstanceState);
-        initialize();
-        return view;
-    }
+  @Override public void showLoading() {
+    // No-op
+  }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        userListPresenter.attachView(this);
-        if (savedInstanceState == null) {
-            userListPresenter.initialize();
-        }
-    }
+  @Override public void hideLoading() {
+    // No-op
+  }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
+  @Override public void showRetry() {
+    // No-op
+  }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
+  @Override public void hideRetry() {
+    // No-op
+  }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        this.userListPresenter.detachView();
-    }
+  @Override public void showError(String message) {
+    // No-op
+  }
 
-    public static MainFragment newInstance() {
-        return new MainFragment();
-    }
+  @Override public Context getAppContext() {
+    return getActivity().getApplicationContext();
+  }
 
+  @Override public void onItemClick(RecyclerView parent, View clickedView, int position) {
 
-    private void initialize() {
-        RecyclerViewItemTouchListenerAdapter itemTouchListenerAdapter
-                = new RecyclerViewItemTouchListenerAdapter(
-                mBloatedRecyclerView.recyclerView, this);
-        mBloatedRecyclerView.addItemDividerDecoration(getActivity());
-        mBloatedRecyclerView.recyclerView.addOnItemTouchListener(itemTouchListenerAdapter);
-        mBloatedRecyclerView
-                .setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        mBloatedRecyclerView.setRefreshing(true);
-                        // Hide progress bar when pull refresh is in action
-                        mBloatedRecyclerView.recyclerView.smoothScrollToPosition(0);
-                    }
-                });
-        mBloatedRecyclerView.enableInfiniteScroll();
-        mBloatedRecyclerView.setOnLoadMoreListener(new BloatedRecyclerView.OnLoadMoreListener() {
-            @Override
-            public void loadMore(int itemsCount, int maxLastVisiblePosition) {
+  }
 
-            }
-        });
-    }
-
-    @Override
-    public void showUserList(Collection<UserModel> userModelCollection) {
-        if (userModelCollection != null) {
-            List userList = new ArrayList(userModelCollection);
-            mRecyclerViewAdapter.setItems(userList);
-            mBloatedRecyclerView.setAdapter(mRecyclerViewAdapter);
-        }
-    }
-
-    @Override
-    public void showLoading() {
-        // No-op
-    }
-
-    @Override
-    public void hideLoading() {
-        // No-op
-    }
-
-    @Override
-    public void showRetry() {
-        // No-op
-    }
-
-    @Override
-    public void hideRetry() {
-        // No-op
-    }
-
-    @Override
-    public void showError(String message) {
-        // No-op
-    }
-
-    @Override
-    public Context getAppContext() {
-        return getActivity().getApplicationContext();
-    }
-
-    @Override
-    public void onItemClick(RecyclerView parent, View clickedView, int position) {
-
-    }
-
-    @Override
-    public void onItemLongClick(RecyclerView parent, View clickedView, int position) {
-        // No-op
-    }
+  @Override public void onItemLongClick(RecyclerView parent, View clickedView, int position) {
+    // No-op
+  }
 }

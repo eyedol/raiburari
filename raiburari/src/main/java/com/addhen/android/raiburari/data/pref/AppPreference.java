@@ -21,26 +21,26 @@ package com.addhen.android.raiburari.data.pref;
  */
 public interface AppPreference<T> {
 
-    /**
-     * Gets the value of the preference
-     */
-    T get();
+  /**
+   * Gets the value of the preference
+   */
+  T get();
 
-    /**
-     * Checks if the preference is set.
-     *
-     * @return The status of the preferences. Whether it has been set or not.
-     */
-    boolean isSet();
+  /**
+   * Checks if the preference is set.
+   *
+   * @return The status of the preferences. Whether it has been set or not.
+   */
+  boolean isSet();
 
-    /**
-     * Set the value for the preference
-     */
-    void set(T value);
+  /**
+   * Set the value for the preference
+   */
+  void set(T value);
 
-    /**
-     * Deletes the set preference.
-     */
-    void delete();
+  /**
+   * Deletes the set preference.
+   */
+  void delete();
 }
 

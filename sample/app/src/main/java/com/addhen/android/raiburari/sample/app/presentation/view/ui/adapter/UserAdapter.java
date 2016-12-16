@@ -16,79 +16,73 @@
 
 package com.addhen.android.raiburari.sample.app.presentation.view.ui.adapter;
 
-import com.addhen.android.raiburari.presentation.view.ui.adapter.BaseRecyclerViewAdapter;
-import com.addhen.android.raiburari.sample.app.R;
-import com.addhen.android.raiburari.sample.app.presentation.model.UserModel;
-
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import com.addhen.android.raiburari.presentation.view.ui.adapter.BaseRecyclerViewAdapter;
+import com.addhen.android.raiburari.sample.app.R;
+import com.addhen.android.raiburari.sample.app.presentation.model.UserModel;
 
 /**
  * @author Henry Addo
  */
 public class UserAdapter extends BaseRecyclerViewAdapter<UserModel>
-        implements View.OnClickListener {
+    implements View.OnClickListener {
 
-    private OnUserItemClickListener mOnUserItemClickListener;
+  private OnUserItemClickListener mOnUserItemClickListener;
 
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
-        return new Widgets(LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.list_user_item, parent, false));
+  @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
+    return new Widgets(
+        LayoutInflater.from(parent.getContext()).inflate(R.layout.list_user_item, parent, false));
+  }
+
+  @Override public int getAdapterItemCount() {
+    return getItems().size();
+  }
+
+  @Override public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+    if ((position < getItemCount()) && (customHeaderView != null ? position <= getAdapterItemCount()
+        : position < getAdapterItemCount()) && (customHeaderView != null ? position > 0 : true)) {
+      ((Widgets) viewHolder).title.setText(getItem(position).fullName);
+      ((Widgets) viewHolder).email.setText(getItem(position).email);
+      ((Widgets) viewHolder).more.setTag(position);
+      ((Widgets) viewHolder).more.setOnClickListener(this);
     }
+  }
 
-    @Override
-    public int getAdapterItemCount() {
-        return getItems().size();
+  @Override public void onClick(View view) {
+    if (view.getId() == R.id.btn_more) {
+      if (mOnUserItemClickListener != null) {
+        mOnUserItemClickListener.onMoreClick(view, (Integer) view.getTag());
+      }
     }
+  }
 
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        if ((position < getItemCount()) && (customHeaderView != null ? position
-                <= getAdapterItemCount() : position < getAdapterItemCount())
-                && (customHeaderView != null ? position > 0 : true)) {
-            ((Widgets) viewHolder).title.setText(getItem(position).fullName);
-            ((Widgets) viewHolder).email.setText(getItem(position).email);
-            ((Widgets) viewHolder).more.setTag(position);
-            ((Widgets) viewHolder).more.setOnClickListener(this);
-        }
+  public void setOnUserItemClickListener(OnUserItemClickListener onUserItemClickListener) {
+    mOnUserItemClickListener = onUserItemClickListener;
+  }
+
+  public interface OnUserItemClickListener {
+
+    void onMoreClick(View v, int position);
+  }
+
+  public class Widgets extends RecyclerView.ViewHolder {
+
+    TextView title;
+
+    TextView email;
+
+    ImageButton more;
+
+    public Widgets(View convertView) {
+      super(convertView);
+      title = (TextView) convertView.findViewById(R.id.title);
+      email = (TextView) convertView.findViewById(R.id.email);
+      more = (ImageButton) convertView.findViewById(R.id.btn_more);
     }
-
-    @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.btn_more) {
-            if (mOnUserItemClickListener != null) {
-                mOnUserItemClickListener.onMoreClick(view, (Integer) view.getTag());
-            }
-        }
-    }
-
-    public void setOnUserItemClickListener(OnUserItemClickListener onUserItemClickListener) {
-        mOnUserItemClickListener = onUserItemClickListener;
-    }
-
-    public class Widgets extends RecyclerView.ViewHolder {
-
-        TextView title;
-
-        TextView email;
-
-        ImageButton more;
-
-        public Widgets(View convertView) {
-            super(convertView);
-            title = (TextView) convertView.findViewById(R.id.title);
-            email = (TextView) convertView.findViewById(R.id.email);
-            more = (ImageButton) convertView.findViewById(R.id.btn_more);
-        }
-    }
-
-    public interface OnUserItemClickListener {
-
-        void onMoreClick(View v, int position);
-    }
+  }
 }

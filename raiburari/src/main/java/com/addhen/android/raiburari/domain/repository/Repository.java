@@ -16,10 +16,8 @@
 
 package com.addhen.android.raiburari.domain.repository;
 
-import java.util.List;
-
 import io.reactivex.Observable;
-
+import java.util.List;
 
 /**
  * Base Interface that represents Repository for fetching {@link E}
@@ -29,36 +27,36 @@ import io.reactivex.Observable;
  */
 public interface Repository<E> {
 
-    /**
-     * Get an {@link Observable} which will emit a List of {@link E}.
-     */
-    Observable<List<E>> getEntities();
+  /**
+   * Get an {@link Observable} which will emit a List of {@link E}.
+   */
+  Observable<List<E>> getEntities();
 
-    /**
-     * Get an {@link Observable} which will emit a {@link E}.
-     *
-     * @param entityId The entity id used to retrieve the entity data.
-     */
-    Observable<E> getEntity(final Long entityId);
+  /**
+   * Get an {@link Observable} which will emit a {@link E}.
+   *
+   * @param entityId The entity id used to retrieve the entity data.
+   */
+  Observable<E> getEntity(Long entityId);
 
-    /**
-     * Add an {@link E} to a storage.
-     *
-     * @param entity The entity to be added.
-     */
-    Observable<Long> addEntity(E entity);
+  /**
+   * Add an {@link E} to a storage.
+   *
+   * @param entity The entity to be added.
+   */
+  Observable<Long> addEntity(E entity);
 
-    /**
-     * Update an existing {@link E} in a storage.
-     *
-     * @param entity The entity to be updated.
-     */
-    Observable<Long> updateEntity(E entity);
+  /**
+   * Update an existing {@link E} in a storage.
+   *
+   * @param entity The entity to be updated.
+   */
+  Observable<Long> updateEntity(E entity);
 
-    /**
-     * Delete an existing {@link E} in a storage.
-     *
-     * @param id The entity's id to be deleted.
-     */
-    Observable<Long> deleteEntity(Long id);
+  /**
+   * Delete an existing {@link E} in a storage.
+   *
+   * @param id The entity's id to be deleted.
+   */
+  Observable<Long> deleteEntity(Long id);
 }

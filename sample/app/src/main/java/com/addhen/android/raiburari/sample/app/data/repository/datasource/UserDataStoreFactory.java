@@ -25,12 +25,11 @@ import javax.inject.Inject;
  */
 public class UserDataStoreFactory {
 
-    @Inject
-    public UserDataStoreFactory() {
+  @Inject public UserDataStoreFactory() {
 
-    }
+  }
 
-    public UserDataSource createDummyDataSource() {
-        return new DummyDataSource();
-    }
+  public UserDataSource createDummyDataSource() {
+    return new DummyDataSource();
+  }
 }

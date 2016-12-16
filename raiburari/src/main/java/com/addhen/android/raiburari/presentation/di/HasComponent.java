@@ -24,5 +24,5 @@ package com.addhen.android.raiburari.presentation.di;
  */
 public interface HasComponent<C> {
 
-    C getComponent();
+  C getComponent();
 }

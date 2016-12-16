@@ -23,5 +23,5 @@ import java.util.ArrayList;
  */
 public interface MapsView extends LoadDataView {
 
-    void renderGeoJson(ArrayList<Object> uiObjects);
+  void renderGeoJson(ArrayList<Object> uiObjects);
 }

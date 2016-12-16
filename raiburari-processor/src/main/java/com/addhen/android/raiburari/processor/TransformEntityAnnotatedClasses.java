@@ -58,6 +58,10 @@ public class TransformEntityAnnotatedClasses {
     mIsInjectable = isInjectable;
   }
 
+  private static String makeFirstCharLowerCase(String inputString) {
+    return inputString.substring(0, 1).toLowerCase(Locale.getDefault()) + inputString.substring(1);
+  }
+
   public void add(TransformEntityAnnotatedClass transformAnnotatedClass) {
     mItems.add(transformAnnotatedClass);
   }
@@ -152,9 +156,5 @@ public class TransformEntityAnnotatedClasses {
   private String getPackageName(Elements elements, TypeElement superClassName) {
     PackageElement pkg = elements.getPackageOf(superClassName);
     return pkg.isUnnamed() ? null : pkg.getQualifiedName().toString();
-  }
-
-  private static String makeFirstCharLowerCase(String inputString) {
-    return inputString.substring(0, 1).toLowerCase(Locale.getDefault()) + inputString.substring(1);
   }
 }

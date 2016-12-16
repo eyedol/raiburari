@@ -16,10 +16,6 @@
 
 package com.addhen.android.raiburari.presentation.view.ui.fragment;
 
-import com.addhen.android.raiburari.presentation.model.Model;
-import com.addhen.android.raiburari.presentation.view.ui.adapter.BaseRecyclerViewAdapter;
-import com.addhen.android.raiburari.presentation.view.ui.widget.BloatedRecyclerView;
-
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -27,7 +23,9 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import com.addhen.android.raiburari.presentation.model.Model;
+import com.addhen.android.raiburari.presentation.view.ui.adapter.BaseRecyclerViewAdapter;
+import com.addhen.android.raiburari.presentation.view.ui.widget.BloatedRecyclerView;
 
 /**
  * Base {@link android.app.ListFragment} that every fragment list will extend from.
@@ -35,82 +33,75 @@ import android.view.ViewGroup;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public abstract class BaseRecyclerViewFragment<M extends Model, L extends BaseRecyclerViewAdapter>
-        extends BaseFragment {
+    extends BaseFragment {
 
-    private static final String TAG = BaseRecyclerViewFragment.class.getSimpleName();
+  private static final String TAG = BaseRecyclerViewFragment.class.getSimpleName();
+  /**
+   * RecyclerViewAdapter class
+   */
+  private final Class<L> mRecyclerViewAdapterClass;
+  /**
+   * RecyclerViewAdapter
+   */
+  protected L mRecyclerViewAdapter;
+  /**
+   * RecyclerView
+   */
+  protected BloatedRecyclerView mBloatedRecyclerView;
 
-    /**
-     * RecyclerViewAdapter
-     */
-    protected L mRecyclerViewAdapter;
+  protected BaseRecyclerViewFragment(Class<L> adapterClass, int layout, int menu) {
+    super(layout, menu);
+    mRecyclerViewAdapterClass = adapterClass;
+  }
 
-    /**
-     * RecyclerView
-     */
-    protected BloatedRecyclerView mBloatedRecyclerView;
-
-    /**
-     * RecyclerViewAdapter class
-     */
-    private final Class<L> mRecyclerViewAdapterClass;
-
-    protected BaseRecyclerViewFragment(Class<L> adapterClass, int layout, int menu) {
-        super(layout, menu);
-        mRecyclerViewAdapterClass = adapterClass;
+  /**
+   * Uses reflection to create a new instance of a class
+   *
+   * @param targetClass The class to create an instance
+   * @return The created instance
+   */
+  private static <T> T createInstance(Class<?> targetClass) {
+    try {
+      return (T) targetClass.newInstance();
+    } catch (IllegalAccessException e) {
+      Log.e(TAG, "IllegalAccessException", e);
+    } catch (IllegalStateException e) {
+      Log.e(TAG, "IllegalStateException", e);
+    } catch (SecurityException e) {
+      Log.e(TAG, "SecurityException", e);
+      for (StackTraceElement exception : e.getStackTrace()) {
+        Log.e(TAG, String.format("%s", exception.toString()));
+      }
+    } catch (InflateException e) {
+      Log.e(TAG, "InflateException", e);
+    } catch (java.lang.InstantiationException e) {
+      Log.e(TAG, "InstantiationException", e);
     }
+    return null;
+  }
 
-    /**
-     * Uses reflection to create a new instance of a class
-     *
-     * @param targetClass The class to create an instance
-     * @return The created instance
-     */
-    private static <T> T createInstance(Class<?> targetClass) {
-        try {
-            return (T) targetClass.newInstance();
-        } catch (IllegalAccessException e) {
-            Log.e(TAG, "IllegalAccessException", e);
-        } catch (IllegalStateException e) {
-            Log.e(TAG, "IllegalStateException", e);
-        } catch (SecurityException e) {
-            Log.e(TAG, "SecurityException", e);
-            for (StackTraceElement exception : e.getStackTrace()) {
-                Log.e(TAG,
-                        String.format("%s", exception.toString()));
-            }
-        } catch (InflateException e) {
-            Log.e(TAG, "InflateException", e);
-        } catch (java.lang.InstantiationException e) {
-            Log.e(TAG, "InstantiationException", e);
-        }
-        return null;
-    }
+  public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+    setHasOptionsMenu(true);
+  }
 
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+    mBloatedRecyclerView.setAdapter(null);
+  }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mBloatedRecyclerView.setAdapter(null);
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+      Bundle savedInstanceState) {
+    View view = super.onCreateView(inflater, container, savedInstanceState);
+    mBloatedRecyclerView = (BloatedRecyclerView) view.findViewById(android.R.id.list);
+    if (mBloatedRecyclerView != null) {
+      mRecyclerViewAdapter = BaseRecyclerViewFragment.createInstance(mRecyclerViewAdapterClass);
+      mBloatedRecyclerView.setFocusable(true);
+      mBloatedRecyclerView.setFocusableInTouchMode(true);
+      mBloatedRecyclerView.setAdapter(mRecyclerViewAdapter);
+      mBloatedRecyclerView.setHasFixedSize(true);
+      mBloatedRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater,
-            ViewGroup container, Bundle savedInstanceState) {
-        View view = super.onCreateView(inflater, container, savedInstanceState);
-        mBloatedRecyclerView = (BloatedRecyclerView) view.findViewById(android.R.id.list);
-        if (mBloatedRecyclerView != null) {
-            mRecyclerViewAdapter = BaseRecyclerViewFragment
-                    .createInstance(mRecyclerViewAdapterClass);
-            mBloatedRecyclerView.setFocusable(true);
-            mBloatedRecyclerView.setFocusableInTouchMode(true);
-            mBloatedRecyclerView.setAdapter(mRecyclerViewAdapter);
-            mBloatedRecyclerView.setHasFixedSize(true);
-            mBloatedRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        }
-        return view;
-    }
+    return view;
+  }
 }

@@ -23,7 +23,7 @@ package com.addhen.android.raiburari.domain.entity;
  */
 public class Entity {
 
-    protected Entity() {
-        // No-op
-    }
+  protected Entity() {
+    // No-op
+  }
 }

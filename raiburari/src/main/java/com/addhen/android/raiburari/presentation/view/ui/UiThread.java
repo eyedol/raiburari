@@ -21,28 +21,22 @@ package com.addhen.android.raiburari.presentation.view.ui;
  */
 
 import com.addhen.android.raiburari.domain.executor.PostExecutionThread;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * MainThread (UI Thread) implementation based on a {@link Scheduler}
  * which will execute actions on the Android UI thread
  */
-@Singleton
-public class UiThread implements PostExecutionThread {
+@Singleton public class UiThread implements PostExecutionThread {
 
-    @Inject
-    public UiThread() {
-        //No-op
-    }
+  @Inject public UiThread() {
+    //No-op
+  }
 
-    @Override
-    public Scheduler getScheduler() {
-        return AndroidSchedulers.mainThread();
-    }
+  @Override public Scheduler getScheduler() {
+    return AndroidSchedulers.mainThread();
+  }
 }

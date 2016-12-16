@@ -27,94 +27,90 @@ import android.os.Build;
  */
 public abstract class BasePreference<T> implements AppPreference<T> {
 
-    /**
-     * Wrapper for saving the preference. Switches between
-     * {@link android.content.SharedPreferences.Editor#commit()}, and
-     * {@link android.content.SharedPreferences.Editor#apply()} based of of the api level
-     */
-    static final PrefSaver PREF_SAVER;
+  /**
+   * Wrapper for saving the preference. Switches between
+   * {@link android.content.SharedPreferences.Editor#commit()}, and
+   * {@link android.content.SharedPreferences.Editor#apply()} based of of the api level
+   */
+  static final PrefSaver PREF_SAVER;
 
-    static {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-            PREF_SAVER = new PrefSaverGingerbread();
-        } else {
-            PREF_SAVER = new PrefSaverDefault();
-        }
+  static {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+      PREF_SAVER = new PrefSaverGingerbread();
+    } else {
+      PREF_SAVER = new PrefSaverDefault();
     }
+  }
 
-    private final SharedPreferences mSharedPreferences;
+  private final SharedPreferences mSharedPreferences;
 
-    private final String mKey;
+  private final String mKey;
 
-    private final T mDefaultValue;
+  private final T mDefaultValue;
 
-    public BasePreference(SharedPreferences sharedPreferences, String key, T defaultValue) {
-        mSharedPreferences = sharedPreferences;
-        mKey = key;
-        mDefaultValue = defaultValue;
+  public BasePreference(SharedPreferences sharedPreferences, String key, T defaultValue) {
+    mSharedPreferences = sharedPreferences;
+    mKey = key;
+    mDefaultValue = defaultValue;
+  }
+
+  @Override public boolean isSet() {
+    return getSharedPreferences().contains(mKey);
+  }
+
+  @Override public void delete() {
+    getSharedPreferences().edit().remove(mKey).apply();
+  }
+
+  /**
+   * Gets the key of the preference.
+   *
+   * @return The key
+   */
+  protected String getKey() {
+    return mKey;
+  }
+
+  /**
+   * Gets the default value of the preference
+   *
+   * @return The default value
+   */
+  protected T getDefaultValue() {
+    return mDefaultValue;
+  }
+
+  /**
+   * Gets the {@link SharedPreferences}
+   *
+   * @return The SharedPreferences
+   */
+  protected SharedPreferences getSharedPreferences() {
+    return mSharedPreferences;
+  }
+
+  /** Get the implementation to save shared prefereneces based on api level */
+  protected PrefSaver getPrefSaver() {
+    return PREF_SAVER;
+  }
+
+  interface PrefSaver {
+
+    void save(SharedPreferences.Editor editor);
+  }
+
+  static class PrefSaverDefault implements PrefSaver {
+
+    @Override public void save(SharedPreferences.Editor editor) {
+      editor.commit();
     }
+  }
 
-    @Override
-    public boolean isSet() {
-        return getSharedPreferences().contains(mKey);
+  static class PrefSaverGingerbread implements PrefSaver {
+
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD) @Override
+    public void save(SharedPreferences.Editor editor) {
+      editor.apply();
     }
-
-    @Override
-    public void delete() {
-        getSharedPreferences().edit().remove(mKey).apply();
-    }
-
-    /**
-     * Gets the key of the preference.
-     *
-     * @return The key
-     */
-    protected String getKey() {
-        return mKey;
-    }
-
-    /**
-     * Gets the default value of the preference
-     *
-     * @return The default value
-     */
-    protected T getDefaultValue() {
-        return mDefaultValue;
-    }
-
-    /**
-     * Gets the {@link SharedPreferences}
-     *
-     * @return The SharedPreferences
-     */
-    protected SharedPreferences getSharedPreferences() {
-        return mSharedPreferences;
-    }
-
-    /** Get the implementation to save shared prefereneces based on api level */
-    protected PrefSaver getPrefSaver() {
-        return PREF_SAVER;
-    }
-
-    interface PrefSaver {
-
-        void save(SharedPreferences.Editor editor);
-    }
-
-    static class PrefSaverDefault implements PrefSaver {
-
-        @Override
-        public void save(SharedPreferences.Editor editor) {
-            editor.commit();
-        }
-    }
-
-    static class PrefSaverGingerbread implements PrefSaver {
-
-        @TargetApi(Build.VERSION_CODES.GINGERBREAD)
-        @Override
-        public void save(SharedPreferences.Editor editor) {
-            editor.apply();
-        }
-    }
+  }
 }

@@ -30,81 +30,75 @@ import android.view.View;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public class RecyclerViewItemTouchListenerAdapter extends GestureDetector.SimpleOnGestureListener
-        implements RecyclerView.OnItemTouchListener {
+    implements RecyclerView.OnItemTouchListener {
 
-    private final RecyclerViewOnItemClickListener mListener;
+  private final RecyclerViewOnItemClickListener mListener;
 
-    private final RecyclerView mRecyclerView;
+  private final RecyclerView mRecyclerView;
 
-    private final GestureDetector mGestureDetector;
+  private final GestureDetector mGestureDetector;
 
-    public RecyclerViewItemTouchListenerAdapter(RecyclerView recyclerView,
-            RecyclerViewOnItemClickListener listener) {
-        if (recyclerView == null || listener == null) {
-            throw new IllegalArgumentException(
-                    "RecyclerView and Listener arguments can not be null");
-        }
-        mRecyclerView = recyclerView;
-        mListener = listener;
-        mGestureDetector = new GestureDetector(recyclerView.getContext(), this);
+  public RecyclerViewItemTouchListenerAdapter(RecyclerView recyclerView,
+      RecyclerViewOnItemClickListener listener) {
+    if (recyclerView == null || listener == null) {
+      throw new IllegalArgumentException("RecyclerView and Listener arguments can not be null");
+    }
+    mRecyclerView = recyclerView;
+    mListener = listener;
+    mGestureDetector = new GestureDetector(recyclerView.getContext(), this);
+  }
+
+  @Override
+  public boolean onInterceptTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
+    mGestureDetector.onTouchEvent(motionEvent);
+    return false;
+  }
+
+  @Override public void onTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
+    // No-op
+  }
+
+  @Override public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+    // No-op
+  }
+
+  @Override public void onShowPress(MotionEvent e) {
+    View view = getChildViewUnder(e);
+    if (view != null) {
+      view.setPressed(true);
+    }
+  }
+
+  @Override public boolean onSingleTapUp(MotionEvent e) {
+    View view = getChildViewUnder(e);
+    if (view == null) {
+      return false;
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
-        mGestureDetector.onTouchEvent(motionEvent);
-        return false;
+    view.setPressed(false);
+    int position = mRecyclerView.getChildAdapterPosition(view);
+    mListener.onItemClick(mRecyclerView, view, position);
+    return true;
+  }
+
+  public void onLongPress(MotionEvent e) {
+    View view = getChildViewUnder(e);
+    if (view == null) {
+      return;
     }
+    int position = mRecyclerView.getChildAdapterPosition(view);
+    mListener.onItemLongClick(mRecyclerView, view, position);
+    view.setPressed(false);
+  }
 
-    @Override
-    public void onTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
-        // No-op
-    }
+  @Nullable private View getChildViewUnder(MotionEvent e) {
+    return mRecyclerView.findChildViewUnder(e.getX(), e.getY());
+  }
 
-    @Override
-    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-        // No-op
-    }
+  public interface RecyclerViewOnItemClickListener {
 
-    @Override
-    public void onShowPress(MotionEvent e) {
-        View view = getChildViewUnder(e);
-        if (view != null) {
-            view.setPressed(true);
-        }
-    }
+    void onItemClick(RecyclerView parent, View clickedView, int position);
 
-    @Override
-    public boolean onSingleTapUp(MotionEvent e) {
-        View view = getChildViewUnder(e);
-        if (view == null) {
-            return false;
-        }
-
-        view.setPressed(false);
-        int position = mRecyclerView.getChildAdapterPosition(view);
-        mListener.onItemClick(mRecyclerView, view, position);
-        return true;
-    }
-
-    public void onLongPress(MotionEvent e) {
-        View view = getChildViewUnder(e);
-        if (view == null) {
-            return;
-        }
-        int position = mRecyclerView.getChildAdapterPosition(view);
-        mListener.onItemLongClick(mRecyclerView, view, position);
-        view.setPressed(false);
-    }
-
-    @Nullable
-    private View getChildViewUnder(MotionEvent e) {
-        return mRecyclerView.findChildViewUnder(e.getX(), e.getY());
-    }
-
-    public interface RecyclerViewOnItemClickListener {
-
-        void onItemClick(RecyclerView parent, View clickedView, int position);
-
-        void onItemLongClick(RecyclerView parent, View clickedView, int position);
-    }
+    void onItemLongClick(RecyclerView parent, View clickedView, int position);
+  }
 }

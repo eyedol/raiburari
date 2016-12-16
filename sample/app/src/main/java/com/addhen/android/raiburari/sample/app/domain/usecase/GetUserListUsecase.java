@@ -20,28 +20,23 @@ import com.addhen.android.raiburari.domain.executor.PostExecutionThread;
 import com.addhen.android.raiburari.domain.executor.ThreadExecutor;
 import com.addhen.android.raiburari.domain.usecase.Usecase;
 import com.addhen.android.raiburari.sample.app.domain.repository.UserRepository;
-
-import javax.inject.Inject;
-
 import io.reactivex.Observable;
-
+import javax.inject.Inject;
 
 /**
  * @author Henry Addo
  */
 public class GetUserListUsecase extends Usecase {
 
-    private final UserRepository mUserRepository;
+  private final UserRepository mUserRepository;
 
-    @Inject
-    protected GetUserListUsecase(UserRepository userRepository, ThreadExecutor threadExecutor,
-            PostExecutionThread postExecutionThread) {
-        super(threadExecutor, postExecutionThread);
-        mUserRepository = userRepository;
-    }
+  @Inject protected GetUserListUsecase(UserRepository userRepository, ThreadExecutor threadExecutor,
+      PostExecutionThread postExecutionThread) {
+    super(threadExecutor, postExecutionThread);
+    mUserRepository = userRepository;
+  }
 
-    @Override
-    protected Observable buildUseCaseObservable() {
-        return mUserRepository.getEntities();
-    }
+  @Override protected Observable buildUseCaseObservable() {
+    return mUserRepository.getEntities();
+  }
 }

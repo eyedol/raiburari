@@ -23,14 +23,14 @@ import javax.lang.model.element.Element;
  */
 public class ProcessingException extends Exception {
 
-    Element mElement;
+  Element mElement;
 
-    public ProcessingException(Element element, String message, Object... args) {
-        super(String.format(message, args));
-        mElement = element;
-    }
+  public ProcessingException(Element element, String message, Object... args) {
+    super(String.format(message, args));
+    mElement = element;
+  }
 
-    public Element getElement() {
-        return mElement;
-    }
+  public Element getElement() {
+    return mElement;
+  }
 }

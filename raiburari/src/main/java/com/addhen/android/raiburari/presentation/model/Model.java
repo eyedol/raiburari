@@ -23,7 +23,7 @@ package com.addhen.android.raiburari.presentation.model;
  */
 public class Model {
 
-    protected Model() {
-        // No-op
-    }
+  protected Model() {
+    // No-op
+  }
 }

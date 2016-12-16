@@ -17,7 +17,6 @@
 package com.addhen.android.raiburari.sample.app.presentation.view;
 
 import com.addhen.android.raiburari.sample.app.presentation.model.UserModel;
-
 import java.util.Collection;
 
 /**
@@ -25,10 +24,10 @@ import java.util.Collection;
  */
 public interface UserListView extends LoadDataView {
 
-    /**
-     * Render a user list in the UI.
-     *
-     * @param userModelCollection The collection of {@link UserModel} that will be shown.
-     */
-    void showUserList(Collection<UserModel> userModelCollection);
+  /**
+   * Render a user list in the UI.
+   *
+   * @param userModelCollection The collection of {@link UserModel} that will be shown.
+   */
+  void showUserList(Collection<UserModel> userModelCollection);
 }

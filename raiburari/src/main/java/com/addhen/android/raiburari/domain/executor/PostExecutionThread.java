@@ -16,7 +16,6 @@
 
 package com.addhen.android.raiburari.domain.executor;
 
-
 import io.reactivex.Scheduler;
 
 /**
@@ -28,5 +27,5 @@ import io.reactivex.Scheduler;
  */
 public interface PostExecutionThread {
 
-    Scheduler getScheduler();
+  Scheduler getScheduler();
 }

@@ -29,33 +29,32 @@ import android.view.ViewConfiguration;
  */
 // Tracking the value in prevX in the switch construct. In this case this rule doesn't hold for
 // the prevX variable
-@SuppressWarnings("PMD.SingularField")
-public class VerticalSwipeRefreshLayout extends SwipeRefreshLayout {
+@SuppressWarnings("PMD.SingularField") public class VerticalSwipeRefreshLayout
+    extends SwipeRefreshLayout {
 
-    private final int mTouchSlop;
+  private final int mTouchSlop;
 
-    private float prevX;
+  private float prevX;
 
-    public VerticalSwipeRefreshLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
-    }
+  public VerticalSwipeRefreshLayout(Context context, AttributeSet attrs) {
+    super(context, attrs);
+    mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+  }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                prevX = MotionEvent.obtain(event).getX();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                final float eventX = event.getX();
-                float xDiff = Math.abs(eventX - prevX);
-                if (xDiff > mTouchSlop) {
-                    return false;
-                }
-            default:
-                break;
+  @Override public boolean onInterceptTouchEvent(MotionEvent event) {
+    switch (event.getAction()) {
+      case MotionEvent.ACTION_DOWN:
+        prevX = MotionEvent.obtain(event).getX();
+        break;
+      case MotionEvent.ACTION_MOVE:
+        final float eventX = event.getX();
+        float xDiff = Math.abs(eventX - prevX);
+        if (xDiff > mTouchSlop) {
+          return false;
         }
-        return super.onInterceptTouchEvent(event);
+      default:
+        break;
     }
+    return super.onInterceptTouchEvent(event);
+  }
 }

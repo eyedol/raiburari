@@ -22,7 +22,5 @@ package com.addhen.android.raiburari.presentation.view.ui.listener;
  * @author Ushahidi Team <team@ushahidi.com>
  */
 public enum ObservableScrollState {
-    STOP,
-    UP,
-    DOWN,
+  STOP, UP, DOWN,
 }

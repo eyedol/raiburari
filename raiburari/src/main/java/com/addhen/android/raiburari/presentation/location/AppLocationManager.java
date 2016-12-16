@@ -16,18 +16,13 @@
 
 package com.addhen.android.raiburari.presentation.location;
 
-
-import com.addhen.android.raiburari.presentation.location.geocoder.GeocodeObservable;
-import com.addhen.android.raiburari.presentation.location.geocoder.ReverseGeocodeObservable;
-
 import android.content.Context;
 import android.location.Address;
 import android.location.Location;
-
-import java.util.List;
-
+import com.addhen.android.raiburari.presentation.location.geocoder.GeocodeObservable;
+import com.addhen.android.raiburari.presentation.location.geocoder.ReverseGeocodeObservable;
 import io.reactivex.Observable;
-
+import java.util.List;
 
 /**
  * Location manager that returns observables for getting the location of the user's device.
@@ -37,26 +32,26 @@ import io.reactivex.Observable;
  */
 public class AppLocationManager {
 
-    private final Context mContext;
+  private final Context mContext;
 
-    public AppLocationManager(Context context) {
-        mContext = context;
-    }
+  public AppLocationManager(Context context) {
+    mContext = context;
+  }
 
-    public Observable<Location> getLastKnownLocation() {
-        return LastKnownLocationObservable.createObservable(mContext);
-    }
+  public Observable<Location> getLastKnownLocation() {
+    return LastKnownLocationObservable.createObservable(mContext);
+  }
 
-    public Observable<Location> getUpdatedLocation() {
-        return LocationUpdatesObservable.createObservable(mContext);
-    }
+  public Observable<Location> getUpdatedLocation() {
+    return LocationUpdatesObservable.createObservable(mContext);
+  }
 
-    public Observable<List<Address>> getReverseGeocode(double latitude, double longitude,
-            int maxResults) {
-        return ReverseGeocodeObservable.createObservable(mContext, latitude, longitude, maxResults);
-    }
+  public Observable<List<Address>> getReverseGeocode(double latitude, double longitude,
+      int maxResults) {
+    return ReverseGeocodeObservable.createObservable(mContext, latitude, longitude, maxResults);
+  }
 
-    public Observable<List<Address>> getGeocode(String locationName, int maxResults) {
-        return GeocodeObservable.createObservable(mContext, locationName, maxResults);
-    }
+  public Observable<List<Address>> getGeocode(String locationName, int maxResults) {
+    return GeocodeObservable.createObservable(mContext, locationName, maxResults);
+  }
 }

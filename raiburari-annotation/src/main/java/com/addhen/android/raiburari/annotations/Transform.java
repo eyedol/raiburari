@@ -27,25 +27,20 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
  * @author Henry Addo
  */
 
-@Retention(SOURCE)
-@Documented
-@Target({FIELD})
-public @interface Transform {
+@Retention(SOURCE) @Documented @Target({ FIELD }) public @interface Transform {
 
-    /**
-     * The corresponding variable name of the class being transformed into.
-     *
-     * @return The variable name
-     */
-    String name();
+  /**
+   * The corresponding variable name of the class being transformed into.
+   *
+   * @return The variable name
+   */
+  String name();
 
-    /**
-     * The Transformer class to be used to transform the object field to its corresponding
-     * class type.
-     *
-     * @return The class name of the transformer. Usually it ends with Transformer.
-     */
-    String transformer() default "";
-
-
+  /**
+   * The Transformer class to be used to transform the object field to its corresponding
+   * class type.
+   *
+   * @return The class name of the transformer. Usually it ends with Transformer.
+   */
+  String transformer() default "";
 }

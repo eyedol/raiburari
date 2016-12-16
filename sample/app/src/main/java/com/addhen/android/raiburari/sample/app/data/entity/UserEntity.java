@@ -24,22 +24,17 @@ import com.addhen.android.raiburari.sample.app.domain.entity.User;
 /**
  * @author Ushahidi Team <team@ushahidi.com>
  */
-@TransformEntity(to = User.class)
-public class UserEntity extends DataEntity {
+@TransformEntity(to = User.class) public class UserEntity extends DataEntity {
 
-    @Transform(name = "id")
-    public long id;
+  @Transform(name = "id") public long id;
 
-    @Transform(name = "fullName")
-    public String fullName;
+  @Transform(name = "fullName") public String fullName;
 
-    @Transform(name = "email")
-    public String email;
+  @Transform(name = "email") public String email;
 
-    @Transform(name = "description")
-    public String description;
+  @Transform(name = "description") public String description;
 
-    public UserEntity() {
-        // No-op
-    }
+  public UserEntity() {
+    // No-op
+  }
 }

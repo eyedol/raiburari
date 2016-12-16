@@ -16,10 +16,8 @@
 
 package com.addhen.android.raiburari.presentation.di.module;
 
-import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
-
 import android.app.Activity;
-
+import com.addhen.android.raiburari.presentation.di.qualifier.ActivityScope;
 import dagger.Module;
 import dagger.Provides;
 
@@ -29,21 +27,18 @@ import dagger.Provides;
  *
  * @author Henry Addo
  */
-@Module
-public class ActivityModule {
+@Module public class ActivityModule {
 
-    private final Activity mActivity;
+  private final Activity mActivity;
 
-    public ActivityModule(Activity activity) {
-        mActivity = activity;
-    }
+  public ActivityModule(Activity activity) {
+    mActivity = activity;
+  }
 
-    /**
-     * Expose the activity to dependents in the graph.
-     */
-    @Provides
-    @ActivityScope
-    Activity activity() {
-        return mActivity;
-    }
+  /**
+   * Expose the activity to dependents in the graph.
+   */
+  @Provides @ActivityScope Activity activity() {
+    return mActivity;
+  }
 }

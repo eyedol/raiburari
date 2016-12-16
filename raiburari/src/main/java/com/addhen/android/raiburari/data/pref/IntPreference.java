@@ -19,7 +19,6 @@ package com.addhen.android.raiburari.data.pref;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
-
 import javax.inject.Inject;
 
 /**
@@ -29,52 +28,47 @@ import javax.inject.Inject;
  */
 public class IntPreference extends BasePreference<Integer> {
 
-    /**
-     * Constructs a new {@link IntPreference}
-     *
-     * @param sharedPreferences SharedPreferences to be used for storing the value.
-     * @param key               The key for the preference
-     */
-    @Inject
-    public IntPreference(SharedPreferences sharedPreferences, String key) {
-        this(sharedPreferences, key, 0);
-    }
+  /**
+   * Constructs a new {@link IntPreference}
+   *
+   * @param sharedPreferences SharedPreferences to be used for storing the value.
+   * @param key The key for the preference
+   */
+  @Inject public IntPreference(SharedPreferences sharedPreferences, String key) {
+    this(sharedPreferences, key, 0);
+  }
 
-    /**
-     * Constructs a new {@link IntPreference}
-     *
-     * @param sharedPreferences SharedPreferences to be used for storing the value.
-     * @param key               The key for the preference
-     * @param defaultValue      The default value
-     */
-    public IntPreference(SharedPreferences sharedPreferences, String key,
-            Integer defaultValue) {
-        super(sharedPreferences, key, defaultValue);
-    }
+  /**
+   * Constructs a new {@link IntPreference}
+   *
+   * @param sharedPreferences SharedPreferences to be used for storing the value.
+   * @param key The key for the preference
+   * @param defaultValue The default value
+   */
+  public IntPreference(SharedPreferences sharedPreferences, String key, Integer defaultValue) {
+    super(sharedPreferences, key, defaultValue);
+  }
 
-    @Override
-    public Integer get() {
-        return getSharedPreferences().getInt(getKey(), getDefaultValue());
-    }
+  @Override public Integer get() {
+    return getSharedPreferences().getInt(getKey(), getDefaultValue());
+  }
 
-    /**
-     * Sets the Integer to be saved
-     *
-     * @param value The Integer value to be saved
-     */
-    @Override
-    public void set(@NonNull Integer value) {
-        this.set((int) value);
-    }
+  /**
+   * Sets the Integer to be saved
+   *
+   * @param value The Integer value to be saved
+   */
+  @Override public void set(@NonNull Integer value) {
+    this.set((int) value);
+  }
 
-    /**
-     * Convenient method for setting the Integer to be saved and to avoid clumsy autoboxing.
-     *
-     * @param value The Integer value to be saved
-     */
-    @SuppressLint("CommitPrefEdits")
-    public void set(int value) {
-        SharedPreferences.Editor editor = getSharedPreferences().edit().putInt(getKey(), value);
-        PREF_SAVER.save(editor);
-    }
+  /**
+   * Convenient method for setting the Integer to be saved and to avoid clumsy autoboxing.
+   *
+   * @param value The Integer value to be saved
+   */
+  @SuppressLint("CommitPrefEdits") public void set(int value) {
+    SharedPreferences.Editor editor = getSharedPreferences().edit().putInt(getKey(), value);
+    PREF_SAVER.save(editor);
+  }
 }

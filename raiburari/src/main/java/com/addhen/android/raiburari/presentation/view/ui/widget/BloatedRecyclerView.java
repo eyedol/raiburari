@@ -70,7 +70,7 @@ import com.addhen.android.raiburari.presentation.view.ui.listener.ObservableScro
 
   protected RecyclerView.OnScrollListener mOnScrollListener;
 
-  protected LAYOUT_MANAGER_TYPE layoutManagerType;
+  protected LayoutManagerType layoutManagerType;
 
   protected int mPadding;
 
@@ -271,11 +271,11 @@ import com.addhen.android.raiburari.presentation.view.ui.listener.ObservableScro
 
         if (layoutManagerType == null) {
           if (layoutManager instanceof LinearLayoutManager) {
-            layoutManagerType = LAYOUT_MANAGER_TYPE.LINEAR;
+            layoutManagerType = LayoutManagerType.LINEAR;
           } else if (layoutManager instanceof GridLayoutManager) {
-            layoutManagerType = LAYOUT_MANAGER_TYPE.GRID;
+            layoutManagerType = LayoutManagerType.GRID;
           } else if (layoutManager instanceof StaggeredGridLayoutManager) {
-            layoutManagerType = LAYOUT_MANAGER_TYPE.STAGGERED_GRID;
+            layoutManagerType = LayoutManagerType.STAGGERED_GRID;
           } else {
             throw new RuntimeException(
                 "Unsupported LayoutManager used. Valid ones are LinearLayoutManager"
@@ -489,7 +489,8 @@ import com.addhen.android.raiburari.presentation.view.ui.listener.ObservableScro
    * uses an instance of {@link android.support.v7.widget.DefaultItemAnimator}. Whether item
    * animations are
    * enabled for the RecyclerView depends on the ItemAnimator and whether
-   * the LayoutManager {@link android.support.v7.widget.RecyclerView.LayoutManager#supportsPredictiveItemAnimations()
+   * the LayoutManager
+   * {@link android.support.v7.widget.RecyclerView.LayoutManager#supportsPredictiveItemAnimations()
    * supports item animations}.
    *
    * @param animator The ItemAnimator being set. If null, no animations will occur
@@ -733,7 +734,7 @@ import com.addhen.android.raiburari.presentation.view.ui.listener.ObservableScro
     return super.onTouchEvent(ev);
   }
 
-  public enum LAYOUT_MANAGER_TYPE {
+  public enum LayoutManagerType {
     LINEAR, GRID, STAGGERED_GRID
   }
 

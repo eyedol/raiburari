@@ -19,7 +19,6 @@ package com.addhen.android.raiburari.data.pref;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
-
 import javax.inject.Inject;
 
 /**
@@ -29,47 +28,42 @@ import javax.inject.Inject;
  */
 public class LongPreference extends BasePreference<Long> {
 
-    /**
-     * Constructs a new {@link LongPreference}
-     *
-     * @param sharedPreferences SharedPreferences to be used for storing the value.
-     * @param key               The key for the preference
-     */
-    @Inject
-    public LongPreference(SharedPreferences sharedPreferences, String key) {
-        this(sharedPreferences, key, 0);
-    }
+  /**
+   * Constructs a new {@link LongPreference}
+   *
+   * @param sharedPreferences SharedPreferences to be used for storing the value.
+   * @param key The key for the preference
+   */
+  @Inject public LongPreference(SharedPreferences sharedPreferences, String key) {
+    this(sharedPreferences, key, 0);
+  }
 
-    /**
-     * Constructs a new {@link LongPreference}
-     *
-     * @param sharedPreferences SharedPreferences to be used for storing the value.
-     * @param key               The key for the preference
-     * @param defaultValue      The default value
-     */
-    public LongPreference(SharedPreferences sharedPreferences, String key,
-            long defaultValue) {
-        super(sharedPreferences, key, defaultValue);
-    }
+  /**
+   * Constructs a new {@link LongPreference}
+   *
+   * @param sharedPreferences SharedPreferences to be used for storing the value.
+   * @param key The key for the preference
+   * @param defaultValue The default value
+   */
+  public LongPreference(SharedPreferences sharedPreferences, String key, long defaultValue) {
+    super(sharedPreferences, key, defaultValue);
+  }
 
-    @Override
-    public Long get() {
-        return getSharedPreferences().getLong(getKey(), getDefaultValue());
-    }
+  @Override public Long get() {
+    return getSharedPreferences().getLong(getKey(), getDefaultValue());
+  }
 
-    /**
-     * Sets the long to be saved
-     *
-     * @param value The Integer value to be saved
-     */
-    @Override
-    public void set(@NonNull Long value) {
-        this.set((long) value);
-    }
+  /**
+   * Sets the long to be saved
+   *
+   * @param value The Integer value to be saved
+   */
+  @Override public void set(@NonNull Long value) {
+    this.set((long) value);
+  }
 
-    @SuppressLint("CommitPrefEdits")
-    public void set(long value) {
-        SharedPreferences.Editor editor = getSharedPreferences().edit().putLong(getKey(), value);
-        PREF_SAVER.save(editor);
-    }
+  @SuppressLint("CommitPrefEdits") public void set(long value) {
+    SharedPreferences.Editor editor = getSharedPreferences().edit().putLong(getKey(), value);
+    PREF_SAVER.save(editor);
+  }
 }

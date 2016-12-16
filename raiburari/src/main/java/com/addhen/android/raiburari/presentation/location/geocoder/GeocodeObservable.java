@@ -19,50 +19,46 @@ package com.addhen.android.raiburari.presentation.location.geocoder;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
-
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-
-
 public final class GeocodeObservable implements ObservableOnSubscribe<List<Address>> {
 
-    private final Context mContext;
+  private final Context mContext;
 
-    private final String mLocationName;
+  private final String mLocationName;
 
-    private final int mMaxResults;
+  private final int mMaxResults;
 
-    private GeocodeObservable(Context context, String locationName, int maxResults) {
-        mContext = context;
-        mLocationName = locationName;
-        mMaxResults = maxResults;
+  private GeocodeObservable(Context context, String locationName, int maxResults) {
+    mContext = context;
+    mLocationName = locationName;
+    mMaxResults = maxResults;
+  }
+
+  public static Observable<List<Address>> createObservable(Context ctx, String locationName,
+      int maxResults) {
+    return Observable.create(new GeocodeObservable(ctx, locationName, maxResults));
+  }
+
+  @Override public void subscribe(ObservableEmitter<List<Address>> subscriber) {
+    Geocoder geocoder = new Geocoder(mContext);
+    List<Address> result = new ArrayList<>();
+
+    try {
+      result = geocoder.getFromLocationName(mLocationName, mMaxResults);
+    } catch (IOException e) {
+      if (!subscriber.isDisposed()) {
+        subscriber.onError(e);
+      }
     }
-
-    public static Observable<List<Address>> createObservable(Context ctx, String locationName,
-            int maxResults) {
-        return Observable.create(new GeocodeObservable(ctx, locationName, maxResults));
+    if (!subscriber.isDisposed()) {
+      subscriber.onNext(result);
+      subscriber.onComplete();
     }
-
-    @Override
-    public void subscribe(ObservableEmitter<List<Address>> subscriber) {
-        Geocoder geocoder = new Geocoder(mContext);
-        List<Address> result = new ArrayList<>();
-
-        try {
-            result = geocoder.getFromLocationName(mLocationName, mMaxResults);
-        } catch (IOException e) {
-            if (!subscriber.isDisposed()) {
-                subscriber.onError(e);
-            }
-        }
-        if (!subscriber.isDisposed()) {
-            subscriber.onNext(result);
-            subscriber.onComplete();
-        }
-    }
+  }
 }
