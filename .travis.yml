@@ -26,7 +26,7 @@ deploy:
   script: "./release.sh"
   on:
     tags: true
-  repo: eyedol/Raiburari
+  repo: eyedol/raiburari
 
 script: ./gradlew clean build
 
