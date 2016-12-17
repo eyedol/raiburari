@@ -18,6 +18,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.jfrog.artifactory'
+apply plugin: 'maven-publish'
 apply plugin: 'com.noveogroup.android.check'
 
 def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -53,7 +55,8 @@ android {
     disable 'UnusedResources' // Ignore for now.
     warningsAsErrors true
     if (System.env.CI == 'true') {
-      abortOnError true
+      // Enable true when this https://code.google.com/p/android/issues/detail?id=230218 is fixed
+      abortOnError false
       htmlReport false
       xmlReport false
       textReport true
