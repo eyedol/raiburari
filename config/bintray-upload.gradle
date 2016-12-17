@@ -143,7 +143,7 @@ bintray {
 
 publishing {
   publications {
-    sources(MavenPublication) {
+    archives(MavenPublication) {
       groupId group
       version = rootProject.extensions.getByName("ext").getAt("androidVersionName")
       artifactId artifact
@@ -151,7 +151,9 @@ publishing {
           hasPlugin('com.android.library')) {
         artifact(androidJavadocsJar)
         artifact(androidSourcesJar)
+        artifact "${project.buildDir}/outputs/aar/${project.name}-release.aar"
       } else {
+        from components.java
         artifact(sourcesJar)
         artifact(javadocJar)
       }
@@ -171,7 +173,7 @@ artifactory {
     }
     defaults {
       publishArtifacts = true
-      publications('sources')
+      publications('archives')
       publishPom = true //Publish generated POM files to Artifactory (true by default)
       publishIvy = false //Publish generated Ivy descriptor files to Artifactory (true by default)
     }
