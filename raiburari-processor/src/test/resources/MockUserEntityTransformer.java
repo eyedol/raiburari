@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Transforms a {@link MockUserEntity} into an {@link MockUser}
  */
-class MockUserEntityTransformer {
+public class MockUserEntityTransformer {
 
   public MockUserEntityTransformer() {
   }

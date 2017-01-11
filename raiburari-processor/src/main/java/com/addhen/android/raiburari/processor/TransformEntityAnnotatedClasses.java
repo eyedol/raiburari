@@ -136,6 +136,7 @@ public class TransformEntityAnnotatedClasses {
 
         builder.addJavadoc("Transforms a {@link $T} into an {@link $T}\n",
             TypeName.get(item.getElement().asType()), ClassName.get(superClassName))
+            .addModifiers(Modifier.PUBLIC)
             .addMethod(constructor);
         builder.addMethod(mapMethod).addMethod(methodCollection.build());
 

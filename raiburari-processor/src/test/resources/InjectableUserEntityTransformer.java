@@ -25,7 +25,7 @@ import javax.inject.Inject;
 /**
  * Transforms a {@link InjectableUserEntity} into an {@link MockUser}
  */
-class InjectableUserEntityTransformer {
+public class InjectableUserEntityTransformer {
 
   @Inject public InjectableUserEntityTransformer() {
   }
