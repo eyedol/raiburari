@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+## v3.0.2
+_2017-01-12_
+
+* Fix bug where generated transformer classes are projected instead of being private.
+* Fix so SNAPSHOT releases include their dependencies in the generated POM file.
+* Update `RxJava` to `v2.0.4`
+
 ## v3.0.1
 _2016-12-16_
 
