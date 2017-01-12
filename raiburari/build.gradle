@@ -86,7 +86,7 @@ dependencies {
 }
 
 ext {
-  artifact = 'raiburari'
+  artifact = 'Raiburari'
   blob = 'The project aims to provide a reusable Android library for building Android apps'
   pkg = 'aar'
 }
