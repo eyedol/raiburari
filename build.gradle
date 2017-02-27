@@ -17,38 +17,38 @@
 apply from: 'config/dependencies.gradle'
 
 buildscript {
-  repositories {
-    jcenter()
-  }
-  dependencies {
-    classpath 'com.android.tools.build:gradle:2.3.0-beta2'
-    classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
-    classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
-    classpath('com.noveogroup.android:check:1.2.3') {
-      exclude module: 'checkstyle'
+    repositories {
+        jcenter()
     }
-    classpath 'com.puppycrawl.tools:checkstyle:7.3'
-    classpath 'com.jakewharton:butterknife-gradle-plugin:8.2.1'
-    //Check for the latest version here: http://plugins.gradle.org/plugin/com.jfrog.artifactory
-    // Needds to publish SNAPSHOTs to JFrog
-    classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.1.1'
-  }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.0-rc1'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+        classpath('com.noveogroup.android:check:1.2.3') {
+            exclude module: 'checkstyle'
+        }
+        classpath 'com.puppycrawl.tools:checkstyle:7.3'
+        classpath 'com.jakewharton:butterknife-gradle-plugin:8.2.1'
+        // Check for the latest version here: http://plugins.gradle.org/plugin/com.jfrog.artifactory
+        // Needed to publish SNAPSHOTs to JFrog
+        classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.1.1'
+    }
 }
 
 task wrapper(type: Wrapper) {
-  description 'Creates the gradle wrapper.'
-  gradleVersion '3.2'
+    description 'Creates the gradle wrapper.'
+    gradleVersion '3.4'
 }
 
 allprojects {
-  ext {
-    androidVersionCode = 229
-    androidVersionName = '3.0.3-SNAPSHOT'
-    testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
-  }
+    ext {
+        androidVersionCode = 229
+        androidVersionName = '3.0.3-SNAPSHOT'
+        testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+    }
 
-  repositories {
-    jcenter()
-    maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
-  }
+    repositories {
+        jcenter()
+        maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
+    }
 }
