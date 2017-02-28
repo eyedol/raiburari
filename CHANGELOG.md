@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+## v3.0.3
+_2017-02-28_
+
+* Upgrade support library to `v25.2.0`.
+* Upgrade butterkinfe to `v8.5.1`.
+* Update `RxJava` to `v2.0.6`
+
 ## v3.0.2
 _2017-01-12_
 
